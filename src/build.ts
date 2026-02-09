@@ -7,6 +7,7 @@ import { buildNavigation, renderHeader } from './utils';
 const CONTENT_ROOT = path.resolve(process.cwd(), 'content');
 const DIST_ROOT = path.resolve(process.cwd(), 'dist');
 const VALID_SEGMENT_RE = /^[a-z0-9-_]+$/;
+const INTERNAL_LINK_RE = /\]\((\/[^)\s]+)\)/g;
 
 type DirNode = {
   dirRel: string;
@@ -73,6 +74,21 @@ function stripNavSections(body: string): string {
   return result.trim();
 }
 
+function parseInternalLinks(markdown: string): string[] {
+  const links: string[] = [];
+  let match: RegExpExecArray | null;
+  while ((match = INTERNAL_LINK_RE.exec(markdown)) !== null) {
+    const url = match[1];
+    if (url.startsWith('/')) links.push(url);
+  }
+  return links;
+}
+
+function normalizeLink(url: string): string {
+  const trimmed = url.split('#')[0].split('?')[0];
+  return trimmed;
+}
+
 async function readContent(filePath: string): Promise<ParsedContent> {
   const raw = await fs.readFile(filePath, 'utf8');
   const parsed = matter(raw);
@@ -129,6 +145,17 @@ async function buildTree(): Promise<Map<string, DirNode>> {
   return dirs;
 }
 
+function buildKnownUrls(dirs: Map<string, DirNode>): Set<string> {
+  const urls = new Set<string>();
+  for (const node of dirs.values()) {
+    urls.add(dirRelToUrl(node.dirRel));
+    for (const slug of node.pages.keys()) {
+      urls.add(pageRelToUrl(node.dirRel, slug));
+    }
+  }
+  return urls;
+}
+
 function buildDirectorySummary(subdirs: string[], pages: string[], dirRel: string): string {
   const base = `This directory contains ${subdirs.length} subdirectories and ${pages.length} pages.`;
   let suggestion = '';
@@ -153,7 +180,32 @@ function renderList(items: string[]): string {
   return items.map((item) => `- ${item}`).join('\n');
 }
 
-async function generateDirectoryIndex(node: DirNode, dirs: Map<string, DirNode>): Promise<void> {
+type BacklinkState = {
+  backlinks: Map<string, Set<string>>;
+  sourceTitles: Map<string, string>;
+  pageUrls: Set<string>;
+  knownUrls: Set<string>;
+};
+
+function recordLinks(sourceUrl: string, body: string, state: BacklinkState): void {
+  const links = parseInternalLinks(body);
+  for (const rawLink of links) {
+    const link = normalizeLink(rawLink);
+    if (!link.endsWith('/')) continue;
+    if (link.includes('.md')) continue;
+    if (!state.knownUrls.has(link)) continue;
+    if (link === sourceUrl) continue;
+    const set = state.backlinks.get(link) || new Set<string>();
+    set.add(sourceUrl);
+    state.backlinks.set(link, set);
+  }
+}
+
+async function generateDirectoryIndex(
+  node: DirNode,
+  dirs: Map<string, DirNode>,
+  getParsed: (filePath: string) => Promise<ParsedContent>,
+): Promise<void> {
   const subdirs = Array.from(node.subdirs).sort();
   const pages = Array.from(node.pages.keys()).sort();
 
@@ -163,7 +215,7 @@ async function generateDirectoryIndex(node: DirNode, dirs: Map<string, DirNode>)
 
   let parsed: ParsedContent = { body: '' };
   if (node.indexFile) {
-    parsed = await readContent(node.indexFile);
+    parsed = await getParsed(node.indexFile);
   }
 
   const title = parsed.title || (node.dirRel || 'Home');
@@ -181,7 +233,7 @@ async function generateDirectoryIndex(node: DirNode, dirs: Map<string, DirNode>)
     '**Subdirectories:** Folders under this directory.',
     renderList(subdirLinks),
     '',
-    '**Pages:** Content pages in this directory.',
+    '**Pages:** Files (content pages) in this directory.',
     renderList(pageLinks),
   ].join('\n');
 
@@ -203,8 +255,14 @@ async function generateDirectoryIndex(node: DirNode, dirs: Map<string, DirNode>)
   }
 }
 
-async function generatePage(dirRel: string, slug: string, filePath: string): Promise<void> {
-  const parsed = await readContent(filePath);
+async function generatePage(
+  dirRel: string,
+  slug: string,
+  filePath: string,
+  getParsed: (filePath: string) => Promise<ParsedContent>,
+  state: BacklinkState,
+): Promise<void> {
+  const parsed = await getParsed(filePath);
   const title = parsed.title || slug;
   const summary = parsed.summary || truncateSummary(`Documentation for ${title}.`);
   const body = parsed.body.trim();
@@ -214,7 +272,19 @@ async function generatePage(dirRel: string, slug: string, filePath: string): Pro
   const navigation = buildNavigation(segments);
   const header = renderHeader(title, navigation, summary);
 
-  const content = body ? `${header}\n${body}` : header;
+  let backlinksBlock = '';
+  const backlinks = state.backlinks.get(url);
+  if (backlinks && backlinks.size > 0 && state.pageUrls.has(url)) {
+    const items = Array.from(backlinks).sort().map((sourceUrl) => {
+      const label = state.sourceTitles.get(sourceUrl) || sourceUrl;
+      return `- [${label}](${sourceUrl})`;
+    });
+    backlinksBlock = `**Backlinks:** Pages linking to here\n${items.join('\n')}`;
+  }
+
+  const content = body
+    ? `${header}\n${body}${backlinksBlock ? `\n\n${backlinksBlock}` : ''}`
+    : `${header}${backlinksBlock ? `\n${backlinksBlock}` : ''}`;
   const distPath = path.join(DIST_ROOT, dirRel, `${slug}.md`);
   await writeFile(distPath, content);
 }
@@ -226,13 +296,48 @@ async function main(): Promise<void> {
   await fs.mkdir(DIST_ROOT, { recursive: true });
 
   const dirList = Array.from(dirs.values()).sort((a, b) => a.dirRel.localeCompare(b.dirRel));
+  const parsedCache = new Map<string, ParsedContent>();
+  const getParsed = async (filePath: string): Promise<ParsedContent> => {
+    const cached = parsedCache.get(filePath);
+    if (cached) return cached;
+    const parsed = await readContent(filePath);
+    parsedCache.set(filePath, parsed);
+    return parsed;
+  };
+
+  const knownUrls = buildKnownUrls(dirs);
+  const backlinks: Map<string, Set<string>> = new Map();
+  const sourceTitles = new Map<string, string>();
+  const pageUrls = new Set<string>();
+  const state: BacklinkState = { backlinks, sourceTitles, pageUrls, knownUrls };
+
   for (const node of dirList) {
-    await generateDirectoryIndex(node, dirs);
+    const dirUrl = dirRelToUrl(node.dirRel);
+    sourceTitles.set(dirUrl, node.dirRel || 'Home');
+    if (node.indexFile) {
+      const parsed = await getParsed(node.indexFile);
+      const title = parsed.title || (node.dirRel || 'Home');
+      sourceTitles.set(dirUrl, title);
+      const body = stripNavSections(parsed.body.trim());
+      if (body) recordLinks(dirUrl, body, state);
+    }
+    for (const [slug, filePath] of node.pages.entries()) {
+      const pageUrl = pageRelToUrl(node.dirRel, slug);
+      pageUrls.add(pageUrl);
+      const parsed = await getParsed(filePath);
+      sourceTitles.set(pageUrl, parsed.title || slug);
+      const body = parsed.body.trim();
+      if (body) recordLinks(pageUrl, body, state);
+    }
+  }
+
+  for (const node of dirList) {
+    await generateDirectoryIndex(node, dirs, getParsed);
   }
 
   for (const node of dirList) {
     for (const [slug, filePath] of node.pages.entries()) {
-      await generatePage(node.dirRel, slug, filePath);
+      await generatePage(node.dirRel, slug, filePath, getParsed, state);
     }
   }
 
