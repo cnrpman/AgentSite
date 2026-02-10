@@ -181,7 +181,12 @@ async function sendHtml(reply: FastifyReply, requestEtag: string | undefined, ht
 
 async function fetchMarkdown(markdownPath: string): Promise<{ status: number; text: string }> {
   const url = `${MARKDOWN_BASE_URL}${markdownPath}`;
-  const response = await fetch(url, { headers: { Accept: 'text/markdown' } });
+  const response = await fetch(url, {
+    headers: {
+      Accept: 'text/markdown',
+      'Accept-Encoding': 'identity',
+    },
+  });
   const text = await response.text();
   return { status: response.status, text };
 }

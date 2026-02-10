@@ -37,6 +37,20 @@ summary: How to use visit(url) to traverse the Markdown directory site.
 ---
 ```
 
+## Tool Pages (Recommended)
+
+Sample tool docs live in `content/docs/agent/tools/`.
+
+Each tool page should include:
+- **Tool ID** (callable function name)
+- Purpose
+- Use This When
+- Input
+- Output
+- Example Call
+- Example Response
+- See also
+
 ## Output Rules
 
 - `dist/` mirrors URL structure.
@@ -45,7 +59,7 @@ summary: How to use visit(url) to traverse the Markdown directory site.
   - `**Navigation:**`
   - `**Summary:**`
   - `---`
-- Directory pages always contain `**Subdirectories:**` and `**Pages:**` labels with bullet lists (use `- (none)` when empty).
+- Directory pages always contain `**Subdirectories** under this directory:` and `**Pages** in this directory:` labels with bullet lists (use `- (none)` when empty).
 
 ## Server Behavior (Markdown Service)
 
