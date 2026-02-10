@@ -147,6 +147,12 @@ function wrapHtml(title: string, markdownPath: string, bodyHtml: string, tokenLa
         padding: 2px 6px;
         border-radius: 4px;
       }
+      pre code {
+        background: transparent;
+        padding: 0;
+        border-radius: 0;
+        color: inherit;
+      }
       h1, h2, h3 { line-height: 1.2; }
       a { color: #0a4ea3; }
       ul { padding-left: 20px; }

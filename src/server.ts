@@ -71,11 +71,6 @@ async function sendMarkdown(reply: FastifyReply, requestEtag: string | undefined
     reply.code(304).send();
     return;
   }
-  const compressReply = reply as FastifyReply & { compress?: (payload: Buffer | string) => void };
-  if (typeof compressReply.compress === 'function') {
-    compressReply.compress(content);
-    return;
-  }
   reply.send(content);
 }
 

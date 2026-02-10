@@ -185,19 +185,25 @@ type BacklinkState = {
   sourceTitles: Map<string, string>;
   pageUrls: Set<string>;
   knownUrls: Set<string>;
+  outgoingLinks: Map<string, Set<string>>;
 };
 
 function recordLinks(sourceUrl: string, body: string, state: BacklinkState): void {
   const links = parseInternalLinks(body);
+  const outgoing = state.outgoingLinks.get(sourceUrl) || new Set<string>();
   for (const rawLink of links) {
     const link = normalizeLink(rawLink);
     if (!link.endsWith('/')) continue;
     if (link.includes('.md')) continue;
     if (!state.knownUrls.has(link)) continue;
     if (link === sourceUrl) continue;
+    outgoing.add(link);
     const set = state.backlinks.get(link) || new Set<string>();
     set.add(sourceUrl);
     state.backlinks.set(link, set);
+  }
+  if (outgoing.size > 0) {
+    state.outgoingLinks.set(sourceUrl, outgoing);
   }
 }
 
@@ -275,13 +281,17 @@ async function generatePage(
 
   let backlinksBlock = '';
   const backlinks = state.backlinks.get(url);
+  const outgoing = state.outgoingLinks.get(url);
   if (backlinks && backlinks.size > 0 && state.pageUrls.has(url)) {
     const items = Array.from(backlinks).sort().map((sourceUrl) => {
+      if (outgoing && outgoing.has(sourceUrl)) return null;
       const label = state.sourceTitles.get(sourceUrl) || sourceUrl;
       return `- [${label}](${sourceUrl})`;
-    });
+    }).filter(Boolean) as string[];
     // Backlinks section format can be adjusted here.
-    backlinksBlock = `**Backlinks:** Pages linking here.\n${items.join('\n')}`;
+    if (items.length > 0) {
+      backlinksBlock = `**Backlinks:** Pages linking here.\n${items.join('\n')}`;
+    }
   }
 
   const content = body
@@ -311,11 +321,13 @@ async function main(): Promise<void> {
   const backlinks: Map<string, Set<string>> = new Map();
   const sourceTitles = new Map<string, string>();
   const pageUrls = new Set<string>();
+  const outgoingLinks = new Map<string, Set<string>>();
   const state: BacklinkState = {
     backlinks,
     sourceTitles,
     pageUrls,
     knownUrls,
+    outgoingLinks,
   };
 
   for (const node of dirList) {
