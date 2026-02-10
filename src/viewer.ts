@@ -4,6 +4,9 @@ import { marked } from 'marked';
 import { HTML_CACHE_CONTROL, MARKDOWN_BASE_URL } from './config';
 import { computeEtag } from './utils';
 
+const MODEL_NAME = 'gpt-5';
+const FALLBACK_ENCODING = 'o200k_base';
+
 function escapeHtmlAttr(value: string): string {
   return value.replace(/&/g, '&amp;')
     .replace(/"/g, '&quot;')
@@ -38,12 +41,62 @@ marked.setOptions({
   headerIds: false,
 });
 
+type TokenizerState = {
+  encode: (text: string) => number[];
+  label: string;
+  note?: string;
+};
+
+let tokenizerState: TokenizerState | null = null;
+let tokenizerInitFailed = false;
+
+async function getTokenizer(): Promise<TokenizerState | null> {
+  if (tokenizerState || tokenizerInitFailed) return tokenizerState;
+  try {
+    const mod = await import('tiktoken');
+    const encodingForModel = (mod as { encoding_for_model?: (model: string) => { encode: (text: string) => number[] } }).encoding_for_model;
+    const getEncoding = (mod as { get_encoding?: (name: string) => { encode: (text: string) => number[] } }).get_encoding;
+
+    if (encodingForModel) {
+      try {
+        const enc = encodingForModel(MODEL_NAME);
+        tokenizerState = { encode: enc.encode.bind(enc), label: MODEL_NAME };
+        return tokenizerState;
+      } catch {
+        // fall through to fallback encoding
+      }
+    }
+
+    if (getEncoding) {
+      try {
+        const enc = getEncoding(FALLBACK_ENCODING);
+        tokenizerState = { encode: enc.encode.bind(enc), label: MODEL_NAME, note: `fallback ${FALLBACK_ENCODING}` };
+        return tokenizerState;
+      } catch {
+        // ignore
+      }
+    }
+  } catch {
+    // ignore
+  }
+  tokenizerInitFailed = true;
+  return null;
+}
+
+async function countTokens(markdown: string): Promise<string | null> {
+  const tokenizer = await getTokenizer();
+  if (!tokenizer) return null;
+  const count = tokenizer.encode(markdown).length;
+  return tokenizer.note ? `${count} (${MODEL_NAME}, ${tokenizer.note})` : `${count} (${MODEL_NAME})`;
+}
+
 function extractTitle(markdown: string): string {
   const match = markdown.match(/^#\s+(.+)$/m);
   return match ? match[1].trim() : 'Markdown';
 }
 
-function wrapHtml(title: string, markdownPath: string, bodyHtml: string): string {
+function wrapHtml(title: string, markdownPath: string, bodyHtml: string, tokenLabel: string | null): string {
+  const tokenLine = tokenLabel ? `<span class="meta">Tokens: ${escapeHtmlAttr(tokenLabel)}</span>` : `<span class="meta">Tokens: unavailable</span>`;
   return `<!doctype html>
 <html lang="en">
   <head>
@@ -97,6 +150,7 @@ function wrapHtml(title: string, markdownPath: string, bodyHtml: string): string
       h1, h2, h3 { line-height: 1.2; }
       a { color: #0a4ea3; }
       ul { padding-left: 20px; }
+      .meta { color: #5c4b2a; font-size: 0.9rem; }
     </style>
   </head>
   <body>
@@ -104,6 +158,8 @@ function wrapHtml(title: string, markdownPath: string, bodyHtml: string): string
       <a href="/viewer/">Viewer Home</a>
       <span>·</span>
       <a href="${escapeHtmlAttr(markdownPath)}">Raw Markdown</a>
+      <span>·</span>
+      ${tokenLine}
     </header>
     <main>
 ${bodyHtml}
@@ -119,10 +175,7 @@ async function sendHtml(reply: FastifyReply, requestEtag: string | undefined, ht
   reply.header('Content-Type', 'text/html; charset=utf-8');
   reply.header('Cache-Control', HTML_CACHE_CONTROL);
   reply.header('ETag', etag);
-  if (requestEtag && requestEtag === etag) {
-    reply.code(304).send();
-    return;
-  }
+  // Always send HTML body; no-store responses should not return 304.
   reply.send(buffer);
 }
 
@@ -138,10 +191,11 @@ async function renderMarkdownPath(markdownPath: string, reply: FastifyReply, req
     const { status, text } = await fetchMarkdown(markdownPath);
     const title = extractTitle(text);
     const bodyHtml = await marked.parse(text);
-    const html = wrapHtml(title, markdownPath, bodyHtml);
+    const tokenLabel = await countTokens(text);
+    const html = wrapHtml(title, markdownPath, bodyHtml, tokenLabel);
     await sendHtml(reply, requestEtag, html, status);
   } catch {
-    const html = wrapHtml('Viewer Error', markdownPath, `<p>Failed to fetch markdown from ${escapeHtmlAttr(MARKDOWN_BASE_URL)}.</p>`);
+    const html = wrapHtml('Viewer Error', markdownPath, `<p>Failed to fetch markdown from ${escapeHtmlAttr(MARKDOWN_BASE_URL)}.</p>`, null);
     await sendHtml(reply, requestEtag, html, 502);
   }
 }

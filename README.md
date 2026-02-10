@@ -61,6 +61,7 @@ Cache headers and ETag are set for all Markdown responses.
 
 - Runs in the same process/port as the Markdown service.
 - Renders HTML at `/viewer/` and rewrites internal links to stay in the viewer.
+- Displays token counts based on the Markdown API response.
 
 Environment variables:
 - `MARKDOWN_PORT` (markdown service port, default 3000)

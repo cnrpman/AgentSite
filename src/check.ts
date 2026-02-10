@@ -49,8 +49,8 @@ function hasMarkdownHeaderContract(content: string): { ok: boolean; errors: stri
 
 function hasDirectorySections(content: string): { ok: boolean; errors: string[] } {
   const errors: string[] = [];
-  if (!content.includes('**Subdirectories:**')) errors.push('missing Subdirectories section');
-  if (!content.includes('**Pages:**')) errors.push('missing Pages section');
+  if (!content.includes('**Subdirectories**')) errors.push('missing Subdirectories section');
+  if (!content.includes('**Pages**')) errors.push('missing Pages section');
   return { ok: errors.length === 0, errors };
 }
 

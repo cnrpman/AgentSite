@@ -360,6 +360,7 @@ __metadata:
     fastify: "npm:^4.29.1"
     gray-matter: "npm:^4.0.3"
     marked: "npm:^12.0.2"
+    tiktoken: "npm:^1.0.10"
     tsx: "npm:^4.7.1"
     typescript: "npm:^5.4.5"
   languageName: unknown
@@ -1648,6 +1649,13 @@ __metadata:
     readable-stream: "npm:~2.3.6"
     xtend: "npm:~4.0.1"
   checksum: 10c0/cbfe5b57943fa12b4f8c043658c2a00476216d79c014895cef1ac7a1d9a8b31f6b438d0e53eecbb81054b93128324a82ecd59ec1a4f91f01f7ac113dcb14eade
+  languageName: node
+  linkType: hard
+
+"tiktoken@npm:^1.0.10":
+  version: 1.0.22
+  resolution: "tiktoken@npm:1.0.22"
+  checksum: 10c0/4805cf957d32ee53707ea8416256b50f6b4e865fce1d36ba507bfcbf4dd31bfa69b31dbd1303ba216ae44eb680f54c46c11defa5305445ecea946f2c048fa87d
   languageName: node
   linkType: hard
 

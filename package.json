@@ -18,7 +18,8 @@
     "@fastify/rate-limit": "^8.0.0",
     "fastify": "^4.29.1",
     "gray-matter": "^4.0.3",
-    "marked": "^12.0.2"
+    "marked": "^12.0.2",
+    "tiktoken": "^1.0.10"
   },
   "devDependencies": {
     "@types/node": "^20.11.30",

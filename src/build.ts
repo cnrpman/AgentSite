@@ -86,7 +86,7 @@ function parseInternalLinks(markdown: string): string[] {
 
 function normalizeLink(url: string): string {
   const trimmed = url.split('#')[0].split('?')[0];
-  return trimmed;
+  return trimmed.endsWith('/') ? trimmed : `${trimmed}/`;
 }
 
 async function readContent(filePath: string): Promise<ParsedContent> {
@@ -205,6 +205,7 @@ async function generateDirectoryIndex(
   node: DirNode,
   dirs: Map<string, DirNode>,
   getParsed: (filePath: string) => Promise<ParsedContent>,
+  _state: BacklinkState,
 ): Promise<void> {
   const subdirs = Array.from(node.subdirs).sort();
   const pages = Array.from(node.pages.keys()).sort();
@@ -230,10 +231,10 @@ async function generateDirectoryIndex(
   const pageLinks = pages.map((name) => `[${name}](${pageRelToUrl(node.dirRel, name)})`);
 
   const navBlock = [
-    '**Subdirectories:** Folders under this directory.',
+    '**Subdirectories** under this directory:',
     renderList(subdirLinks),
     '',
-    '**Pages:** Files (content pages) in this directory.',
+    '**Pages** in this directory:',
     renderList(pageLinks),
   ].join('\n');
 
@@ -265,9 +266,9 @@ async function generatePage(
   const parsed = await getParsed(filePath);
   const title = parsed.title || slug;
   const summary = parsed.summary || truncateSummary(`Documentation for ${title}.`);
+  const url = pageRelToUrl(dirRel, slug);
   const body = parsed.body.trim();
 
-  const url = pageRelToUrl(dirRel, slug);
   const segments = url.replace(/^\//, '').replace(/\/$/, '').split('/');
   const navigation = buildNavigation(segments);
   const header = renderHeader(title, navigation, summary);
@@ -279,7 +280,8 @@ async function generatePage(
       const label = state.sourceTitles.get(sourceUrl) || sourceUrl;
       return `- [${label}](${sourceUrl})`;
     });
-    backlinksBlock = `**Backlinks:** Pages linking to here\n${items.join('\n')}`;
+    // Backlinks section format can be adjusted here.
+    backlinksBlock = `**Backlinks:** Pages linking here.\n${items.join('\n')}`;
   }
 
   const content = body
@@ -309,7 +311,12 @@ async function main(): Promise<void> {
   const backlinks: Map<string, Set<string>> = new Map();
   const sourceTitles = new Map<string, string>();
   const pageUrls = new Set<string>();
-  const state: BacklinkState = { backlinks, sourceTitles, pageUrls, knownUrls };
+  const state: BacklinkState = {
+    backlinks,
+    sourceTitles,
+    pageUrls,
+    knownUrls,
+  };
 
   for (const node of dirList) {
     const dirUrl = dirRelToUrl(node.dirRel);
@@ -332,7 +339,7 @@ async function main(): Promise<void> {
   }
 
   for (const node of dirList) {
-    await generateDirectoryIndex(node, dirs, getParsed);
+    await generateDirectoryIndex(node, dirs, getParsed, state);
   }
 
   for (const node of dirList) {
