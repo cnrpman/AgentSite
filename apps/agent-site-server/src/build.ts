@@ -290,7 +290,7 @@ async function generatePage(
     }).filter(Boolean) as string[];
     // Backlinks section format can be adjusted here.
     if (items.length > 0) {
-      backlinksBlock = `**Backlinks:** Pages linking here.\n${items.join('\n')}`;
+      backlinksBlock = `Pages that **Backlink** to here:\n${items.join('\n')}`;
     }
   }
 

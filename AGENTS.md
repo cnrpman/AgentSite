@@ -197,5 +197,7 @@ Hard constraint:
 
 * Use Codex for code, VSCode / Github Copilot for code review. Keep athlete and judge roles separate.
 
+* Be aware that localhost is not always usable in Codex sandbox. If you encounter `Operation not permitted` errors, try rerunning with escalated permissions instead of assuming the service is down.
+
 * Task Kick-off Prompt:
     * Hi codex, please refer to AGENTS.md and all the git staged changes. then repeat your task to me. raise any question to me.

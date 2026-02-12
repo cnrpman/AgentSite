@@ -350,9 +350,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"agent-md-site@workspace:.":
+"agent-site-server@workspace:apps/agent-site-server":
   version: 0.0.0-use.local
-  resolution: "agent-md-site@workspace:."
+  resolution: "agent-site-server@workspace:apps/agent-site-server"
   dependencies:
     "@fastify/compress": "npm:^7.0.0"
     "@fastify/rate-limit": "npm:^8.0.0"
@@ -363,6 +363,12 @@ __metadata:
     tiktoken: "npm:^1.0.10"
     tsx: "npm:^4.7.1"
     typescript: "npm:^5.4.5"
+  languageName: unknown
+  linkType: soft
+
+"agent-site@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "agent-site@workspace:."
   languageName: unknown
   linkType: soft
 
