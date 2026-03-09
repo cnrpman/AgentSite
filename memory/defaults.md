@@ -1,6 +1,6 @@
 # Defaults
 
-**Navigation:** [Home](/) > [memory](/AgentSite/memory/) > [defaults](/AgentSite/memory/defaults/)
+**Navigation:** [Home](/) > [memory](/AgentSite/memory/index.md) > [defaults](/AgentSite/memory/defaults.md)
 
 **Summary:** Default wallet address, chain, and operational conventions for this user.
 
@@ -26,9 +26,9 @@ Ethereum (chainId: 1) when chain is ambiguous. Try all supported chains if uncle
 
 ## See Also
 
-- [Runtime Rules](/AgentSite/soul/runtime/) for chain limitations
-- [Wallet Token Balance Tool](/AgentSite/tool/wallet-token-balance/) for balance queries
+- [Runtime Rules](/AgentSite/soul/runtime.md) for chain limitations
+- [Wallet Token Balance Tool](/AgentSite/tool/wallet-token-balance.md) for balance queries
 
 Pages that **Backlink** to here:
-- [MEMORY Layer](/AgentSite/memory/)
-- [User Profile](/AgentSite/memory/profile/)
+- [MEMORY Layer](/AgentSite/memory/index.md)
+- [User Profile](/AgentSite/memory/profile.md)

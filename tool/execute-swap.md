@@ -1,6 +1,6 @@
 # ExecuteSwapTool
 
-**Navigation:** [Home](/) > [tool](/AgentSite/tool/) > [execute-swap](/AgentSite/tool/execute-swap/)
+**Navigation:** [Home](/) > [tool](/AgentSite/tool/index.md) > [execute-swap](/AgentSite/tool/execute-swap.md)
 
 **Summary:** Prepare and validate a DEX token swap using optional execution parameters.
 
@@ -23,7 +23,7 @@ Set up a token swap by validating chain and token addresses and returning execut
 
 - User does NOT need all parameters upfront; invoke with available details
 - Token symbols are not required; contract addresses are the primary inputs
-- If only symbols are known, use [searchTokenInfo](/AgentSite/tool/search-token-info/) first to resolve addresses
+- If only symbols are known, use [searchTokenInfo](/AgentSite/tool/search-token-info.md) first to resolve addresses
 - If a token cannot be resolved or a quote cannot be obtained, the tool returns a failure reason
 
 ## Output
@@ -32,9 +32,9 @@ Returns swap parameters for downstream execution: `chainId`, `amount`, `fromToke
 
 ## See Also
 
-- [Search Token Info](/AgentSite/tool/search-token-info/) for resolving symbols to addresses
-- [Runtime Rules](/AgentSite/soul/runtime/) for chain limitations
-- [Execute Transfer](/AgentSite/tool/execute-transfer/) for transfers instead of swaps
+- [Search Token Info](/AgentSite/tool/search-token-info.md) for resolving symbols to addresses
+- [Runtime Rules](/AgentSite/soul/runtime.md) for chain limitations
+- [Execute Transfer](/AgentSite/tool/execute-transfer.md) for transfers instead of swaps
 
 Pages that **Backlink** to here:
-- [TOOL Layer](/AgentSite/tool/)
+- [TOOL Layer](/AgentSite/tool/index.md)

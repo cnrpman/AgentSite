@@ -1,6 +1,6 @@
 # getWalletTokenBalance
 
-**Navigation:** [Home](/) > [tool](/AgentSite/tool/) > [wallet-token-balance](/AgentSite/tool/wallet-token-balance/)
+**Navigation:** [Home](/) > [tool](/AgentSite/tool/index.md) > [wallet-token-balance](/AgentSite/tool/wallet-token-balance.md)
 
 **Summary:** Multi-mode EVM wallet intelligence for balances, activity timelines, and filtered transaction history.
 
@@ -34,9 +34,9 @@ Inspect an EVM wallet through one or more modes: balances, activity, and transac
 
 ## See Also
 
-- [searchTokenInfo](/AgentSite/tool/search-token-info/) for token metadata on returned balances
-- [Runtime Rules](/AgentSite/soul/runtime/) for chain constraints
+- [searchTokenInfo](/AgentSite/tool/search-token-info.md) for token metadata on returned balances
+- [Runtime Rules](/AgentSite/soul/runtime.md) for chain constraints
 
 Pages that **Backlink** to here:
-- [Defaults](/AgentSite/memory/defaults/)
-- [TOOL Layer](/AgentSite/tool/)
+- [Defaults](/AgentSite/memory/defaults.md)
+- [TOOL Layer](/AgentSite/tool/index.md)

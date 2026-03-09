@@ -1,6 +1,6 @@
 # MEMORY Layer
 
-**Navigation:** [Home](/) > [memory](/AgentSite/memory/)
+**Navigation:** [Home](/) > [memory](/AgentSite/memory/index.md)
 
 **Summary:** User-specific preferences and defaults, consolidated to keep retrieval overhead low.
 
@@ -10,8 +10,8 @@ The MEMORY layer stores everything that varies per user but persists across sess
 
 | Preference | Current Setting | Page |
 |-----------|----------------|------|
-| User Profile | Trading style, horizon, product preference, risk, information style, execution environment | [profile](/AgentSite/memory/profile/) |
-| Defaults | Wallet address, chain, amount conventions | [defaults](/AgentSite/memory/defaults/) |
+| User Profile | Trading style, horizon, product preference, risk, information style, execution environment | [profile](/AgentSite/memory/profile.md) |
+| Defaults | Wallet address, chain, amount conventions | [defaults](/AgentSite/memory/defaults.md) |
 
 **Why these are MEMORY, not SOUL**: A different user could have low risk tolerance, short-term horizon, and DEX-first preference. The agent's core identity doesn't change - only its output framing does.
 
@@ -21,5 +21,5 @@ The MEMORY layer stores everything that varies per user but persists across sess
 - (none)
 
 **Pages** in this directory:
-- [defaults](/AgentSite/memory/defaults/)
-- [profile](/AgentSite/memory/profile/)
+- [defaults](/AgentSite/memory/defaults.md)
+- [profile](/AgentSite/memory/profile.md)

@@ -1,6 +1,6 @@
 # getTrendingInsights
 
-**Navigation:** [Home](/) > [tool](/AgentSite/tool/) > [trending-insights](/AgentSite/tool/trending-insights/)
+**Navigation:** [Home](/) > [tool](/AgentSite/tool/index.md) > [trending-insights](/AgentSite/tool/trending-insights.md)
 
 **Summary:** Retrieve trending market insights including gainers or losers, community topics, community tokens, and optional Dune contract trends.
 
@@ -31,8 +31,8 @@ Retrieve a packaged market-pulse view across major trending sections.
 
 ## See Also
 
-- [chainTool](/AgentSite/tool/chain-tool/) for chain-level interpretation
-- [searchTwitter](/AgentSite/tool/search-twitter/) for social follow-through on trends
+- [chainTool](/AgentSite/tool/chain-tool.md) for chain-level interpretation
+- [searchTwitter](/AgentSite/tool/search-twitter.md) for social follow-through on trends
 
 Pages that **Backlink** to here:
-- [TOOL Layer](/AgentSite/tool/)
+- [TOOL Layer](/AgentSite/tool/index.md)

@@ -1,6 +1,6 @@
 # searchTokenInfo
 
-**Navigation:** [Home](/) > [tool](/AgentSite/tool/) > [search-token-info](/AgentSite/tool/search-token-info/)
+**Navigation:** [Home](/) > [tool](/AgentSite/tool/index.md) > [search-token-info](/AgentSite/tool/search-token-info.md)
 
 **Summary:** Resolve tokens by symbol or address and retrieve price, metadata, and holder-analysis inputs.
 
@@ -35,18 +35,18 @@ Search for a token using either symbol or contract address. Use it for price loo
 
 ## Fallback
 
-If the result is insufficient for attribution or news validation, follow with [webSearch](/AgentSite/tool/web-search/) or [searchTwitter](/AgentSite/tool/search-twitter/).
+If the result is insufficient for attribution or news validation, follow with [webSearch](/AgentSite/tool/web-search.md) or [searchTwitter](/AgentSite/tool/search-twitter.md).
 
 ## See Also
 
-- [Runtime Rules](/AgentSite/soul/runtime/) for symbol preservation and display rules
-- [webSearch](/AgentSite/tool/web-search/) for open-web confirmation
-- [searchTwitter](/AgentSite/tool/search-twitter/) for sentiment and announcement scanning
+- [Runtime Rules](/AgentSite/soul/runtime.md) for symbol preservation and display rules
+- [webSearch](/AgentSite/tool/web-search.md) for open-web confirmation
+- [searchTwitter](/AgentSite/tool/search-twitter.md) for sentiment and announcement scanning
 
 Pages that **Backlink** to here:
-- [TOOL Layer](/AgentSite/tool/)
-- [ExecuteSwapTool](/AgentSite/tool/execute-swap/)
-- [ExecuteTransferTool](/AgentSite/tool/execute-transfer/)
-- [projectTool](/AgentSite/tool/project-tool/)
-- [setupAlert](/AgentSite/tool/setup-alert/)
-- [getWalletTokenBalance](/AgentSite/tool/wallet-token-balance/)
+- [TOOL Layer](/AgentSite/tool/index.md)
+- [ExecuteSwapTool](/AgentSite/tool/execute-swap.md)
+- [ExecuteTransferTool](/AgentSite/tool/execute-transfer.md)
+- [projectTool](/AgentSite/tool/project-tool.md)
+- [setupAlert](/AgentSite/tool/setup-alert.md)
+- [getWalletTokenBalance](/AgentSite/tool/wallet-token-balance.md)

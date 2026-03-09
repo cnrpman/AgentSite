@@ -1,6 +1,6 @@
 # searchTwitter
 
-**Navigation:** [Home](/) > [tool](/AgentSite/tool/) > [search-twitter](/AgentSite/tool/search-twitter/)
+**Navigation:** [Home](/) > [tool](/AgentSite/tool/index.md) > [search-twitter](/AgentSite/tool/search-twitter.md)
 
 **Summary:** Search Twitter/X for crypto-related tweets about tokens, projects, and market topics.
 
@@ -34,11 +34,11 @@ Successful results return tweet objects that may include:
 
 ## See Also
 
-- [webSearch](/AgentSite/tool/web-search/) for broader web validation
-- [projectTool](/AgentSite/tool/project-tool/) for project-level context
+- [webSearch](/AgentSite/tool/web-search.md) for broader web validation
+- [projectTool](/AgentSite/tool/project-tool.md) for project-level context
 
 Pages that **Backlink** to here:
-- [TOOL Layer](/AgentSite/tool/)
-- [searchPoolInfo](/AgentSite/tool/search-pool-info/)
-- [searchTokenInfo](/AgentSite/tool/search-token-info/)
-- [getTrendingInsights](/AgentSite/tool/trending-insights/)
+- [TOOL Layer](/AgentSite/tool/index.md)
+- [searchPoolInfo](/AgentSite/tool/search-pool-info.md)
+- [searchTokenInfo](/AgentSite/tool/search-token-info.md)
+- [getTrendingInsights](/AgentSite/tool/trending-insights.md)

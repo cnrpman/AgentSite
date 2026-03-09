@@ -1,6 +1,6 @@
 # protocolTool
 
-**Navigation:** [Home](/) > [tool](/AgentSite/tool/) > [protocol-tool](/AgentSite/tool/protocol-tool/)
+**Navigation:** [Home](/) > [tool](/AgentSite/tool/index.md) > [protocol-tool](/AgentSite/tool/protocol-tool.md)
 
 **Summary:** Retrieve DeFi protocol information in markdown format with TVL, fees, revenue, and capital-flow analysis.
 
@@ -29,9 +29,9 @@ Returns a markdown-formatted protocol analysis intended for direct downstream us
 
 ## See Also
 
-- [chainTool](/AgentSite/tool/chain-tool/) for chain context
-- [projectTool](/AgentSite/tool/project-tool/) for project-level metadata and sentiment
-- [webSearch](/AgentSite/tool/web-search/) for official-source verification
+- [chainTool](/AgentSite/tool/chain-tool.md) for chain context
+- [projectTool](/AgentSite/tool/project-tool.md) for project-level metadata and sentiment
+- [webSearch](/AgentSite/tool/web-search.md) for official-source verification
 
 Pages that **Backlink** to here:
-- [TOOL Layer](/AgentSite/tool/)
+- [TOOL Layer](/AgentSite/tool/index.md)

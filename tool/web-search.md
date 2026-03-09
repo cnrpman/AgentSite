@@ -1,6 +1,6 @@
 # webSearch
 
-**Navigation:** [Home](/) > [tool](/AgentSite/tool/) > [web-search](/AgentSite/tool/web-search/)
+**Navigation:** [Home](/) > [tool](/AgentSite/tool/index.md) > [web-search](/AgentSite/tool/web-search.md)
 
 **Summary:** Perform a live web search to gather up-to-date information and sources from the open web.
 
@@ -33,11 +33,11 @@ Returns JSON with:
 
 ## See Also
 
-- [searchTwitter](/AgentSite/tool/search-twitter/) for social discussion
-- [projectTool](/AgentSite/tool/project-tool/) for project-specific analysis
-- [protocolTool](/AgentSite/tool/protocol-tool/) for protocol financial context
+- [searchTwitter](/AgentSite/tool/search-twitter.md) for social discussion
+- [projectTool](/AgentSite/tool/project-tool.md) for project-specific analysis
+- [protocolTool](/AgentSite/tool/protocol-tool.md) for protocol financial context
 
 Pages that **Backlink** to here:
-- [TOOL Layer](/AgentSite/tool/)
-- [searchPoolInfo](/AgentSite/tool/search-pool-info/)
-- [searchTokenInfo](/AgentSite/tool/search-token-info/)
+- [TOOL Layer](/AgentSite/tool/index.md)
+- [searchPoolInfo](/AgentSite/tool/search-pool-info.md)
+- [searchTokenInfo](/AgentSite/tool/search-token-info.md)

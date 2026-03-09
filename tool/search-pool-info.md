@@ -1,6 +1,6 @@
 # searchPoolInfo
 
-**Navigation:** [Home](/) > [tool](/AgentSite/tool/) > [search-pool-info](/AgentSite/tool/search-pool-info/)
+**Navigation:** [Home](/) > [tool](/AgentSite/tool/index.md) > [search-pool-info](/AgentSite/tool/search-pool-info.md)
 
 **Summary:** Retrieve staking and yield pools with scoring, recent APY or TVL trends, and DeFi-oriented interpretation.
 
@@ -28,7 +28,7 @@ Retrieve ranked pool data for staking and yield analysis, including scoring, rec
 ## Rules
 
 - ALWAYS use this as the PRIMARY source for pool data
-- Only after calling searchPoolInfo should you supplement with [webSearch](/AgentSite/tool/web-search/) or [searchTwitter](/AgentSite/tool/search-twitter/)
+- Only after calling searchPoolInfo should you supplement with [webSearch](/AgentSite/tool/web-search.md) or [searchTwitter](/AgentSite/tool/search-twitter.md)
 - Returns pool_id values needed for ExecuteStakeTool
 
 ## Integration
@@ -39,8 +39,8 @@ When staking execution is the intent:
 
 ## See Also
 
-- [Execute Stake](/AgentSite/tool/execute-stake/) for staking execution
-- [User Profile](/AgentSite/memory/profile/) for staking-first output shaping
+- [Execute Stake](/AgentSite/tool/execute-stake.md) for staking execution
+- [User Profile](/AgentSite/memory/profile.md) for staking-first output shaping
 
 Pages that **Backlink** to here:
-- [TOOL Layer](/AgentSite/tool/)
+- [TOOL Layer](/AgentSite/tool/index.md)

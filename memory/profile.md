@@ -1,6 +1,6 @@
 # User Profile
 
-**Navigation:** [Home](/) > [memory](/AgentSite/memory/) > [profile](/AgentSite/memory/profile/)
+**Navigation:** [Home](/) > [memory](/AgentSite/memory/index.md) > [profile](/AgentSite/memory/profile.md)
 
 **Summary:** User preference profile consolidated into one page to keep prompt-fetch cost low while preserving guidance density.
 
@@ -51,9 +51,9 @@
 
 ## See Also
 
-- [Defaults](/AgentSite/memory/defaults/) for wallet and chain defaults
-- [Tool Layer](/AgentSite/tool/) for callable capabilities used to satisfy these preferences
+- [Defaults](/AgentSite/memory/defaults.md) for wallet and chain defaults
+- [Tool Layer](/AgentSite/tool/index.md) for callable capabilities used to satisfy these preferences
 
 Pages that **Backlink** to here:
-- [MEMORY Layer](/AgentSite/memory/)
-- [searchPoolInfo](/AgentSite/tool/search-pool-info/)
+- [MEMORY Layer](/AgentSite/memory/index.md)
+- [searchPoolInfo](/AgentSite/tool/search-pool-info.md)

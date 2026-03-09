@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ExecuteTransferTool</title>
+    <style>
+      body { margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial; background: #f6f4ef; color: #1b1b1b; }
+      header { position: sticky; top: 0; background: #fff7e8; border-bottom: 1px solid #e7dcc3; padding: 12px 20px; display: flex; gap: 12px; align-items: center; }
+      main { max-width: 960px; margin: 24px auto 72px; padding: 0 20px; line-height: 1.6; }
+      a { color: #0a4ea3; }
+      pre { background: #111827; color: #f9fafb; padding: 16px; border-radius: 8px; overflow-x: auto; }
+      code { background: #f0e7d8; padding: 2px 6px; border-radius: 4px; }
+      pre code { background: transparent; padding: 0; }
+      .meta { color: #5c4b2a; font-size: 0.95rem; }
+    </style>
+  </head>
+  <body>
+    <header>
+      <a href="/AgentSite/viewer/">Viewer Home</a>
+      <span>·</span>
+      <a href="/AgentSite/tool/execute-transfer.md">Raw Markdown</a>
+      <span>·</span>
+      <span class="meta">Static GitHub Pages export</span>
+    </header>
+    <main>
+<h1>ExecuteTransferTool</h1>
+<p><strong>Navigation:</strong> <a href="/AgentSite/viewer/">Home</a> &gt; <a href="/AgentSite/viewer/tool/">tool</a> &gt; <a href="/AgentSite/viewer/tool/execute-transfer/">execute-transfer</a></p>
+<p><strong>Summary:</strong> Prepare and validate a token transfer using optional transfer parameters.</p>
+<hr>
+<h2>Purpose</h2>
+<p>Set up a token transfer by validating chain and token inputs and returning transfer-ready parameters.</p>
+<h2>Parameters</h2>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Required</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>amount</code></td>
+<td>string</td>
+<td>Optional</td>
+<td>Amount of tokens to transfer</td>
+</tr>
+<tr>
+<td><code>chainId</code></td>
+<td>string</td>
+<td>Optional</td>
+<td>Target chain ID</td>
+</tr>
+<tr>
+<td><code>tokenAddress</code></td>
+<td>string</td>
+<td>Optional</td>
+<td>Token contract address</td>
+</tr>
+<tr>
+<td><code>receiveAddress</code></td>
+<td>string</td>
+<td>Optional</td>
+<td>Receiver wallet address or ENS</td>
+</tr>
+</tbody></table>
+<h2>Rules</h2>
+<ul>
+<li>User does NOT need all parameters upfront; invoke with available details</li>
+<li>If only a symbol is known, use <a href="/AgentSite/viewer/tool/search-token-info/">searchTokenInfo</a> first to resolve the token address</li>
+<li>If <code>receiveAddress</code> is omitted, the tool should return parameters with an empty <code>receiveAddress</code></li>
+<li>Accept wallet addresses and ENS names directly</li>
+<li>Invalid chain IDs or token addresses should produce a failure reason</li>
+</ul>
+<h2>Output</h2>
+<p>The tool returns transfer parameters in JSON for downstream execution, along with token metadata when available.</p>
+<h2>See Also</h2>
+<ul>
+<li><a href="/AgentSite/viewer/tool/search-token-info/">Search Token Info</a> for resolving symbols</li>
+<li><a href="/AgentSite/viewer/soul/runtime/">Runtime Rules</a> for chain limitations</li>
+<li><a href="/AgentSite/viewer/tool/execute-swap/">Execute Swap</a> for swaps instead of transfers</li>
+</ul>
+<p>Pages that <strong>Backlink</strong> to here:</p>
+<ul>
+<li><a href="/AgentSite/viewer/tool/">TOOL Layer</a></li>
+</ul>
+
+    </main>
+  </body>
+</html>

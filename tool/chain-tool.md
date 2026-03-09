@@ -1,6 +1,6 @@
 # chainTool
 
-**Navigation:** [Home](/) > [tool](/AgentSite/tool/) > [chain-tool](/AgentSite/tool/chain-tool/)
+**Navigation:** [Home](/) > [tool](/AgentSite/tool/index.md) > [chain-tool](/AgentSite/tool/chain-tool.md)
 
 **Summary:** Retrieve chain-level DEX volume, TVL, and protocol-performance analysis for a blockchain network.
 
@@ -29,8 +29,8 @@ At least one of `chainId` or `chainName` must be provided. If `chainId` is provi
 
 ## See Also
 
-- [protocolTool](/AgentSite/tool/protocol-tool/) for protocol-level financial analysis
-- [getTrendingInsights](/AgentSite/tool/trending-insights/) for broader market trend inputs
+- [protocolTool](/AgentSite/tool/protocol-tool.md) for protocol-level financial analysis
+- [getTrendingInsights](/AgentSite/tool/trending-insights.md) for broader market trend inputs
 
 Pages that **Backlink** to here:
-- [TOOL Layer](/AgentSite/tool/)
+- [TOOL Layer](/AgentSite/tool/index.md)

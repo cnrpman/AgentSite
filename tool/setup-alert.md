@@ -1,6 +1,6 @@
 # setupAlert
 
-**Navigation:** [Home](/) > [tool](/AgentSite/tool/) > [setup-alert](/AgentSite/tool/setup-alert/)
+**Navigation:** [Home](/) > [tool](/AgentSite/tool/index.md) > [setup-alert](/AgentSite/tool/setup-alert.md)
 
 **Summary:** Parse crypto price-alert intent from natural language after embedding the current price in `userIntent`.
 
@@ -19,7 +19,7 @@ Parse user intent into structured price-alert conditions.
 
 ## Workflow
 
-1. First fetch current price via [searchTokenInfo](/AgentSite/tool/search-token-info/)
+1. First fetch current price via [searchTokenInfo](/AgentSite/tool/search-token-info.md)
 2. Then call `setupAlert` with `userIntent` that includes both the user's request and the current price
 
 Example userIntent: "BTC is currently $95000. Alert me when it drops 5%"
@@ -37,7 +37,7 @@ Example userIntent: "BTC is currently $95000. Alert me when it drops 5%"
 
 ## See Also
 
-- [Search Token Info](/AgentSite/tool/search-token-info/) for fetching current prices
+- [Search Token Info](/AgentSite/tool/search-token-info.md) for fetching current prices
 
 Pages that **Backlink** to here:
-- [TOOL Layer](/AgentSite/tool/)
+- [TOOL Layer](/AgentSite/tool/index.md)

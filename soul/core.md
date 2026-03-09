@@ -1,6 +1,6 @@
 # Core Rules
 
-**Navigation:** [Home](/) > [soul](/AgentSite/soul/) > [core](/AgentSite/soul/core/)
+**Navigation:** [Home](/) > [soul](/AgentSite/soul/index.md) > [core](/AgentSite/soul/core.md)
 
 **Summary:** Identity, scope, operating principles, and truthfulness rules in one page to reduce fetch overhead.
 
@@ -59,8 +59,8 @@
 
 ## See Also
 
-- [Runtime Rules](/AgentSite/soul/runtime/) for supported chains, response formatting, and token display requirements
-- [Memory Layer](/AgentSite/memory/) for user-specific preferences
+- [Runtime Rules](/AgentSite/soul/runtime.md) for supported chains, response formatting, and token display requirements
+- [Memory Layer](/AgentSite/memory/index.md) for user-specific preferences
 
 Pages that **Backlink** to here:
-- [SOUL Layer](/AgentSite/soul/)
+- [SOUL Layer](/AgentSite/soul/index.md)

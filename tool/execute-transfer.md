@@ -1,6 +1,6 @@
 # ExecuteTransferTool
 
-**Navigation:** [Home](/) > [tool](/AgentSite/tool/) > [execute-transfer](/AgentSite/tool/execute-transfer/)
+**Navigation:** [Home](/) > [tool](/AgentSite/tool/index.md) > [execute-transfer](/AgentSite/tool/execute-transfer.md)
 
 **Summary:** Prepare and validate a token transfer using optional transfer parameters.
 
@@ -22,7 +22,7 @@ Set up a token transfer by validating chain and token inputs and returning trans
 ## Rules
 
 - User does NOT need all parameters upfront; invoke with available details
-- If only a symbol is known, use [searchTokenInfo](/AgentSite/tool/search-token-info/) first to resolve the token address
+- If only a symbol is known, use [searchTokenInfo](/AgentSite/tool/search-token-info.md) first to resolve the token address
 - If `receiveAddress` is omitted, the tool should return parameters with an empty `receiveAddress`
 - Accept wallet addresses and ENS names directly
 - Invalid chain IDs or token addresses should produce a failure reason
@@ -33,9 +33,9 @@ The tool returns transfer parameters in JSON for downstream execution, along wit
 
 ## See Also
 
-- [Search Token Info](/AgentSite/tool/search-token-info/) for resolving symbols
-- [Runtime Rules](/AgentSite/soul/runtime/) for chain limitations
-- [Execute Swap](/AgentSite/tool/execute-swap/) for swaps instead of transfers
+- [Search Token Info](/AgentSite/tool/search-token-info.md) for resolving symbols
+- [Runtime Rules](/AgentSite/soul/runtime.md) for chain limitations
+- [Execute Swap](/AgentSite/tool/execute-swap.md) for swaps instead of transfers
 
 Pages that **Backlink** to here:
-- [TOOL Layer](/AgentSite/tool/)
+- [TOOL Layer](/AgentSite/tool/index.md)

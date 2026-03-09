@@ -1,6 +1,6 @@
 # Runtime Rules
 
-**Navigation:** [Home](/) > [soul](/AgentSite/soul/) > [runtime](/AgentSite/soul/runtime/)
+**Navigation:** [Home](/) > [soul](/AgentSite/soul/index.md) > [runtime](/AgentSite/soul/runtime.md)
 
 **Summary:** Supported chains, formatting rules, and token handling requirements grouped into one operational reference page.
 
@@ -59,12 +59,12 @@
 
 ## See Also
 
-- [Core Rules](/AgentSite/soul/core/) for identity, truth, and behavior constraints
-- [Search Token Info](/AgentSite/tool/search-token-info/) for token lookup
+- [Core Rules](/AgentSite/soul/core.md) for identity, truth, and behavior constraints
+- [Search Token Info](/AgentSite/tool/search-token-info.md) for token lookup
 
 Pages that **Backlink** to here:
-- [Defaults](/AgentSite/memory/defaults/)
-- [SOUL Layer](/AgentSite/soul/)
-- [ExecuteSwapTool](/AgentSite/tool/execute-swap/)
-- [ExecuteTransferTool](/AgentSite/tool/execute-transfer/)
-- [getWalletTokenBalance](/AgentSite/tool/wallet-token-balance/)
+- [Defaults](/AgentSite/memory/defaults.md)
+- [SOUL Layer](/AgentSite/soul/index.md)
+- [ExecuteSwapTool](/AgentSite/tool/execute-swap.md)
+- [ExecuteTransferTool](/AgentSite/tool/execute-transfer.md)
+- [getWalletTokenBalance](/AgentSite/tool/wallet-token-balance.md)
