@@ -189,6 +189,10 @@ Hard constraint:
 * Refer to Plan.md for task breakdown and tracking. But you shouldn't edit Plan.md directly. Only authorized project manager should do that. You can suggest changes to Plan.md.
 * Refer to agent_log/ for implementation history and execution log. You may append new logs in the current .md file as needed, following existing format. But do not edit previous logs or create new log files.
     * Treat agent_log updates as part of the “definition of done,” not an optional afterthought.
+* When writing agent-facing documentation, optimize for total retrieval cost, not page purity:
+  * Prefer fewer pages for stable layers like SOUL and MEMORY
+  * Target roughly 2000 tokens per page when practical
+  * Avoid splitting closely related guidance across many tiny pages, because each fetch adds tool-calling context cost
 * To help future code base readers run, update README.md about:
     * how codebase organized
     * how the overall system architected (if applicable)

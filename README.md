@@ -23,14 +23,26 @@ The root scripts proxy to `apps/agent-site-server`.
 - Markdown API: `http://localhost:3000/`
 - Viewer: `http://localhost:3000/viewer/`
 
+## Content Architecture
+
+`apps/agent-site-server/content` now follows a layered agent-doc structure:
+
+- `soul/` - immutable agent identity and behavioral rules
+- `memory/` - user-specific durable preferences
+- `tool/` - callable tool contracts and parameter docs
+- `skill/` - placeholder only; no standalone mock skill pages
+
+The tool layer is the main source of truth for runtime behavior. Multi-step patterns that were previously described as “skills” are now documented as tool combinations inside the tool docs.
+
+For stable prompt layers such as `soul/` and `memory/`, prefer a small number of denser pages, with a rough target of about 2000 tokens per page. This reduces retrieval overhead when the docs are consumed during tool-calling flows.
+
+The root `content/index.md` should also behave as a router page: one dense read that points the agent toward the smallest relevant next branch.
+
 ## Notes
 
 - `apps/agent-browser-skill` includes:
   - `SKILL.md`
   - `scripts/curl-with-jwt.sh` for `Authorization: Bearer <JWT>` requests to `localhost:3000` and `*.sahara.info`
-- `apps/agent-site-server/content` now uses an API-book layout focused on low LLM attention load:
-  - Start at `/`
-  - First concrete endpoint page: `/social/`
-  - Blueprint for scaling to ~20 endpoints: `/blueprint/` + `/backlog/`
+- `apps/agent-site-server/content` is now organized around the `SOUL` / `MEMORY` / `TOOL` / `SKILL` layers, with tool pages aligned to real function definitions.
 - `apps/agent-site-autosearch` is currently an empty scaffold.
 - Keep each app independently runnable and documented as implementation starts.

@@ -1,6 +1,6 @@
 # Agent-friendly Markdown Directory Site
 
-Pure Markdown directory tree for agents that only have `visit(url)`. All URLs are trailing-slash nodes, every page includes breadcrumb + summary + navigation lists, and the origin server only serves static Markdown from `dist/`.
+Pure Markdown directory tree for agent-facing docs. All URLs are trailing-slash nodes, every page includes breadcrumb + summary + navigation lists, and the origin server only serves static Markdown from `dist/`.
 
 ## Quickstart
 
@@ -47,24 +47,28 @@ summary: How to use visit(url) to traverse the Markdown directory site.
 ---
 ```
 
-## API Book Structure (Recommended)
+## Content Structure
 
-The current content is organized as a low-token API call book:
+The current content is organized as a layered agent prompt reference:
 
-- `content/index.md` - entry page and reading order.
-- `content/social.md` - first concrete API page (URL access pattern).
-- `content/blueprint.md` - copyable template for new API pages.
-- `content/cost.md` - attention/call cost guardrails.
-- `content/backlog.md` - slot tracking toward ~20 APIs.
+- `content/index.md` - entry page and reading order
+- `content/soul/` - identity, rules, truth policy, formatting, supported chains
+- `content/memory/` - durable user preferences and defaults
+- `content/tool/` - callable tool contracts aligned to real function definitions, with a dense router-style `index.md`
+- `content/skill/` - placeholder page only; no standalone skill mocks
 
-Each API page should keep a fixed section order:
-1. Canonical URL
-2. HTTP Contract
-3. Fast Path
-4. Request Example
-5. Response Handling (Minimal Contract)
-6. Failure Handling
-7. See also
+Tool pages should document:
+1. Purpose
+2. Parameters
+3. Output shape or workflow notes when relevant
+4. Invocation rules or constraints
+5. See also
+
+For stable reference sections such as `content/soul/` and `content/memory/`, prefer fewer, denser pages with an approximate target of 2000 tokens per page. The goal is to minimize total retrieval cost rather than maximize page granularity.
+
+For `content/tool/`, keep the index page dense and router-oriented so an agent can choose the right tool family with one read, then fetch only the specific tool pages it needs.
+
+Apply the same router principle to `content/index.md`: it should quickly route the reader to `soul/`, `memory/`, `tool/`, or `skill/` with minimal explanatory overhead.
 
 ## Output Rules
 
