@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>searchPoolInfo</title>
+    <style>
+      body { margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial; background: #f6f4ef; color: #1b1b1b; }
+      header { position: sticky; top: 0; background: #fff7e8; border-bottom: 1px solid #e7dcc3; padding: 12px 20px; display: flex; gap: 12px; align-items: center; }
+      main { max-width: 960px; margin: 24px auto 72px; padding: 0 20px; line-height: 1.6; }
+      a { color: #0a4ea3; }
+      pre { background: #111827; color: #f9fafb; padding: 16px; border-radius: 8px; overflow-x: auto; }
+      code { background: #f0e7d8; padding: 2px 6px; border-radius: 4px; }
+      pre code { background: transparent; padding: 0; }
+      .meta { color: #5c4b2a; font-size: 0.95rem; }
+    </style>
+  </head>
+  <body>
+    <header>
+      <a href="/AgentSite/viewer/">Viewer Home</a>
+      <span>·</span>
+      <a href="/AgentSite/tool/search-pool-info.md">Raw Markdown</a>
+      <span>·</span>
+      <span class="meta">Static GitHub Pages export</span>
+    </header>
+    <main>
+<h1>searchPoolInfo</h1>
+<p><strong>Navigation:</strong> <a href="/AgentSite/viewer/">Home</a> &gt; <a href="/AgentSite/viewer/tool/">tool</a> &gt; <a href="/AgentSite/viewer/tool/search-pool-info/">search-pool-info</a></p>
+<p><strong>Summary:</strong> Retrieve staking and yield pools with scoring, recent APY or TVL trends, and DeFi-oriented interpretation.</p>
+<hr>
+<h2>Purpose</h2>
+<p>Retrieve ranked pool data for staking and yield analysis, including scoring, recent APY or TVL trends, and pool metadata.</p>
+<h2>Parameters</h2>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Required</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>chain</code></td>
+<td>integer</td>
+<td>Optional</td>
+<td>Supported values: <code>1</code> for Ethereum, <code>56</code> for BSC</td>
+</tr>
+<tr>
+<td><code>protocol</code></td>
+<td>string</td>
+<td>Optional</td>
+<td>Protocol slug such as <code>lido</code> or <code>aave-v3</code></td>
+</tr>
+<tr>
+<td><code>token_symbol</code></td>
+<td>string</td>
+<td>Optional</td>
+<td>Token filter such as <code>ETH</code> or <code>USDC</code></td>
+</tr>
+<tr>
+<td><code>pool_id</code></td>
+<td>string</td>
+<td>Optional</td>
+<td>Specific pool identifier</td>
+</tr>
+</tbody></table>
+<h2>Output Shape</h2>
+<ul>
+<li><code>success</code>: boolean</li>
+<li><code>data</code>: ranked pool results with metadata and historical context</li>
+<li><code>error</code>: failure reason when unavailable</li>
+</ul>
+<h2>Rules</h2>
+<ul>
+<li>ALWAYS use this as the PRIMARY source for pool data</li>
+<li>Only after calling searchPoolInfo should you supplement with <a href="/AgentSite/viewer/tool/web-search/">webSearch</a> or <a href="/AgentSite/viewer/tool/search-twitter/">searchTwitter</a></li>
+<li>Returns pool_id values needed for ExecuteStakeTool</li>
+</ul>
+<h2>Integration</h2>
+<p>When staking execution is the intent:</p>
+<ol>
+<li>Call searchPoolInfo to get pool information and pool_id</li>
+<li>IMMEDIATELY call ExecuteStakeTool with the pool_id</li>
+</ol>
+<h2>See Also</h2>
+<ul>
+<li><a href="/AgentSite/viewer/tool/execute-stake/">Execute Stake</a> for staking execution</li>
+<li><a href="/AgentSite/viewer/memory/profile/">User Profile</a> for staking-first output shaping</li>
+</ul>
+<p>Pages that <strong>Backlink</strong> to here:</p>
+<ul>
+<li><a href="/AgentSite/viewer/tool/">TOOL Layer</a></li>
+</ul>
+
+    </main>
+  </body>
+</html>

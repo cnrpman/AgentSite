@@ -9,6 +9,7 @@
   "scripts": {
     "build": "tsx src/build.ts",
     "check": "tsx src/check.ts",
+    "export:gh-pages": "tsx src/export-gh-pages.ts",
     "build:server": "tsc -p tsconfig.json",
     "dev": "tsx watch src/server.ts",
     "start": "node build/server.js"

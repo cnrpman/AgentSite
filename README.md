@@ -23,6 +23,13 @@ The root scripts proxy to `apps/agent-site-server`.
 - Markdown API: `http://localhost:3000/`
 - Viewer: `http://localhost:3000/viewer/`
 
+For GitHub Pages export:
+
+- `yarn --ignore-engines build`
+- `yarn --ignore-engines export:gh-pages`
+
+This produces a dual-output static bundle where raw Markdown remains available as `.md` files and a readable static viewer is generated under `viewer/`.
+
 ## Content Architecture
 
 `apps/agent-site-server/content` now follows a layered agent-doc structure:

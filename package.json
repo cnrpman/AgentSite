@@ -8,6 +8,7 @@
   "scripts": {
     "build": "yarn workspace agent-site-server build",
     "check": "yarn workspace agent-site-server run check",
+    "export:gh-pages": "yarn workspace agent-site-server export:gh-pages",
     "build:server": "yarn workspace agent-site-server build:server",
     "dev": "yarn workspace agent-site-server dev",
     "start": "yarn workspace agent-site-server start"
