@@ -1,6 +1,7 @@
 node_modules
 build
 dist
+.tsbuild
 .env
 .DS_Store
 .yarn

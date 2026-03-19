@@ -62,7 +62,6 @@ export function useContent() {
       const { title: t, summary: s, body } = parseFrontmatter(raw);
       title.value = t;
       summary.value = s;
-      marked.setOptions({ headerIds: false });
       let out = marked.parse(body) as string;
       // Rewrite internal links to in-app routes so clicking shows the page
       out = out.replace(/ href="(\/[^"]*?)"/g, (_, href) => {
