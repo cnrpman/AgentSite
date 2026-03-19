@@ -2,15 +2,22 @@
   "name": "agent-site",
   "version": "0.1.0",
   "private": true,
-  "workspaces": [
-    "apps/*"
-  ],
+  "type": "module",
   "scripts": {
-    "build": "yarn workspace agent-site-server build",
-    "check": "yarn workspace agent-site-server run check",
-    "export:gh-pages": "yarn workspace agent-site-server export:gh-pages",
-    "build:server": "yarn workspace agent-site-server build:server",
-    "dev": "yarn workspace agent-site-server dev",
-    "start": "yarn workspace agent-site-server start"
+    "dev": "vite",
+    "build": "vue-tsc -b && vite build",
+    "preview": "vite preview",
+    "chrome:debug": "open -a 'Google Chrome' --args --remote-debugging-port=9222 http://localhost:5174"
+  },
+  "dependencies": {
+    "marked": "^12.0.2",
+    "vue": "^3.5.13",
+    "vue-router": "^4.5.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.2.1",
+    "typescript": "~5.6.2",
+    "vite": "^6.0.3",
+    "vue-tsc": "^2.1.10"
   }
 }
