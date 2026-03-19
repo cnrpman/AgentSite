@@ -189,6 +189,10 @@ Hard constraint:
 * Refer to Plan.md for task breakdown and tracking. But you shouldn't edit Plan.md directly. Only authorized project manager should do that. You can suggest changes to Plan.md.
 * Refer to agent_log/ for implementation history and execution log. You may append new logs in the current .md file as needed, following existing format. But do not edit previous logs or create new log files.
     * Treat agent_log updates as part of the “definition of done,” not an optional afterthought.
+* When writing agent-facing documentation, optimize for total retrieval cost, not page purity:
+  * Prefer fewer pages for stable layers like SOUL and MEMORY
+  * Target roughly 2000 tokens per page when practical
+  * Avoid splitting closely related guidance across many tiny pages, because each fetch adds tool-calling context cost
 * To help future code base readers run, update README.md about:
     * how codebase organized
     * how the overall system architected (if applicable)
@@ -196,6 +200,8 @@ Hard constraint:
 * When learn some new knowledge that is not specific to the current project but can be useful for future projects, please write it down in MEMORY.md
 
 * Use Codex for code, VSCode / Github Copilot for code review. Keep athlete and judge roles separate.
+
+* Be aware that localhost is not always usable in Codex sandbox. If you encounter `Operation not permitted` errors, try rerunning with escalated permissions instead of assuming the service is down.
 
 * Task Kick-off Prompt:
     * Hi codex, please refer to AGENTS.md and all the git staged changes. then repeat your task to me. raise any question to me.

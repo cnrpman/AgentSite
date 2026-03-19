@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>chainTool</title>
+    <style>
+      body { margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial; background: #f6f4ef; color: #1b1b1b; }
+      header { position: sticky; top: 0; background: #fff7e8; border-bottom: 1px solid #e7dcc3; padding: 12px 20px; display: flex; gap: 12px; align-items: center; }
+      main { max-width: 960px; margin: 24px auto 72px; padding: 0 20px; line-height: 1.6; }
+      a { color: #0a4ea3; }
+      pre { background: #111827; color: #f9fafb; padding: 16px; border-radius: 8px; overflow-x: auto; }
+      code { background: #f0e7d8; padding: 2px 6px; border-radius: 4px; }
+      pre code { background: transparent; padding: 0; }
+      .meta { color: #5c4b2a; font-size: 0.95rem; }
+    </style>
+  </head>
+  <body>
+    <header>
+      <a href="/AgentSite/viewer/">Viewer Home</a>
+      <span>·</span>
+      <a href="/AgentSite/tool/chain-tool.md">Raw Markdown</a>
+      <span>·</span>
+      <span class="meta">Static GitHub Pages export</span>
+    </header>
+    <main>
+<h1>chainTool</h1>
+<p><strong>Navigation:</strong> <a href="/AgentSite/viewer/">Home</a> &gt; <a href="/AgentSite/viewer/tool/">tool</a> &gt; <a href="/AgentSite/viewer/tool/chain-tool/">chain-tool</a></p>
+<p><strong>Summary:</strong> Retrieve chain-level DEX volume, TVL, and protocol-performance analysis for a blockchain network.</p>
+<hr>
+<h2>Purpose</h2>
+<p>Analyze a chain&#39;s DeFi activity through DEX volume statistics, TVL data, protocol rankings, and market-share distribution.</p>
+<h2>Parameters</h2>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Required</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>chainId</code></td>
+<td>string</td>
+<td>Conditionally</td>
+<td>Chain ID such as <code>1</code> or <code>56</code></td>
+</tr>
+<tr>
+<td><code>chainName</code></td>
+<td>string</td>
+<td>Conditionally</td>
+<td>Chain name such as <code>Ethereum</code>, <code>Polygon</code>, or <code>Arbitrum</code></td>
+</tr>
+</tbody></table>
+<p>At least one of <code>chainId</code> or <code>chainName</code> must be provided. If <code>chainId</code> is provided, it can be mapped to <code>chainName</code>.</p>
+<h2>When to Call</h2>
+<ul>
+<li>Chain comparison</li>
+<li>DEX activity review</li>
+<li>TVL trend review</li>
+<li>Protocol dominance analysis</li>
+<li>Trading-pattern scans at the chain level</li>
+</ul>
+<h2>See Also</h2>
+<ul>
+<li><a href="/AgentSite/viewer/tool/protocol-tool/">protocolTool</a> for protocol-level financial analysis</li>
+<li><a href="/AgentSite/viewer/tool/trending-insights/">getTrendingInsights</a> for broader market trend inputs</li>
+</ul>
+<p>Pages that <strong>Backlink</strong> to here:</p>
+<ul>
+<li><a href="/AgentSite/viewer/tool/">TOOL Layer</a></li>
+</ul>
+
+    </main>
+  </body>
+</html>

@@ -1,8 +1,16 @@
-# Agent-friendly Markdown Directory Site
+# Agent Site Monorepo
 
-Pure Markdown directory tree for agents that only have `visit(url)`. All URLs are trailing-slash nodes, every page includes breadcrumb + summary + navigation lists, and the origin server only serves static Markdown from `dist/`.
+This repository now uses a lightweight monorepo layout.
 
-## Quickstart
+## Project Layout
+
+- `apps/agent-site-server` - main project: agent-friendly Markdown directory web server.
+- `apps/agent-browser-skill` - Sorin Brain API browser skill with JWT-backed URL fetch helper.
+- `apps/agent-site-autosearch` - planned project: automatic heuristic site-structure search/optimization.
+- `agent_log/` - implementation history.
+- `AGENTS.md` - collaboration and engineering profile.
+
+## Quickstart (Main Project)
 
 ```bash
 yarn install
@@ -10,60 +18,38 @@ yarn build
 yarn dev
 ```
 
-Visit Markdown API at `http://localhost:3000/`.
-Viewer is available at `http://localhost:3000/viewer/`.
+The root scripts proxy to `apps/agent-site-server`.
 
-## Scripts
+- Markdown API: `http://localhost:3000/`
+- Viewer: `http://localhost:3000/viewer/`
 
-- `yarn build` → generate `dist/` from `content/` and run checks
-- `yarn check` → validate page contract, links, and reachability
-- `yarn dev` → run Fastify server with TS runtime (`tsx watch`)
-- `yarn build:server` → compile TypeScript to `build/`
-- `yarn start` → run compiled server (`node build/server.js`)
+For GitHub Pages export:
 
-## Content Authoring
+- `yarn --ignore-engines build`
+- `yarn --ignore-engines export:gh-pages`
 
-- Source files live in `content/`.
-- Directory pages use `content/<path>/index.md`.
-- Content pages use `content/<path>/<slug>.md`.
-- All segments must match `[a-z0-9-_]` (lowercase only).
+This produces a dual-output static bundle where raw Markdown remains available as `.md` files and a readable static viewer is generated under `viewer/`.
 
-Frontmatter is optional:
+## Content Architecture
 
-```yaml
----
-title: Visit URL Tool
-summary: How to use visit(url) to traverse the Markdown directory site.
----
-```
+`apps/agent-site-server/content` now follows a layered agent-doc structure:
 
-## Output Rules
+- `soul/` - immutable agent identity and behavioral rules
+- `memory/` - user-specific durable preferences
+- `tool/` - callable tool contracts and parameter docs
+- `skill/` - placeholder only; no standalone mock skill pages
 
-- `dist/` mirrors URL structure.
-- Every output page includes:
-  - H1 title
-  - `**Navigation:**`
-  - `**Summary:**`
-  - `---`
-- Directory pages always contain `**Subdirectories:**` and `**Pages:**` labels with bullet lists (use `- (none)` when empty).
+The tool layer is the main source of truth for runtime behavior. Multi-step patterns that were previously described as “skills” are now documented as tool combinations inside the tool docs.
 
-## Server Behavior (Markdown Service)
+For stable prompt layers such as `soul/` and `memory/`, prefer a small number of denser pages, with a rough target of about 2000 tokens per page. This reduces retrieval overhead when the docs are consumed during tool-calling flows.
 
-- `GET /` → `dist/index.md`
-- `GET /<dir>/` → `dist/<dir>/index.md`
-- `GET /<path>/<page>/` → `dist/<path>/<page>.md`
-- `GET /healthz` → `OK`
-- `GET /llms.txt` → same Markdown as `/`
+The root `content/index.md` should also behave as a router page: one dense read that points the agent toward the smallest relevant next branch.
 
-Cache headers and ETag are set for all Markdown responses.
+## Notes
 
-## Viewer
-
-- Runs in the same process/port as the Markdown service.
-- Renders HTML at `/viewer/` and rewrites internal links to stay in the viewer.
-- Displays token counts based on the Markdown API response.
-
-Environment variables:
-- `MARKDOWN_PORT` (markdown service port, default 3000)
-- `HOST` (bind host, default 0.0.0.0)
-- `MARKDOWN_BASE_URL` (viewer fetch target, default `http://localhost:<MARKDOWN_PORT>`)
+- `apps/agent-browser-skill` includes:
+  - `SKILL.md`
+  - `scripts/curl-with-jwt.sh` for `Authorization: Bearer <JWT>` requests to `localhost:3000` and `*.sahara.info`
+- `apps/agent-site-server/content` is now organized around the `SOUL` / `MEMORY` / `TOOL` / `SKILL` layers, with tool pages aligned to real function definitions.
+- `apps/agent-site-autosearch` is currently an empty scaffold.
+- Keep each app independently runnable and documented as implementation starts.
