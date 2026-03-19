@@ -1,5 +1,7 @@
 import { ref } from 'vue';
 import { marked } from 'marked';
+import { useStore } from '@/store';
+import { useRouter } from 'vue-router';
 
 const CONTENT_BASE = '/content';
 
@@ -35,6 +37,8 @@ export function getMarkdownUrl(path: string): string {
 }
 
 export function useContent() {
+  const store = useStore();
+  const router = useRouter();
   const html = ref('');
   const title = ref('');
   const summary = ref('');
@@ -51,8 +55,12 @@ export function useContent() {
     rawFileUrl.value = '';
     try {
       const url = getMarkdownUrl(path);
-      console.log('url', url);
-      const res = await fetch(url);
+      const res = await fetch(url, { credentials: 'include' });
+      if (res.status === 401) {
+        store.dispatch('logout');
+        await router.push({ name: 'Login', query: { redirect: path ? `/${path}` : '/' } });
+        return;
+      }
       if (!res.ok) {
         error.value = `Failed to load: ${res.status}`;
         return;

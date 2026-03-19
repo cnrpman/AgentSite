@@ -8,7 +8,10 @@
       "runtimeExecutable": "yarn",
       "runtimeArgs": ["run", "dev"],
       "cwd": "${workspaceFolder}",
-      "console": "integratedTerminal"
+      "console": "integratedTerminal",
+      "env": {
+        "SITE_PASSWORD": "password"
+      }
     }
   ]
 }

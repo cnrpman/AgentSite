@@ -4,18 +4,24 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "concurrently -k -n api,web -c cyan,magenta \"node server/index.js\" \"vite\"",
+    "dev:vite": "vite",
+    "dev:server": "node server/index.js",
     "build": "vue-tsc --noEmit && vite build",
     "preview": "vite preview",
+    "start": "node server/index.js",
     "chrome:debug": "open -a 'Google Chrome' --args --remote-debugging-port=9222 http://localhost:5174"
   },
   "dependencies": {
+    "express": "^4.21.0",
     "marked": "^12.0.2",
     "vue": "^3.5.13",
-    "vue-router": "^4.5.0"
+    "vue-router": "^4.5.0",
+    "vuex": "4"
   },
   "devDependencies": {
     "@types/node": "^22.10.7",
+    "concurrently": "^9.1.0",
     "@vitejs/plugin-vue": "^5.2.1",
     "typescript": "~5.6.2",
     "vite": "^6.0.3",

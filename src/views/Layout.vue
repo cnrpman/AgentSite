@@ -13,6 +13,8 @@
         <RouterLink to="/skill">Skill</RouterLink>
         <span>·</span>
         <a :href="rawMarkdownUrl" :download="rawMarkdownDownloadFilename" class="nav-link">Raw Markdown</a>
+        <span>·</span>
+        <button type="button" class="nav-btn" @click="onLogout">Log out</button>
       </nav>
     </header>
     <main class="main">
@@ -23,10 +25,18 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { getMarkdownUrl } from '@/composables/useContent';
+import { useStore } from '@/store';
 
 const route = useRoute();
+const router = useRouter();
+const store = useStore();
+
+async function onLogout() {
+  await store.dispatch('logout');
+  await router.push({ name: 'Login' });
+}
 
 const rawMarkdownUrl = computed(() => {
   const p = route.params.pathMatch;
@@ -58,6 +68,16 @@ const rawMarkdownDownloadFilename = computed(() => {
 }
 .nav-link { color: #0a4ea3; text-decoration: none; }
 .nav-link:hover { text-decoration: underline; }
+.nav-btn {
+  background: transparent;
+  border: none;
+  padding: 0;
+  font: inherit;
+  color: #0a4ea3;
+  cursor: pointer;
+  text-decoration: underline;
+}
+.nav-btn:hover { color: #083b7a; }
 .main {
   max-width: 960px;
   margin: 24px auto 72px;

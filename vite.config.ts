@@ -16,5 +16,29 @@ export default defineConfig({
   server: {
     port: 5174,
     sourcemapIgnoreList: false,
+    proxy: {
+      '/api': {
+        target: 'http://localhost:3080',
+        changeOrigin: true,
+        configure(proxy) {
+          proxy.on('proxyReq', (proxyReq, req) => {
+            const a = req.headers.authorization;
+            const val = Array.isArray(a) ? a[0] : a;
+            if (val) proxyReq.setHeader('Authorization', val);
+          });
+        },
+      },
+      '/content': {
+        target: 'http://localhost:3080',
+        changeOrigin: true,
+        configure(proxy) {
+          proxy.on('proxyReq', (proxyReq, req) => {
+            const a = req.headers.authorization;
+            const val = Array.isArray(a) ? a[0] : a;
+            if (val) proxyReq.setHeader('Authorization', val);
+          });
+        },
+      },
+    },
   },
 });
