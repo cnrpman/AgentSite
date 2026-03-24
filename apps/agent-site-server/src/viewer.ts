@@ -1,7 +1,12 @@
-import crypto from 'node:crypto';
 import type { FastifyInstance, FastifyReply } from 'fastify';
 import { marked } from 'marked';
-import { HTML_CACHE_CONTROL, MARKDOWN_BASE_URL } from './config';
+import {
+  HTML_CACHE_CONTROL,
+  MARKDOWN_BASE_URL,
+  VIEWER_CACHE_MAX_ENTRIES,
+  VIEWER_CACHE_TTL_MS,
+  VIEWER_FETCH_TIMEOUT_MS,
+} from './config';
 import { computeEtag } from './utils';
 
 const MODEL_NAME = 'gpt-5';
@@ -37,25 +42,36 @@ markdownRenderer.image = (href, title, text) => {
 
 marked.setOptions({
   renderer: markdownRenderer,
-  mangle: false,
-  headerIds: false,
 });
 
 type TokenizerState = {
-  encode: (text: string) => number[];
+  encode: (text: string) => { length: number };
   label: string;
   note?: string;
 };
 
+type ViewerCacheEntry = {
+  status: number;
+  html: Buffer;
+  etag: string;
+  expiresAt: number;
+};
+
 let tokenizerState: TokenizerState | null = null;
 let tokenizerInitFailed = false;
+const viewerCache = new Map<string, ViewerCacheEntry>();
+const inFlightRenders = new Map<string, Promise<ViewerCacheEntry>>();
 
 async function getTokenizer(): Promise<TokenizerState | null> {
   if (tokenizerState || tokenizerInitFailed) return tokenizerState;
   try {
     const mod = await import('tiktoken');
-    const encodingForModel = (mod as { encoding_for_model?: (model: string) => { encode: (text: string) => number[] } }).encoding_for_model;
-    const getEncoding = (mod as { get_encoding?: (name: string) => { encode: (text: string) => number[] } }).get_encoding;
+    const typed = mod as unknown as {
+      encoding_for_model?: (model: string) => { encode: (text: string) => { length: number } };
+      get_encoding?: (name: string) => { encode: (text: string) => { length: number } };
+    };
+    const encodingForModel = typed.encoding_for_model;
+    const getEncoding = typed.get_encoding;
 
     if (encodingForModel) {
       try {
@@ -174,20 +190,43 @@ ${bodyHtml}
 </html>`;
 }
 
-async function sendHtml(reply: FastifyReply, requestEtag: string | undefined, html: string, statusCode = 200): Promise<void> {
-  const buffer = Buffer.from(html);
-  const etag = computeEtag(buffer);
-  reply.code(statusCode);
+function evictViewerCacheIfNeeded(): void {
+  while (viewerCache.size > VIEWER_CACHE_MAX_ENTRIES) {
+    const oldestKey = viewerCache.keys().next().value as string | undefined;
+    if (!oldestKey) break;
+    viewerCache.delete(oldestKey);
+  }
+}
+
+function setViewerCache(markdownPath: string, entry: ViewerCacheEntry): void {
+  viewerCache.set(markdownPath, entry);
+  evictViewerCacheIfNeeded();
+}
+
+function getFreshViewerCache(markdownPath: string): ViewerCacheEntry | null {
+  const cached = viewerCache.get(markdownPath);
+  if (!cached) return null;
+  if (cached.expiresAt <= Date.now()) return null;
+  return cached;
+}
+
+function getStaleViewerCache(markdownPath: string): ViewerCacheEntry | null {
+  return viewerCache.get(markdownPath) || null;
+}
+
+async function sendHtml(reply: FastifyReply, requestEtag: string | undefined, entry: ViewerCacheEntry): Promise<void> {
+  reply.code(entry.status);
   reply.header('Content-Type', 'text/html; charset=utf-8');
   reply.header('Cache-Control', HTML_CACHE_CONTROL);
-  reply.header('ETag', etag);
+  reply.header('ETag', entry.etag);
   // Always send HTML body; no-store responses should not return 304.
-  reply.send(buffer);
+  reply.send(entry.html);
 }
 
 async function fetchMarkdown(markdownPath: string): Promise<{ status: number; text: string }> {
   const url = `${MARKDOWN_BASE_URL}${markdownPath}`;
   const response = await fetch(url, {
+    signal: AbortSignal.timeout(VIEWER_FETCH_TIMEOUT_MS),
     headers: {
       Accept: 'text/markdown',
       'Accept-Encoding': 'identity',
@@ -197,17 +236,61 @@ async function fetchMarkdown(markdownPath: string): Promise<{ status: number; te
   return { status: response.status, text };
 }
 
+async function buildViewerEntry(markdownPath: string): Promise<ViewerCacheEntry> {
+  const { status, text } = await fetchMarkdown(markdownPath);
+  const title = extractTitle(text);
+  const bodyHtml = await marked.parse(text);
+  const tokenLabel = await countTokens(text);
+  const html = wrapHtml(title, markdownPath, bodyHtml, tokenLabel);
+  const buffer = Buffer.from(html);
+  return {
+    status,
+    html: buffer,
+    etag: computeEtag(buffer),
+    expiresAt: Date.now() + VIEWER_CACHE_TTL_MS,
+  };
+}
+
+async function getViewerEntry(markdownPath: string): Promise<ViewerCacheEntry> {
+  const cached = getFreshViewerCache(markdownPath);
+  if (cached) return cached;
+
+  const pending = inFlightRenders.get(markdownPath);
+  if (pending) return pending;
+
+  const nextRender = buildViewerEntry(markdownPath)
+    .then((entry) => {
+      setViewerCache(markdownPath, entry);
+      inFlightRenders.delete(markdownPath);
+      return entry;
+    })
+    .catch((error) => {
+      inFlightRenders.delete(markdownPath);
+      throw error;
+    });
+  inFlightRenders.set(markdownPath, nextRender);
+  return nextRender;
+}
+
 async function renderMarkdownPath(markdownPath: string, reply: FastifyReply, requestEtag?: string): Promise<void> {
   try {
-    const { status, text } = await fetchMarkdown(markdownPath);
-    const title = extractTitle(text);
-    const bodyHtml = await marked.parse(text);
-    const tokenLabel = await countTokens(text);
-    const html = wrapHtml(title, markdownPath, bodyHtml, tokenLabel);
-    await sendHtml(reply, requestEtag, html, status);
+    const entry = await getViewerEntry(markdownPath);
+    await sendHtml(reply, requestEtag, entry);
   } catch {
+    const stale = getStaleViewerCache(markdownPath);
+    if (stale) {
+      reply.header('X-Viewer-Cache', 'stale');
+      await sendHtml(reply, requestEtag, stale);
+      return;
+    }
     const html = wrapHtml('Viewer Error', markdownPath, `<p>Failed to fetch markdown from ${escapeHtmlAttr(MARKDOWN_BASE_URL)}.</p>`, null);
-    await sendHtml(reply, requestEtag, html, 502);
+    const buffer = Buffer.from(html);
+    await sendHtml(reply, requestEtag, {
+      status: 502,
+      html: buffer,
+      etag: computeEtag(buffer),
+      expiresAt: Date.now(),
+    });
   }
 }
 

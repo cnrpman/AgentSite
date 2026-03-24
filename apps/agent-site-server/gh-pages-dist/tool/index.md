@@ -2,17 +2,29 @@
 
 **Navigation:** [Home](/) > [tool](/AgentSite/tool/index.md)
 
-**Summary:** Callable tool contracts grouped by task, with a low-cost reading path for choosing the right tool quickly.
+**Summary:** Callable contracts grouped for progressive routing: choose one branch, open one page, execute, iterate.
 
 ---
 
-The TOOL layer defines what the agent can DO as atomic operations. Each tool has a clear contract: when to call it, what parameters it takes, and how to handle failures.
+The TOOL layer defines executable capabilities. For each task, choose the smallest matching page and execute from that contract.
+
+## Progressive Tool Flow
+
+1. Select one task row below
+2. Open one or more relevant tool pages based on query scope
+3. Execute tools with required parameters
+4. Add dependent or validating tools in additional rounds as needed
+
+## Fetch Budget and Stop Rules
+
+- Start with the smallest relevant tool set, then expand to additional tool pages when evidence is incomplete
+- Open add-on pages when attribution, validation, or workflow dependencies require them
+- Stop doc traversal once endpoint, required params, and constraints are known
+- Prefer retrying tool calls over opening many additional docs pages
 
 ## Fast Routing Table
 
-Use this page as the router. In most cases, read this page first, then jump to only one or two specific tool pages.
-
-| If the user wants... | Start here | Then optionally add |
+| If the user wants... | Primary Tool | Optional Add-Ons |
 |----------------------|------------|---------------------|
 | token facts, price, contract, holders | [searchTokenInfo](/AgentSite/tool/search-token-info.md) | [projectTool](/AgentSite/tool/project-tool.md), [searchTwitter](/AgentSite/tool/search-twitter.md), [webSearch](/AgentSite/tool/web-search.md) |
 | wallet balances or history | [getWalletTokenBalance](/AgentSite/tool/wallet-token-balance.md) | [searchTokenInfo](/AgentSite/tool/search-token-info.md) |
@@ -22,18 +34,25 @@ Use this page as the router. In most cases, read this page first, then jump to o
 | chain or protocol analysis | [chainTool](/AgentSite/tool/chain-tool.md) or [protocolTool](/AgentSite/tool/protocol-tool.md) | [webSearch](/AgentSite/tool/web-search.md) |
 | project sentiment or market pulse | [projectTool](/AgentSite/tool/project-tool.md) or [getTrendingInsights](/AgentSite/tool/trending-insights.md) | [searchTwitter](/AgentSite/tool/search-twitter.md), [webSearch](/AgentSite/tool/web-search.md) |
 
-## Tool Groups
+## Endpoint-Critical Pages
 
-### Discovery and Analysis
+| Tool | Endpoint Rule |
+|------|---------------|
+| [searchTokenInfo](/AgentSite/tool/search-token-info.md) | Must call remote `/token/v2/analysis` endpoint with intent-driven parameters |
+| [projectTool](/AgentSite/tool/project-tool.md) | Must call remote `/project/analysis` endpoint with intent-driven parameters |
+
+## Tool Catalog
+
+### Analysis
 
 | Tool | Purpose | Page |
 |------|---------|------|
-| searchTokenInfo | Token lookup, price, metadata, holder view inputs | [search-token-info](/AgentSite/tool/search-token-info.md) |
-| searchPoolInfo | Pool discovery, scoring, APY/TVL trend analysis | [search-pool-info](/AgentSite/tool/search-pool-info.md) |
-| chainTool | Chain-level DEX volume, TVL, protocol ranking analysis | [chain-tool](/AgentSite/tool/chain-tool.md) |
+| searchTokenInfo | Token lookup, price, metadata, holder inputs | [search-token-info](/AgentSite/tool/search-token-info.md) |
+| searchPoolInfo | Pool discovery, scoring, APY/TVL trends | [search-pool-info](/AgentSite/tool/search-pool-info.md) |
+| chainTool | Chain-level volume, TVL, protocol ranking analysis | [chain-tool](/AgentSite/tool/chain-tool.md) |
 | protocolTool | DeFi protocol financial and TVL analysis | [protocol-tool](/AgentSite/tool/protocol-tool.md) |
-| projectTool | Project metadata, valuation sentiment, and prediction-market style signals | [project-tool](/AgentSite/tool/project-tool.md) |
-| getTrendingInsights | Trending gainers or losers, community topics, tokens, and contract trends | [trending-insights](/AgentSite/tool/trending-insights.md) |
+| projectTool | Project metadata and prediction-market style signals | [project-tool](/AgentSite/tool/project-tool.md) |
+| getTrendingInsights | Trending assets, topics, and contracts | [trending-insights](/AgentSite/tool/trending-insights.md) |
 
 ### Wallet and Execution
 
@@ -45,20 +64,21 @@ Use this page as the router. In most cases, read this page first, then jump to o
 | ExecuteStakeTool | Staking execution by `pool_id` | [execute-stake](/AgentSite/tool/execute-stake.md) |
 | setupAlert | Natural-language alert parsing | [setup-alert](/AgentSite/tool/setup-alert.md) |
 
-### External Signal Collection
+### External Signals
 
 | Tool | Purpose | Page |
 |------|---------|------|
 | searchTwitter | Twitter/X search for crypto discussion | [search-twitter](/AgentSite/tool/search-twitter.md) |
 | webSearch | Open-web search for live information | [web-search](/AgentSite/tool/web-search.md) |
 
-**Core rule**: Tools are the PRIMARY information source. Never ask the user for information that tools can provide. Call tools immediately, iterate if results are insufficient.
+## Core Rules
 
-**Concurrency**: All tools called in the same round execute in parallel. If tool B needs output from tool A, call them in SEPARATE rounds.
+- Tools are the primary factual source
+- Never ask users for information that tools can provide
+- Call tools immediately, iterate if results are insufficient
+- If tool B depends on tool A output, call them in separate rounds
 
 ## Common Multi-Tool Patterns
-
-Former mock "skill" flows are documented here as tool combinations rather than separate pages.
 
 | Goal | Typical Tool Combination |
 |------|--------------------------|
@@ -70,7 +90,7 @@ Former mock "skill" flows are documented here as tool combinations rather than s
 
 ## Packaging Note
 
-This overview is intentionally dense so an agent can pick the right branch with one read. Detailed parameter contracts stay in per-tool pages.
+Keep router pages dense and leaf pages explicit. This preserves a shallow navigation tree and reduces retrieval cost.
 
 **Subdirectories** under this directory:
 - (none)

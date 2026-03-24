@@ -30,6 +30,8 @@
 <hr>
 <h2>Purpose</h2>
 <p>Fetch project metadata plus market-implied expectations such as pre-market FDV views, short-term and long-term price targets, and trading-volume-backed confidence signals.</p>
+<h2>Endpoint</h2>
+<p><code>https://vf35f12f---defi-ai-services-gateway-staging-n7gcbq4uva-uc.a.run.app/project/analysis</code></p>
 <h2>Parameters</h2>
 <table>
 <thead>
@@ -47,6 +49,12 @@
 <td>Project or token name, for example <code>Bitcoin</code>, <code>Ethereum</code>, or <code>Zama</code></td>
 </tr>
 </tbody></table>
+<h2>Use Rules</h2>
+<ul>
+<li><code>projectName</code> is required</li>
+<li>Always call the remote endpoint above for project analysis</li>
+<li>Build request parameters from user intent; do not hardcode values</li>
+</ul>
 <h2>When to Call</h2>
 <ul>
 <li>Project due diligence</li>

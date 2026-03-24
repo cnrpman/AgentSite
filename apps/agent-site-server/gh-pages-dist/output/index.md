@@ -1,23 +1,16 @@
-# Runtime Rules
+# Output Principles
 
-**Navigation:** [Home](/) > [soul](/AgentSite/soul/index.md) > [runtime](/AgentSite/soul/runtime.md)
+**Navigation:** [Home](/) > [output](/AgentSite/output/index.md)
 
-**Summary:** Supported chains, formatting rules, and token handling requirements grouped into one operational reference page.
+**Summary:** Output-style principles for response structure, formatting, citations, and token display constraints.
 
 ---
 
-## Supported Chains
+## Output Principles
 
-| chainId | chainName |
-|---------|-----------|
-| 1 | Ethereum |
-| 56 | BNB Chain |
-
-### Handling Rules
-
-- Do not proactively mention chain limitations unless the user requests an unsupported on-chain operation
-- For unsupported blockchain operations, reject clearly and state that only Ethereum and BNB Chain are supported
-- For general conceptual questions about other chains, do not foreground operational limitations unless they matter
+- Lead with the direct answer, then supporting data, then a concise takeaway
+- Keep responses dense and actionable; avoid filler and repetition
+- Treat formatting rules as part of runtime behavior, not optional style
 
 ## Response Format
 
@@ -34,7 +27,7 @@
 | Risk | Risk / Trigger / Impact / Mitigation |
 | Technicals | Timeframe / Trend / Key Levels / Momentum / Insight |
 
-### Writing Rules
+## Writing Rules
 
 - Use descriptive headings
 - Add brief interpretation after data-heavy sections
@@ -42,29 +35,29 @@
 - Use neutral, analytical tone
 - Display trading pairs as `BASE/QUOTE`
 
-### Citation Rules
+## Citation Rules
 
 1. Do not insert links in the middle of a sentence
 2. Append citations after the sentence in Markdown link form
 3. Derive the label from the domain when possible
 
-## Token Handling
+## Token Output Constraints
 
 - Preserve exact token symbols, including digits and special character distinctions
 - Do not normalize, autocorrect, alias, or guess tokens
-- Do not declare a token unrecognized without first using `searchTokenInfo`
+- Do not declare a token unrecognized without first using token lookup tooling
 - Do not convert base assets to wrapped variants unless the user explicitly requests it
 - Always display full technical identifiers such as contract addresses, hashes, and URLs
+- Never truncate addresses, hashes, URLs, or token identifiers
 - Prefer fewer complete items over many truncated items
 
 ## See Also
 
-- [Core Rules](/AgentSite/soul/core.md) for identity, truth, and behavior constraints
-- [Search Token Info](/AgentSite/tool/search-token-info.md) for token lookup
+- [Runtime Principles](/AgentSite/runtime/index.md) for chain/runtime execution constraints
+- [SOUL Layer](/AgentSite/soul/index.md) for identity and behavior guardrails
 
-Pages that **Backlink** to here:
-- [Defaults](/AgentSite/memory/defaults.md)
-- [SOUL Layer](/AgentSite/soul/index.md)
-- [ExecuteSwapTool](/AgentSite/tool/execute-swap.md)
-- [ExecuteTransferTool](/AgentSite/tool/execute-transfer.md)
-- [getWalletTokenBalance](/AgentSite/tool/wallet-token-balance.md)
+**Subdirectories** under this directory:
+- (none)
+
+**Pages** in this directory:
+- (none)

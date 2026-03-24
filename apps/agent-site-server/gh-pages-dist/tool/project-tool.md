@@ -10,11 +10,21 @@
 
 Fetch project metadata plus market-implied expectations such as pre-market FDV views, short-term and long-term price targets, and trading-volume-backed confidence signals.
 
+## Endpoint
+
+`https://vf35f12f---defi-ai-services-gateway-staging-n7gcbq4uva-uc.a.run.app/project/analysis`
+
 ## Parameters
 
 | Parameter | Type | Required | Notes |
 |-----------|------|----------|-------|
 | `projectName` | string | Yes | Project or token name, for example `Bitcoin`, `Ethereum`, or `Zama` |
+
+## Use Rules
+
+- `projectName` is required
+- Always call the remote endpoint above for project analysis
+- Build request parameters from user intent; do not hardcode values
 
 ## When to Call
 

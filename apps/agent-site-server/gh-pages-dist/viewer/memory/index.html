@@ -48,6 +48,21 @@
 <td><a href="/AgentSite/viewer/memory/defaults/">defaults</a></td>
 </tr>
 </tbody></table>
+<h2>Read/Write Policy</h2>
+<ul>
+<li>Before answers that depend on user persona, read memory first with a descriptive semantic query</li>
+<li>Query should describe both topic and preference target, not restate user text verbatim</li>
+<li>When a user reveals a new or changed durable preference, write it to memory as a factual observation</li>
+<li>Do not write raw conversation transcripts into memory</li>
+<li>Read <code>profile</code> first for framing; read <code>defaults</code> only when execution parameters are needed</li>
+</ul>
+<h2>Example Memory Read Queries</h2>
+<ul>
+<li>&quot;user risk tolerance and preferred risk framing&quot;</li>
+<li>&quot;trading style and experience level for analysis depth&quot;</li>
+<li>&quot;preferred DeFi products and investment focus&quot;</li>
+<li>&quot;time horizon and participation frequency&quot;</li>
+</ul>
 <p><strong>Why these are MEMORY, not SOUL</strong>: A different user could have low risk tolerance, short-term horizon, and DEX-first preference. The agent&#39;s core identity doesn&#39;t change - only its output framing does.</p>
 <p><strong>Packaging principle</strong>: Prefer a few pages around 2000 tokens each over many tiny pages, because each additional fetch increases context overhead.</p>
 <p><strong>Subdirectories</strong> under this directory:</p>

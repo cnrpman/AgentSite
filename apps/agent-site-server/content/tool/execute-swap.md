@@ -29,5 +29,5 @@ Returns swap parameters for downstream execution: `chainId`, `amount`, `fromToke
 ## See Also
 
 - [Search Token Info](/tool/search-token-info/) for resolving symbols to addresses
-- [Runtime Rules](/soul/runtime/) for chain limitations
+- [Runtime Rules](/runtime/) for chain limitations
 - [Execute Transfer](/tool/execute-transfer/) for transfers instead of swaps

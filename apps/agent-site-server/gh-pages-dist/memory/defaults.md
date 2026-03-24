@@ -26,7 +26,7 @@ Ethereum (chainId: 1) when chain is ambiguous. Try all supported chains if uncle
 
 ## See Also
 
-- [Runtime Rules](/AgentSite/soul/runtime.md) for chain limitations
+- [Runtime Rules](/AgentSite/runtime/index.md) for chain limitations
 - [Wallet Token Balance Tool](/AgentSite/tool/wallet-token-balance.md) for balance queries
 
 Pages that **Backlink** to here:

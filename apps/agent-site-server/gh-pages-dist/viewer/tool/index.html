@@ -26,17 +26,30 @@
     <main>
 <h1>TOOL Layer</h1>
 <p><strong>Navigation:</strong> <a href="/AgentSite/viewer/">Home</a> &gt; <a href="/AgentSite/viewer/tool/">tool</a></p>
-<p><strong>Summary:</strong> Callable tool contracts grouped by task, with a low-cost reading path for choosing the right tool quickly.</p>
+<p><strong>Summary:</strong> Callable contracts grouped for progressive routing: choose one branch, open one page, execute, iterate.</p>
 <hr>
-<p>The TOOL layer defines what the agent can DO as atomic operations. Each tool has a clear contract: when to call it, what parameters it takes, and how to handle failures.</p>
+<p>The TOOL layer defines executable capabilities. For each task, choose the smallest matching page and execute from that contract.</p>
+<h2>Progressive Tool Flow</h2>
+<ol>
+<li>Select one task row below</li>
+<li>Open one or more relevant tool pages based on query scope</li>
+<li>Execute tools with required parameters</li>
+<li>Add dependent or validating tools in additional rounds as needed</li>
+</ol>
+<h2>Fetch Budget and Stop Rules</h2>
+<ul>
+<li>Start with the smallest relevant tool set, then expand to additional tool pages when evidence is incomplete</li>
+<li>Open add-on pages when attribution, validation, or workflow dependencies require them</li>
+<li>Stop doc traversal once endpoint, required params, and constraints are known</li>
+<li>Prefer retrying tool calls over opening many additional docs pages</li>
+</ul>
 <h2>Fast Routing Table</h2>
-<p>Use this page as the router. In most cases, read this page first, then jump to only one or two specific tool pages.</p>
 <table>
 <thead>
 <tr>
 <th>If the user wants...</th>
-<th>Start here</th>
-<th>Then optionally add</th>
+<th>Primary Tool</th>
+<th>Optional Add-Ons</th>
 </tr>
 </thead>
 <tbody><tr>
@@ -75,8 +88,25 @@
 <td><a href="/AgentSite/viewer/tool/search-twitter/">searchTwitter</a>, <a href="/AgentSite/viewer/tool/web-search/">webSearch</a></td>
 </tr>
 </tbody></table>
-<h2>Tool Groups</h2>
-<h3>Discovery and Analysis</h3>
+<h2>Endpoint-Critical Pages</h2>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>Endpoint Rule</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><a href="/AgentSite/viewer/tool/search-token-info/">searchTokenInfo</a></td>
+<td>Must call remote <code>/token/v2/analysis</code> endpoint with intent-driven parameters</td>
+</tr>
+<tr>
+<td><a href="/AgentSite/viewer/tool/project-tool/">projectTool</a></td>
+<td>Must call remote <code>/project/analysis</code> endpoint with intent-driven parameters</td>
+</tr>
+</tbody></table>
+<h2>Tool Catalog</h2>
+<h3>Analysis</h3>
 <table>
 <thead>
 <tr>
@@ -87,17 +117,17 @@
 </thead>
 <tbody><tr>
 <td>searchTokenInfo</td>
-<td>Token lookup, price, metadata, holder view inputs</td>
+<td>Token lookup, price, metadata, holder inputs</td>
 <td><a href="/AgentSite/viewer/tool/search-token-info/">search-token-info</a></td>
 </tr>
 <tr>
 <td>searchPoolInfo</td>
-<td>Pool discovery, scoring, APY/TVL trend analysis</td>
+<td>Pool discovery, scoring, APY/TVL trends</td>
 <td><a href="/AgentSite/viewer/tool/search-pool-info/">search-pool-info</a></td>
 </tr>
 <tr>
 <td>chainTool</td>
-<td>Chain-level DEX volume, TVL, protocol ranking analysis</td>
+<td>Chain-level volume, TVL, protocol ranking analysis</td>
 <td><a href="/AgentSite/viewer/tool/chain-tool/">chain-tool</a></td>
 </tr>
 <tr>
@@ -107,12 +137,12 @@
 </tr>
 <tr>
 <td>projectTool</td>
-<td>Project metadata, valuation sentiment, and prediction-market style signals</td>
+<td>Project metadata and prediction-market style signals</td>
 <td><a href="/AgentSite/viewer/tool/project-tool/">project-tool</a></td>
 </tr>
 <tr>
 <td>getTrendingInsights</td>
-<td>Trending gainers or losers, community topics, tokens, and contract trends</td>
+<td>Trending assets, topics, and contracts</td>
 <td><a href="/AgentSite/viewer/tool/trending-insights/">trending-insights</a></td>
 </tr>
 </tbody></table>
@@ -151,7 +181,7 @@
 <td><a href="/AgentSite/viewer/tool/setup-alert/">setup-alert</a></td>
 </tr>
 </tbody></table>
-<h3>External Signal Collection</h3>
+<h3>External Signals</h3>
 <table>
 <thead>
 <tr>
@@ -171,10 +201,14 @@
 <td><a href="/AgentSite/viewer/tool/web-search/">web-search</a></td>
 </tr>
 </tbody></table>
-<p><strong>Core rule</strong>: Tools are the PRIMARY information source. Never ask the user for information that tools can provide. Call tools immediately, iterate if results are insufficient.</p>
-<p><strong>Concurrency</strong>: All tools called in the same round execute in parallel. If tool B needs output from tool A, call them in SEPARATE rounds.</p>
+<h2>Core Rules</h2>
+<ul>
+<li>Tools are the primary factual source</li>
+<li>Never ask users for information that tools can provide</li>
+<li>Call tools immediately, iterate if results are insufficient</li>
+<li>If tool B depends on tool A output, call them in separate rounds</li>
+</ul>
 <h2>Common Multi-Tool Patterns</h2>
-<p>Former mock &quot;skill&quot; flows are documented here as tool combinations rather than separate pages.</p>
 <table>
 <thead>
 <tr>
@@ -204,7 +238,7 @@
 </tr>
 </tbody></table>
 <h2>Packaging Note</h2>
-<p>This overview is intentionally dense so an agent can pick the right branch with one read. Detailed parameter contracts stay in per-tool pages.</p>
+<p>Keep router pages dense and leaf pages explicit. This preserves a shallow navigation tree and reduces retrieval cost.</p>
 <p><strong>Subdirectories</strong> under this directory:</p>
 <ul>
 <li>(none)</li>

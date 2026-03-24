@@ -30,5 +30,5 @@ The tool returns transfer parameters in JSON for downstream execution, along wit
 ## See Also
 
 - [Search Token Info](/tool/search-token-info/) for resolving symbols
-- [Runtime Rules](/soul/runtime/) for chain limitations
+- [Runtime Rules](/runtime/) for chain limitations
 - [Execute Swap](/tool/execute-swap/) for swaps instead of transfers

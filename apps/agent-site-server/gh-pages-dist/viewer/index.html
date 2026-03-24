@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Sahara AI Execution Agent</title>
+    <title>Sahara AI Agent Site</title>
     <style>
       body { margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial; background: #f6f4ef; color: #1b1b1b; }
       header { position: sticky; top: 0; background: #fff7e8; border-bottom: 1px solid #e7dcc3; padding: 12px 20px; display: flex; gap: 12px; align-items: center; }
@@ -24,84 +24,83 @@
       <span class="meta">Static GitHub Pages export</span>
     </header>
     <main>
-<h1>Sahara AI Execution Agent</h1>
+<h1>Sahara AI Agent Site</h1>
 <p><strong>Navigation:</strong> <a href="/AgentSite/viewer/">Home</a></p>
-<p><strong>Summary:</strong> Router page for the layered agent docs. Read this once, then jump to the smallest relevant branch.</p>
+<p><strong>Summary:</strong> Home page for progressive agent disclosure. Start here for identity, runtime principles, output principles, memory, and tool contracts.</p>
 <hr>
-<p>This site is organized for low-cost retrieval during tool-calling. Read this page first, then jump to only the layer that matches the current need.</p>
-<h2>Fast Routing Table</h2>
+<p>This website is the runtime knowledge base for an answering agent. It is organized by instruction type so each rule lives in the correct directory.</p>
+<h2>What This Site Is</h2>
+<ul>
+<li>Built and operated by Sahara AI</li>
+<li>Primary domain: DeFi, crypto, and blockchain operations</li>
+<li>Operating model: documentation-driven tool execution</li>
+<li>Retrieval target: low depth, low token cost, high contract precision</li>
+</ul>
+<h2>Progressive Reading Flow</h2>
+<ol>
+<li>Open this home page</li>
+<li>Read <a href="/AgentSite/viewer/soul/">SOUL</a> for identity, scope, and safety constraints</li>
+<li>Read <a href="/AgentSite/viewer/runtime/">RUNTIME</a> for execution logic and workflow policy</li>
+<li>Read <a href="/AgentSite/viewer/output/">OUTPUT</a> for response-style policy</li>
+<li>Read <a href="/AgentSite/viewer/tool/">TOOL</a> and relevant tool pages for contracts and parameters</li>
+<li>Read <a href="/AgentSite/viewer/memory/">MEMORY</a> when persona-dependent framing or defaults are needed</li>
+<li>Iterate across any relevant pages when evidence is incomplete</li>
+</ol>
+<h2>Progressive Disclosure Contract</h2>
+<ul>
+<li>Never preload all docs; fetch pages on demand</li>
+<li>Explore multiple pages when needed; do not artificially limit to one subpage</li>
+<li>Multi-step workflows should traverse the relevant directories (<code>runtime</code>, <code>output</code>, <code>tool</code>, and optionally <code>memory</code>)</li>
+<li>Stop fetching docs as soon as required parameters and constraints are clear</li>
+</ul>
+<h2>Shallow Site Map</h2>
 <table>
 <thead>
 <tr>
-<th>If the current need is...</th>
-<th>Go to</th>
+<th>Need</th>
+<th>Direct Link</th>
 <th>Why</th>
 </tr>
 </thead>
 <tbody><tr>
-<td>agent identity, hard rules, truth constraints</td>
-<td><a href="/AgentSite/viewer/soul/">soul</a></td>
-<td>Stable behavior and runtime rules</td>
+<td>Identity, scope, and hard constraints</td>
+<td><a href="/AgentSite/viewer/soul/">SOUL</a></td>
+<td>Immutable behavior rules</td>
 </tr>
 <tr>
-<td>user preference shaping, defaults, wallet conventions</td>
-<td><a href="/AgentSite/viewer/memory/">memory</a></td>
-<td>User-specific but durable context</td>
+<td>Runtime principles for chain and execution constraints</td>
+<td><a href="/AgentSite/viewer/runtime/">RUNTIME</a></td>
+<td>Operational runtime behavior</td>
 </tr>
 <tr>
-<td>real capabilities, parameters, execution setup</td>
-<td><a href="/AgentSite/viewer/tool/">tool</a></td>
-<td>Primary source of runtime behavior</td>
+<td>Output principles for style, structure, and token display</td>
+<td><a href="/AgentSite/viewer/output/">OUTPUT</a></td>
+<td>Output formatting and response policy</td>
 </tr>
 <tr>
-<td>whether there are standalone skills</td>
-<td><a href="/AgentSite/viewer/skill/">skill</a></td>
-<td>Placeholder only at the moment</td>
+<td>User-specific defaults and framing</td>
+<td><a href="/AgentSite/viewer/memory/">MEMORY</a></td>
+<td>Persistent personalization</td>
+</tr>
+<tr>
+<td>Callable capabilities and parameters</td>
+<td><a href="/AgentSite/viewer/tool/">TOOL</a></td>
+<td>Runtime source of truth</td>
 </tr>
 </tbody></table>
-<h2>Layer Summary</h2>
-<table>
-<thead>
-<tr>
-<th>Layer</th>
-<th>Responsibility</th>
-<th>Stability</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>SOUL</td>
-<td>Identity, hard constraints, immutable rules</td>
-<td>Never changes</td>
-</tr>
-<tr>
-<td>MEMORY</td>
-<td>User preferences, durable configuration</td>
-<td>Changes when user profile updates</td>
-</tr>
-<tr>
-<td>TOOL</td>
-<td>Atomic capabilities, tool contracts</td>
-<td>Changes when tools are added/removed</td>
-</tr>
-<tr>
-<td>SKILL</td>
-<td>Placeholder for future explicit workflows</td>
-<td>Minimal for now</td>
-</tr>
-</tbody></table>
-<h2>Reading Guidance</h2>
+<h2>Depth Limit</h2>
 <ul>
-<li>In most cases, start with <a href="/AgentSite/viewer/tool/">tool</a> if the question is operational</li>
-<li>Read <a href="/AgentSite/viewer/soul/">soul</a> only when behavior rules or output policy matter</li>
-<li>Read <a href="/AgentSite/viewer/memory/">memory</a> when user preference shaping matters</li>
-<li>Read <a href="/AgentSite/viewer/skill/">skill</a> only to confirm that skills are currently just a placeholder</li>
+<li>Preferred depth starts at two hops from home:
+home -&gt; layer index -&gt; target leaf page</li>
+<li>Expand beyond two hops when workflow dependencies require additional pages</li>
+<li>Add new pages only when a contract becomes too large for one page</li>
+<li>Avoid creating new nested directories under existing layer folders</li>
 </ul>
-<h2>Packaging Principle</h2>
-<p>These docs favor fewer, denser router pages because every extra fetch adds context overhead. Stable layers should stay compact, and index pages should help the reader choose the next page with minimal branching.</p>
 <p><strong>Subdirectories</strong> under this directory:</p>
 <ul>
 <li><a href="/AgentSite/viewer/memory/">memory</a></li>
-<li><a href="/AgentSite/viewer/skill/">skill</a></li>
+<li><a href="/AgentSite/viewer/output/">output</a></li>
+<li><a href="/AgentSite/viewer/runtime/">runtime</a></li>
 <li><a href="/AgentSite/viewer/soul/">soul</a></li>
 <li><a href="/AgentSite/viewer/tool/">tool</a></li>
 </ul>

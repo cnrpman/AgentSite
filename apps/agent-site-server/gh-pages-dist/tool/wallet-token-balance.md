@@ -35,7 +35,7 @@ Inspect an EVM wallet through one or more modes: balances, activity, and transac
 ## See Also
 
 - [searchTokenInfo](/AgentSite/tool/search-token-info.md) for token metadata on returned balances
-- [Runtime Rules](/AgentSite/soul/runtime.md) for chain constraints
+- [Runtime Rules](/AgentSite/runtime/index.md) for chain constraints
 
 Pages that **Backlink** to here:
 - [Defaults](/AgentSite/memory/defaults.md)

@@ -1,27 +1,30 @@
 ---
 title: searchTokenInfo
-summary: Resolve tokens by symbol or address and retrieve price, metadata, and holder-analysis inputs.
+summary: Analyze token info by symbol or address using query-first parameters.
 ---
 ## Purpose
 
-Search for a token using either symbol or contract address. Use it for price lookup, metadata retrieval, contract confirmation, and optional holder-oriented analysis inputs.
+Analyze a token by symbol or token address for pricing and related token details.
+
+## Endpoint
+
+`https://vf35f12f---defi-ai-services-gateway-staging-n7gcbq4uva-uc.a.run.app/token/v2/analysis`
 
 ## Parameters
 
 | Parameter | Type | Required | Notes |
 |-----------|------|----------|-------|
-| `tokenSymbol` | string | Conditionally | Required when `tokenAddress` is not provided |
-| `tokenAddress` | string | Conditionally | Required when `tokenSymbol` is not provided |
-| `chainId` | string | Conditionally | Required when using `tokenSymbol`; optional when only `tokenAddress` is provided |
-| `holdersLimit` | integer | Optional | Top-holder limit from 1 to 50 |
-| `quoteCurrency` | string | Optional | Quote currency for technical analysis; defaults to `USDT` |
+| `query` | string | Required | The token symbol or token address to analyze (e.g., `BTC`, `ETH`) |
+| `quote_currency` | string | Optional | The quote currency for the trading pair (for example, `USDT`) |
+| `chain_index` | integer | Optional | Chain index used to scope the lookup |
 
-## Input Rules
+## Use Rules
 
-- Provide either `tokenSymbol` or `tokenAddress`
-- When using `tokenSymbol`, also provide `chainId`
-- Preserve exact token text; do not normalize or alias symbols
-- Use `holdersLimit` only when holder ranking is useful
+- `query` is required
+- `quote_currency` and `chain_index` are optional
+- Always call the remote endpoint above for token analysis
+- Build query parameters from user intent; do not hardcode parameter values
+- Include `quote_currency` and `chain_index` only when they are provided or clearly inferred
 
 ## Rules
 
@@ -35,6 +38,6 @@ If the result is insufficient for attribution or news validation, follow with [w
 
 ## See Also
 
-- [Runtime Rules](/soul/runtime/) for symbol preservation and display rules
+- [Runtime Rules](/runtime/) for symbol preservation and display rules
 - [webSearch](/tool/web-search/) for open-web confirmation
 - [searchTwitter](/tool/search-twitter/) for sentiment and announcement scanning

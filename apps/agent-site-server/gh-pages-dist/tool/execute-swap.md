@@ -33,7 +33,7 @@ Returns swap parameters for downstream execution: `chainId`, `amount`, `fromToke
 ## See Also
 
 - [Search Token Info](/AgentSite/tool/search-token-info.md) for resolving symbols to addresses
-- [Runtime Rules](/AgentSite/soul/runtime.md) for chain limitations
+- [Runtime Rules](/AgentSite/runtime/index.md) for chain limitations
 - [Execute Transfer](/AgentSite/tool/execute-transfer.md) for transfers instead of swaps
 
 Pages that **Backlink** to here:

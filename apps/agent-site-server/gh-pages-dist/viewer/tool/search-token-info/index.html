@@ -26,10 +26,12 @@
     <main>
 <h1>searchTokenInfo</h1>
 <p><strong>Navigation:</strong> <a href="/AgentSite/viewer/">Home</a> &gt; <a href="/AgentSite/viewer/tool/">tool</a> &gt; <a href="/AgentSite/viewer/tool/search-token-info/">search-token-info</a></p>
-<p><strong>Summary:</strong> Resolve tokens by symbol or address and retrieve price, metadata, and holder-analysis inputs.</p>
+<p><strong>Summary:</strong> Analyze token info by symbol or address using query-first parameters.</p>
 <hr>
 <h2>Purpose</h2>
-<p>Search for a token using either symbol or contract address. Use it for price lookup, metadata retrieval, contract confirmation, and optional holder-oriented analysis inputs.</p>
+<p>Analyze a token by symbol or token address for pricing and related token details.</p>
+<h2>Endpoint</h2>
+<p><code>https://vf35f12f---defi-ai-services-gateway-staging-n7gcbq4uva-uc.a.run.app/token/v2/analysis</code></p>
 <h2>Parameters</h2>
 <table>
 <thead>
@@ -41,42 +43,31 @@
 </tr>
 </thead>
 <tbody><tr>
-<td><code>tokenSymbol</code></td>
+<td><code>query</code></td>
 <td>string</td>
-<td>Conditionally</td>
-<td>Required when <code>tokenAddress</code> is not provided</td>
+<td>Required</td>
+<td>The token symbol or token address to analyze (e.g., <code>BTC</code>, <code>ETH</code>)</td>
 </tr>
 <tr>
-<td><code>tokenAddress</code></td>
+<td><code>quote_currency</code></td>
 <td>string</td>
-<td>Conditionally</td>
-<td>Required when <code>tokenSymbol</code> is not provided</td>
+<td>Optional</td>
+<td>The quote currency for the trading pair (for example, <code>USDT</code>)</td>
 </tr>
 <tr>
-<td><code>chainId</code></td>
-<td>string</td>
-<td>Conditionally</td>
-<td>Required when using <code>tokenSymbol</code>; optional when only <code>tokenAddress</code> is provided</td>
-</tr>
-<tr>
-<td><code>holdersLimit</code></td>
+<td><code>chain_index</code></td>
 <td>integer</td>
 <td>Optional</td>
-<td>Top-holder limit from 1 to 50</td>
-</tr>
-<tr>
-<td><code>quoteCurrency</code></td>
-<td>string</td>
-<td>Optional</td>
-<td>Quote currency for technical analysis; defaults to <code>USDT</code></td>
+<td>Chain index used to scope the lookup</td>
 </tr>
 </tbody></table>
-<h2>Input Rules</h2>
+<h2>Use Rules</h2>
 <ul>
-<li>Provide either <code>tokenSymbol</code> or <code>tokenAddress</code></li>
-<li>When using <code>tokenSymbol</code>, also provide <code>chainId</code></li>
-<li>Preserve exact token text; do not normalize or alias symbols</li>
-<li>Use <code>holdersLimit</code> only when holder ranking is useful</li>
+<li><code>query</code> is required</li>
+<li><code>quote_currency</code> and <code>chain_index</code> are optional</li>
+<li>Always call the remote endpoint above for token analysis</li>
+<li>Build query parameters from user intent; do not hardcode parameter values</li>
+<li>Include <code>quote_currency</code> and <code>chain_index</code> only when they are provided or clearly inferred</li>
 </ul>
 <h2>Rules</h2>
 <ul>
@@ -88,7 +79,7 @@
 <p>If the result is insufficient for attribution or news validation, follow with <a href="/AgentSite/viewer/tool/web-search/">webSearch</a> or <a href="/AgentSite/viewer/tool/search-twitter/">searchTwitter</a>.</p>
 <h2>See Also</h2>
 <ul>
-<li><a href="/AgentSite/viewer/soul/runtime/">Runtime Rules</a> for symbol preservation and display rules</li>
+<li><a href="/AgentSite/viewer/runtime/">Runtime Rules</a> for symbol preservation and display rules</li>
 <li><a href="/AgentSite/viewer/tool/web-search/">webSearch</a> for open-web confirmation</li>
 <li><a href="/AgentSite/viewer/tool/search-twitter/">searchTwitter</a> for sentiment and announcement scanning</li>
 </ul>

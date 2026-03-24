@@ -53,10 +53,11 @@ summary: How to use visit(url) to traverse the Markdown directory site.
 The current content is organized as a layered agent prompt reference:
 
 - `content/index.md` - entry page and reading order
-- `content/soul/` - identity, rules, truth policy, formatting, supported chains
+- `content/soul/` - identity, rules, and truth policy
+- `content/runtime/` - runtime execution constraints and chain handling
+- `content/output/` - output style, response structure, citation, and token-output rules
 - `content/memory/` - durable user preferences and defaults
 - `content/tool/` - callable tool contracts aligned to real function definitions, with a dense router-style `index.md`
-- `content/skill/` - placeholder page only; no standalone skill mocks
 
 Tool pages should document:
 1. Purpose
@@ -69,7 +70,8 @@ For stable reference sections such as `content/soul/` and `content/memory/`, pre
 
 For `content/tool/`, keep the index page dense and router-oriented so an agent can choose the right tool family with one read, then fetch only the specific tool pages it needs.
 
-Apply the same router principle to `content/index.md`: it should quickly route the reader to `soul/`, `memory/`, `tool/`, or `skill/` with minimal explanatory overhead.
+Apply the same router principle to `content/index.md`: it should quickly route the reader to `soul/`, `runtime/`, `output/`, `memory/`, or `tool/` with minimal explanatory overhead.
+Home should remain a router, while identity/safety belongs in `soul/`, execution logic in `runtime/`, response-style policy in `output/`, personalization in `memory/`, and endpoint contracts in `tool/`.
 
 ## Output Rules
 

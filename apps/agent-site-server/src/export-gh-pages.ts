@@ -212,7 +212,7 @@ async function main(): Promise<void> {
     const rawMarkdown = rewriteRawMarkdownLinks(originalMarkdown, pagesByRoute);
     await writeFile(path.join(OUTPUT_ROOT, page.rawRel), rawMarkdown);
 
-    const bodyHtml = await marked.parse(originalMarkdown, { renderer: viewerRenderer, mangle: false, headerIds: false });
+    const bodyHtml = await marked.parse(originalMarkdown, { renderer: viewerRenderer });
     const html = wrapHtml(extractTitle(originalMarkdown), page.rawUrl, bodyHtml);
     await writeFile(path.join(OUTPUT_ROOT, page.viewerRel), html);
   }

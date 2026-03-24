@@ -34,7 +34,7 @@ The tool returns transfer parameters in JSON for downstream execution, along wit
 ## See Also
 
 - [Search Token Info](/AgentSite/tool/search-token-info.md) for resolving symbols
-- [Runtime Rules](/AgentSite/soul/runtime.md) for chain limitations
+- [Runtime Rules](/AgentSite/runtime/index.md) for chain limitations
 - [Execute Swap](/AgentSite/tool/execute-swap.md) for swaps instead of transfers
 
 Pages that **Backlink** to here:
