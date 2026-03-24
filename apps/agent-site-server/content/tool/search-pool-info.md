@@ -6,6 +6,10 @@ summary: Retrieve staking and yield pools with scoring, recent APY or TVL trends
 
 Retrieve ranked pool data for staking and yield analysis, including scoring, recent APY or TVL trends, and pool metadata.
 
+## Endpoint
+
+`/pool/analysis`
+
 ## Parameters
 
 | Parameter | Type | Required | Notes |
@@ -20,6 +24,12 @@ Retrieve ranked pool data for staking and yield analysis, including scoring, rec
 - `success`: boolean
 - `data`: ranked pool results with metadata and historical context
 - `error`: failure reason when unavailable
+
+## Use Rules
+
+- All parameters are optional; call with whatever context is available
+- Always call the remote endpoint above for pool analysis
+- Build request parameters from user intent; do not hardcode values
 
 ## Rules
 

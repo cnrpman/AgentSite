@@ -6,11 +6,21 @@ summary: Retrieve DeFi protocol information in markdown format with TVL, fees, r
 
 Retrieve a protocol-focused analysis covering TVL, fees, revenue, and capital flows.
 
+## Endpoint
+
+`/protocol/analysis`
+
 ## Parameters
 
 | Parameter | Type | Required | Notes |
 |-----------|------|----------|-------|
 | `protocol` | string | Expected | Protocol name or ID such as `aave-v3` or `uniswap` |
+
+## Use Rules
+
+- `protocol` is required
+- Always call the remote endpoint above for protocol analysis
+- Build request parameters from user intent; do not hardcode values
 
 ## When to Call
 

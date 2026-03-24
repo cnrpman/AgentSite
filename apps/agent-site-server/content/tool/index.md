@@ -36,6 +36,9 @@ The TOOL layer defines executable capabilities. For each task, choose the smalle
 |------|---------------|
 | [searchTokenInfo](/tool/search-token-info/) | Must call remote `/token/v2/analysis` endpoint with intent-driven parameters |
 | [projectTool](/tool/project-tool/) | Must call remote `/project/analysis` endpoint with intent-driven parameters |
+| [chainTool](/tool/chain-tool/) | Must call remote `/chain/analysis` endpoint with intent-driven parameters |
+| [protocolTool](/tool/protocol-tool/) | Must call remote `/protocol/analysis` endpoint with intent-driven parameters |
+| [searchPoolInfo](/tool/search-pool-info/) | Must call remote `/pool/analysis` endpoint with intent-driven parameters |
 
 ## Tool Catalog
 

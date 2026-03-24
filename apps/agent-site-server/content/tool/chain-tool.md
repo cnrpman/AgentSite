@@ -6,6 +6,10 @@ summary: Retrieve chain-level DEX volume, TVL, and protocol-performance analysis
 
 Analyze a chain's DeFi activity through DEX volume statistics, TVL data, protocol rankings, and market-share distribution.
 
+## Endpoint
+
+`/chain/analysis`
+
 ## Parameters
 
 | Parameter | Type | Required | Notes |
@@ -14,6 +18,12 @@ Analyze a chain's DeFi activity through DEX volume statistics, TVL data, protoco
 | `chainName` | string | Conditionally | Chain name such as `Ethereum`, `Polygon`, or `Arbitrum` |
 
 At least one of `chainId` or `chainName` must be provided. If `chainId` is provided, it can be mapped to `chainName`.
+
+## Use Rules
+
+- At least one of `chainId` or `chainName` is required
+- Always call the remote endpoint above for chain analysis
+- Build request parameters from user intent; do not hardcode values
 
 ## When to Call
 

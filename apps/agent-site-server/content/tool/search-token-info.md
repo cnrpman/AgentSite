@@ -8,23 +8,24 @@ Analyze a token by symbol or token address for pricing and related token details
 
 ## Endpoint
 
-`https://vf35f12f---defi-ai-services-gateway-staging-n7gcbq4uva-uc.a.run.app/token/v2/analysis`
+`/token/v2/analysis`
 
 ## Parameters
 
 | Parameter | Type | Required | Notes |
 |-----------|------|----------|-------|
-| `query` | string | Required | The token symbol or token address to analyze (e.g., `BTC`, `ETH`) |
-| `quote_currency` | string | Optional | The quote currency for the trading pair (for example, `USDT`) |
-| `chain_index` | integer | Optional | Chain index used to scope the lookup |
+| `query` | string | Yes | Token symbol or contract address (e.g. `BTC`, `ETH`, `USDT`, `0x1f9840a85d5af5bf1d1762f925bdaddc4201f984`) |
+| `chainId` | string | Conditionally | Required only when contract address is provided |
+| `quoteCurrency` | string | Optional | Quote currency for technical analysis; defaults to `USDT` |
 
 ## Use Rules
 
 - `query` is required
-- `quote_currency` and `chain_index` are optional
+- Pass the user's symbol or contract address verbatim in `query`; do not normalize or alias symbols unless the user asks
+- `chainId` is required only when `query` is a contract address; omit for symbol lookups
 - Always call the remote endpoint above for token analysis
 - Build query parameters from user intent; do not hardcode parameter values
-- Include `quote_currency` and `chain_index` only when they are provided or clearly inferred
+- Include `quoteCurrency` only when a non-default quote pair is needed or clearly inferred
 
 ## Rules
 

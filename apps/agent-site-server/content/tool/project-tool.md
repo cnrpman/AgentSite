@@ -8,7 +8,7 @@ Fetch project metadata plus market-implied expectations such as pre-market FDV v
 
 ## Endpoint
 
-`https://vf35f12f---defi-ai-services-gateway-staging-n7gcbq4uva-uc.a.run.app/project/analysis`
+`/project/analysis`
 
 ## Parameters
 
