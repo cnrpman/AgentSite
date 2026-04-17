@@ -6,9 +6,18 @@ branch="${PAGES_BRANCH:-gh-pages}"
 remote="${PAGES_REMOTE:-origin}"
 source_dir="$repo_root/apps/agent-site-server/gh-pages-dist"
 tmpdir="$(mktemp -d /tmp/agent-site-gh-pages.XXXXXX)"
+target_worktree=""
+created_tmp_worktree=0
+
+existing_worktree_for_branch() {
+  git -C "$repo_root" worktree list --porcelain | awk -v branch_ref="refs/heads/$branch" '
+    $1 == "worktree" { path = $2 }
+    $1 == "branch" && $2 == branch_ref { print path; exit }
+  '
+}
 
 cleanup() {
-  if git -C "$repo_root" worktree list --porcelain | grep -Fq "worktree $tmpdir"; then
+  if [[ "$created_tmp_worktree" == "1" ]] && git -C "$repo_root" worktree list --porcelain | grep -Fq "worktree $tmpdir"; then
     git -C "$repo_root" worktree remove --force "$tmpdir" >/dev/null 2>&1 || true
   fi
   rm -rf "$tmpdir"
@@ -19,10 +28,18 @@ trap cleanup EXIT
 cd "$repo_root"
 yarn build
 
-if git show-ref --verify --quiet "refs/heads/$branch"; then
+target_worktree="$(existing_worktree_for_branch || true)"
+
+if [[ -n "$target_worktree" ]]; then
+  :
+elif git show-ref --verify --quiet "refs/heads/$branch"; then
   git worktree add "$tmpdir" "$branch"
+  target_worktree="$tmpdir"
+  created_tmp_worktree=1
 else
   git worktree add -b "$branch" "$tmpdir"
+  target_worktree="$tmpdir"
+  created_tmp_worktree=1
 fi
 
 if [[ ! -d "$source_dir" ]]; then
@@ -30,16 +47,21 @@ if [[ ! -d "$source_dir" ]]; then
   exit 1
 fi
 
-rsync -a --delete --exclude '.git' "$source_dir"/ "$tmpdir"/
+if [[ -z "$target_worktree" ]]; then
+  echo "Failed to resolve target worktree for branch: $branch" >&2
+  exit 1
+fi
 
-git -C "$tmpdir" add -A
+rsync -a --delete --exclude '.git' "$source_dir"/ "$target_worktree"/
 
-if git -C "$tmpdir" diff --cached --quiet; then
+git -C "$target_worktree" add -A
+
+if git -C "$target_worktree" diff --cached --quiet; then
   echo "No gh-pages changes to publish."
   exit 0
 fi
 
-git -C "$tmpdir" commit -F - <<'EOF'
+git -C "$target_worktree" commit -F - <<'EOF'
 Publish current GitHub Pages snapshot
 
 Sync the generated static site from gh-pages-dist into the
@@ -53,4 +75,4 @@ Directive: Run yarn build before publishing so dist and gh-pages-dist stay align
 Tested: yarn build
 EOF
 
-git -C "$tmpdir" push "$remote" "HEAD:$branch"
+git -C "$target_worktree" push "$remote" "HEAD:$branch"

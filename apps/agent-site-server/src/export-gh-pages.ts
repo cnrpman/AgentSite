@@ -1,10 +1,11 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
+import { execSync } from 'node:child_process';
 import { marked } from 'marked';
 
 const DIST_ROOT = path.resolve(process.cwd(), 'dist');
 const OUTPUT_ROOT = path.resolve(process.cwd(), 'gh-pages-dist');
-const BASE_PATH = normalizeBasePath(process.env.GH_PAGES_BASE_PATH || `/${path.basename(path.resolve(process.cwd(), '..', '..'))}`);
+const BASE_PATH = normalizeBasePath(process.env.GH_PAGES_BASE_PATH || inferRepoBasePath());
 
 type PageInfo = {
   sourceAbs: string;
@@ -21,6 +22,21 @@ function normalizeBasePath(input: string): string {
   if (!trimmed || trimmed === '/') return '';
   const withLeading = trimmed.startsWith('/') ? trimmed : `/${trimmed}`;
   return withLeading.endsWith('/') ? withLeading.slice(0, -1) : withLeading;
+}
+
+function inferRepoBasePath(): string {
+  try {
+    const remoteUrl = execSync('git remote get-url origin', {
+      cwd: process.cwd(),
+      encoding: 'utf8',
+      stdio: ['ignore', 'pipe', 'ignore'],
+    }).trim();
+    const match = remoteUrl.match(/\/([^/]+?)(?:\.git)?$/);
+    if (match?.[1]) return `/${match[1]}`;
+  } catch {
+    // ignore and fall back to local directory name
+  }
+  return `/${path.basename(path.resolve(process.cwd(), '..', '..'))}`;
 }
 
 function joinUrl(base: string, rel: string): string {
