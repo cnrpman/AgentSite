@@ -1,7 +1,11 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
+import { getTokenCount } from './tokens';
 
 const DIST_ROOT = path.resolve(process.cwd(), 'dist');
+const TOKEN_TARGET_MIN = 2000;
+const TOKEN_TARGET_MAX = 5000;
+const TOKEN_BUDGET_EXEMPT_URLS = new Set(['/skill/']);
 
 const INTERNAL_LINK_RE = /\]\((\/[^)\s]+)\)/g;
 const H1_RE = /^#\s+.+/m;
@@ -71,6 +75,50 @@ async function listMarkdownFiles(root: string): Promise<string[]> {
   return files;
 }
 
+type TokenBudgetStatus = 'within-target' | 'under-target' | 'over-target' | 'unavailable' | 'exempt';
+
+type TokenBudgetRecord = {
+  url: string;
+  tokens: number | null;
+  status: TokenBudgetStatus;
+};
+
+function formatBudgetStatus(status: TokenBudgetStatus): string {
+  switch (status) {
+    case 'within-target':
+      return 'within target';
+    case 'under-target':
+      return 'under target';
+    case 'over-target':
+      return 'over target';
+    case 'unavailable':
+      return 'tokenizer unavailable';
+    case 'exempt':
+      return 'exempt';
+  }
+}
+
+function summarizeBudgets(records: TokenBudgetRecord[]): string {
+  const within = records.filter((record) => record.status === 'within-target').length;
+  const under = records.filter((record) => record.status === 'under-target').length;
+  const over = records.filter((record) => record.status === 'over-target').length;
+  const unavailable = records.filter((record) => record.status === 'unavailable').length;
+  const exempt = records.filter((record) => record.status === 'exempt').length;
+  const lines = [
+    `Token budget report (target ${TOKEN_TARGET_MIN}-${TOKEN_TARGET_MAX} tokens, fetched markdown):`,
+    `- within target: ${within}`,
+    `- under target: ${under}`,
+    `- over target: ${over}`,
+    `- exempt: ${exempt}`,
+  ];
+  if (unavailable > 0) lines.push(`- tokenizer unavailable: ${unavailable}`);
+  for (const record of records) {
+    const tokenLabel = record.tokens === null ? 'n/a' : String(record.tokens);
+    lines.push(`- ${record.url}: ${tokenLabel} (${formatBudgetStatus(record.status)})`);
+  }
+  return lines.join('\n');
+}
+
 export async function runChecks(distRoot = DIST_ROOT): Promise<void> {
   const errors: string[] = [];
   let files: string[] = [];
@@ -88,6 +136,7 @@ export async function runChecks(distRoot = DIST_ROOT): Promise<void> {
   }
 
   const allLinksByUrl = new Map<string, string[]>();
+  const tokenBudgets: TokenBudgetRecord[] = [];
 
   for (const file of files) {
     const content = await fs.readFile(file, 'utf8');
@@ -119,6 +168,21 @@ export async function runChecks(distRoot = DIST_ROOT): Promise<void> {
         errors.push(`${url}: broken link -> ${link}`);
       }
     }
+
+    const tokens = await getTokenCount(content);
+    let status: TokenBudgetStatus;
+    if (TOKEN_BUDGET_EXEMPT_URLS.has(url)) {
+      status = 'exempt';
+    } else if (tokens === null) {
+      status = 'unavailable';
+    } else if (tokens < TOKEN_TARGET_MIN) {
+      status = 'under-target';
+    } else if (tokens > TOKEN_TARGET_MAX) {
+      status = 'over-target';
+    } else {
+      status = 'within-target';
+    }
+    tokenBudgets.push({ url, tokens, status });
   }
 
   const reachable = new Set<string>();
@@ -143,6 +207,8 @@ export async function runChecks(distRoot = DIST_ROOT): Promise<void> {
     const message = `Content checks failed (${errors.length}):\n- ${errors.join('\n- ')}`;
     throw new Error(message);
   }
+
+  process.stdout.write(`${summarizeBudgets(tokenBudgets.sort((a, b) => a.url.localeCompare(b.url)))}\n`);
 }
 
 if (require.main === module) {

@@ -32,24 +32,19 @@ This produces a dual-output static bundle where raw Markdown remains available a
 
 ## Content Architecture
 
-`apps/agent-site-server/content` now follows a layered agent-doc structure:
+`apps/agent-site-server/content` is intentionally compressed:
 
-- `soul/` - immutable agent identity and behavioral rules
-- `memory/` - user-specific durable preferences
-- `tool/` - callable tool contracts and parameter docs
-- `skill/` - placeholder only; no standalone mock skill pages
+- `index.md` - the only product page, containing tool signatures, call order, defaults, and stop conditions
 
-The tool layer is the main source of truth for runtime behavior. Multi-step patterns that were previously described as “skills” are now documented as tool combinations inside the tool docs.
+The product page now documents callable tools only. Behavior/profile/placeholder layers were removed from the public content tree to reduce noise.
 
-For stable prompt layers such as `soul/` and `memory/`, prefer a small number of denser pages, with a rough target of about 2000 tokens per page. This reduces retrieval overhead when the docs are consumed during tool-calling flows.
-
-The root `content/index.md` should also behave as a router page: one dense read that points the agent toward the smallest relevant next branch.
+The rule for the product surface is simple: keep only invocation-critical content on one page.
 
 ## Notes
 
 - `apps/agent-browser-skill` includes:
   - `SKILL.md`
   - `scripts/curl-with-jwt.sh` for `Authorization: Bearer <JWT>` requests to `localhost:3000` and `*.sahara.info`
-- `apps/agent-site-server/content` is now organized around the `SOUL` / `MEMORY` / `TOOL` / `SKILL` layers, with tool pages aligned to real function definitions.
+- `apps/agent-site-server/content` is reduced to a single tool-only page.
 - `apps/agent-site-autosearch` is currently an empty scaffold.
 - Keep each app independently runnable and documented as implementation starts.

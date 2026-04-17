@@ -1,11 +1,8 @@
-import crypto from 'node:crypto';
 import type { FastifyInstance, FastifyReply } from 'fastify';
 import { marked } from 'marked';
 import { HTML_CACHE_CONTROL, MARKDOWN_BASE_URL } from './config';
+import { describeTokenCount } from './tokens';
 import { computeEtag } from './utils';
-
-const MODEL_NAME = 'gpt-5';
-const FALLBACK_ENCODING = 'o200k_base';
 
 function escapeHtmlAttr(value: string): string {
   return value.replace(/&/g, '&amp;')
@@ -37,58 +34,7 @@ markdownRenderer.image = (href, title, text) => {
 
 marked.setOptions({
   renderer: markdownRenderer,
-  mangle: false,
-  headerIds: false,
 });
-
-type TokenizerState = {
-  encode: (text: string) => number[];
-  label: string;
-  note?: string;
-};
-
-let tokenizerState: TokenizerState | null = null;
-let tokenizerInitFailed = false;
-
-async function getTokenizer(): Promise<TokenizerState | null> {
-  if (tokenizerState || tokenizerInitFailed) return tokenizerState;
-  try {
-    const mod = await import('tiktoken');
-    const encodingForModel = (mod as { encoding_for_model?: (model: string) => { encode: (text: string) => number[] } }).encoding_for_model;
-    const getEncoding = (mod as { get_encoding?: (name: string) => { encode: (text: string) => number[] } }).get_encoding;
-
-    if (encodingForModel) {
-      try {
-        const enc = encodingForModel(MODEL_NAME);
-        tokenizerState = { encode: enc.encode.bind(enc), label: MODEL_NAME };
-        return tokenizerState;
-      } catch {
-        // fall through to fallback encoding
-      }
-    }
-
-    if (getEncoding) {
-      try {
-        const enc = getEncoding(FALLBACK_ENCODING);
-        tokenizerState = { encode: enc.encode.bind(enc), label: MODEL_NAME, note: `fallback ${FALLBACK_ENCODING}` };
-        return tokenizerState;
-      } catch {
-        // ignore
-      }
-    }
-  } catch {
-    // ignore
-  }
-  tokenizerInitFailed = true;
-  return null;
-}
-
-async function countTokens(markdown: string): Promise<string | null> {
-  const tokenizer = await getTokenizer();
-  if (!tokenizer) return null;
-  const count = tokenizer.encode(markdown).length;
-  return tokenizer.note ? `${count} (${MODEL_NAME}, ${tokenizer.note})` : `${count} (${MODEL_NAME})`;
-}
 
 function extractTitle(markdown: string): string {
   const match = markdown.match(/^#\s+(.+)$/m);
@@ -202,7 +148,7 @@ async function renderMarkdownPath(markdownPath: string, reply: FastifyReply, req
     const { status, text } = await fetchMarkdown(markdownPath);
     const title = extractTitle(text);
     const bodyHtml = await marked.parse(text);
-    const tokenLabel = await countTokens(text);
+    const tokenLabel = await describeTokenCount(text);
     const html = wrapHtml(title, markdownPath, bodyHtml, tokenLabel);
     await sendHtml(reply, requestEtag, html, status);
   } catch {

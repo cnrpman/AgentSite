@@ -26,7 +26,7 @@ Viewer is available at `http://localhost:3000/viewer/`.
 ## Scripts
 
 - `yarn build` → generate `dist/` from `content/` and run checks
-- `yarn run check` → validate page contract, links, and reachability
+- `yarn run check` → validate page contract, links, reachability, and print a token-budget report for generated Markdown
 - `yarn export:gh-pages` → generate `gh-pages-dist/` with both raw Markdown and static viewer HTML
 - `yarn dev` → run Fastify server with TS runtime (`tsx watch`)
 - `yarn build:server` → compile TypeScript to `build/`
@@ -50,26 +50,20 @@ summary: How to use visit(url) to traverse the Markdown directory site.
 
 ## Content Structure
 
-The current content is organized as a layered agent prompt reference:
+The current content is intentionally minimal:
 
-- `content/index.md` - entry page and reading order
-- `content/soul/` - identity, rules, truth policy, formatting, supported chains
-- `content/memory/` - durable user preferences and defaults
-- `content/tool/` - callable tool contracts aligned to real function definitions, with a dense router-style `index.md`
-- `content/skill/` - placeholder page only; no standalone skill mocks
+- `content/index.md` - the only product page, containing tool signatures, defaults that affect calls, common sequences, and minimal failure rules
 
-Tool pages should document:
-1. Purpose
-2. Parameters
-3. Output shape or workflow notes when relevant
-4. Invocation rules or constraints
-5. See also
+The public content tree no longer includes separate `soul`, `memory`, `skill`, or per-workflow tool pages. The goal is to keep only the information needed to call tools on one page.
 
-For stable reference sections such as `content/soul/` and `content/memory/`, prefer fewer, denser pages with an approximate target of 2000 tokens per page. The goal is to minimize total retrieval cost rather than maximize page granularity.
+`content/index.md` should document:
+1. Which tools belong to the bundle
+2. Call signatures
+3. Required inputs and sequencing
+4. Minimal defaults that affect invocation
+5. Failure conditions that stop the next call
 
-For `content/tool/`, keep the index page dense and router-oriented so an agent can choose the right tool family with one read, then fetch only the specific tool pages it needs.
-
-Apply the same router principle to `content/index.md`: it should quickly route the reader to `soul/`, `memory/`, `tool/`, or `skill/` with minimal explanatory overhead.
+Do not split this into a homepage subset plus a second reference page unless the single page becomes unusable.
 
 ## Output Rules
 

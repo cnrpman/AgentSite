@@ -6,3 +6,7 @@
 
 ## 2026-03-09
 - For agent-facing doc sites used during tool-calling, optimize for total context cost: stable guidance layers like `SOUL` and `MEMORY` should prefer fewer, denser pages of roughly 2000 tokens each instead of many tiny pages, because every extra fetch has prompt overhead.
+
+## 2026-04-17
+- For retrieval-heavy doc trees where the root and first branch pages are often co-fetched, page boundaries should follow high-frequency access paths rather than textbook taxonomy: fill upper pages with shared context first, target roughly `2k-5k` tokens when practical, and only split downward once the parent is already dense or the access pattern clearly diverges.
+- If a user wants an agent-facing doc surface aggressively deslopped, prioritize callable signatures and sequencing over page-size targets; a 2-page tool-only surface can be better than a denser but noisier hierarchy.
