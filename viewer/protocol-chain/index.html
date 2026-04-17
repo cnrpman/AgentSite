@@ -81,6 +81,26 @@
 <li>At least one of <code>chainId</code> or <code>chainName</code> must be provided for <code>chainTool</code>.</li>
 <li>If <code>chainId</code> is provided, it can be mapped to <code>chainName</code>.</li>
 </ul>
+<h2>Endpoint Mapping</h2>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>Endpoint</th>
+<th>Rule</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>protocolTool</code></td>
+<td><code>/protocol/analysis</code></td>
+<td>pass the protocol slug or name directly and build parameters from user intent</td>
+</tr>
+<tr>
+<td><code>chainTool</code></td>
+<td><code>/chain/analysis</code></td>
+<td>pass <code>chainId</code> or <code>chainName</code>; do not hardcode values</td>
+</tr>
+</tbody></table>
 <h2>Follow-Up Tool</h2>
 <table>
 <thead>
@@ -112,6 +132,7 @@
 <li>Protocol dominance analysis</li>
 <li>Trading-pattern scans at the chain level</li>
 </ul>
+<p>Use <code>webSearch</code> only after tool output when official-source confirmation or live external context is still required.</p>
 <h2>Output Notes</h2>
 <ul>
 <li><code>protocolTool</code> returns a markdown-formatted protocol analysis intended for direct downstream use.</li>
@@ -180,7 +201,6 @@
 </tbody></table>
 <h2>See Also</h2>
 <ul>
-<li><a href="/AgentSite/viewer/">/</a> for the full reference</li>
 <li><a href="/AgentSite/viewer/market-signal/">Market Signal</a></li>
 </ul>
 <p>Pages that <strong>Backlink</strong> to here:</p>

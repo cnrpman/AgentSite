@@ -127,6 +127,14 @@
 <li><code>created_at</code></li>
 <li>engagement or metadata fields when available</li>
 </ul>
+<p>Usage policy:</p>
+<ul>
+<li>For token or DeFi narratives, compare <code>searchTwitter</code> results against structured tool outputs before making a strong claim.</li>
+<li>Probe official handles first when token or project metadata exposes them.</li>
+<li>Tag social findings as <code>[Official Announcement]</code>, <code>[Community Sentiment]</code>, or <code>[Unverified Claim]</code>.</li>
+<li>Include handles, timestamps, and links when available when presenting social findings.</li>
+<li>Include freshness, handle, and confidence when social findings materially affect the answer.</li>
+</ul>
 <h3><code>webSearch</code></h3>
 <p>Returns JSON with:</p>
 <ul>
@@ -161,6 +169,10 @@
 <tr>
 <td>social scan only</td>
 <td><code>searchTwitter</code></td>
+</tr>
+<tr>
+<td>token or project narrative check</td>
+<td>relevant fundamental tool, then <code>searchTwitter</code>, then <code>webSearch</code> if confirmation is needed</td>
 </tr>
 </tbody></table>
 <h2>Stop Conditions</h2>
@@ -198,7 +210,6 @@
 </tbody></table>
 <h2>See Also</h2>
 <ul>
-<li><a href="/AgentSite/viewer/">/</a> for the full reference</li>
 <li><a href="/AgentSite/viewer/protocol-chain/">Protocol &amp; Chain</a></li>
 <li><a href="/AgentSite/viewer/token/">Token</a></li>
 </ul>

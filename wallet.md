@@ -81,7 +81,6 @@ Use this page for wallet balances, activity, and transactions.
 
 ## See Also
 
-- [/](/) for the full reference
 - [Execution](/AgentSite/execution.md)
 - [Staking](/AgentSite/staking.md)
 

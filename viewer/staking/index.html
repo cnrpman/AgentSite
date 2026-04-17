@@ -95,12 +95,20 @@
 <li><code>data</code>: confirmation object with <code>pool_id</code> and timestamp when successful</li>
 <li><code>error</code>: failure reason when unsuccessful</li>
 </ul>
+<h2>Endpoint Mapping</h2>
+<p>Underlying endpoint: <code>/pool/analysis</code></p>
+<ul>
+<li>All pool-search parameters are optional; pass whatever chain, protocol, token, or <code>pool_id</code> context is already known.</li>
+<li>Use this as the primary source for pool discovery and <code>pool_id</code> selection.</li>
+<li>Build request parameters from user intent; do not hardcode values.</li>
+</ul>
 <h2>Rules</h2>
 <ul>
 <li>Use <code>searchPoolInfo</code> as the primary source for pool data.</li>
 <li>Only after <code>searchPoolInfo</code> should you supplement with <code>webSearch</code> or <code>searchTwitter</code>, and only if the question still needs it.</li>
 <li><code>searchPoolInfo</code> returns the <code>pool_id</code> needed by <code>ExecuteStakeTool</code>.</li>
 <li><code>ExecuteStakeTool</code> is for execution, not discovery.</li>
+<li>If the intent is staking execution and a pool has been selected, immediately call <code>ExecuteStakeTool</code> with that <code>pool_id</code>.</li>
 </ul>
 <h2>Call Order</h2>
 <table>
@@ -148,7 +156,6 @@
 </tbody></table>
 <h2>See Also</h2>
 <ul>
-<li><a href="/AgentSite/viewer/">/</a> for the full reference</li>
 <li><a href="/AgentSite/viewer/wallet/">Wallet</a></li>
 </ul>
 <p>Pages that <strong>Backlink</strong> to here:</p>

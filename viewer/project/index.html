@@ -46,6 +46,13 @@
 <td>primary project context tool</td>
 </tr>
 </tbody></table>
+<h2>Endpoint Mapping</h2>
+<p>Underlying endpoint: <code>/project/analysis</code></p>
+<ul>
+<li>Pass the project or token name directly.</li>
+<li>Build request parameters from user intent; do not hardcode values.</li>
+<li>Use this tool first for structured project context before social or open-web follow-up.</li>
+</ul>
 <h2>Parameter Shapes</h2>
 <table>
 <thead>
@@ -124,6 +131,10 @@
 <td>project plus token price or contract</td>
 <td><code>projectTool</code>, then <code>searchTokenInfo</code></td>
 </tr>
+<tr>
+<td>full project diligence</td>
+<td><code>projectTool</code>, then <code>searchTwitter</code>, then <code>webSearch</code>, then <code>searchTokenInfo</code> if token facts are needed</td>
+</tr>
 </tbody></table>
 <h2>Stop Conditions</h2>
 <ul>
@@ -132,6 +143,8 @@
 <li>Add <code>webSearch</code> only when official-source confirmation matters.</li>
 <li>Add <code>searchTokenInfo</code> only when token-level facts are needed.</li>
 </ul>
+<p>For due diligence or launch-interest questions, compare structured project output with both <code>searchTwitter</code> discussion and <code>webSearch</code> confirmation before finalizing the answer.
+Mandatory alongside fundamentals: for diligence, investigation, or narrative-sensitive project work, <code>searchTwitter</code> is mandatory alongside fundamentals before the conclusion is finalized.</p>
 <h2>Do Not</h2>
 <ul>
 <li>Do not start with <code>searchTwitter</code> if the user is asking for structured project context.</li>
@@ -156,7 +169,6 @@
 </tbody></table>
 <h2>See Also</h2>
 <ul>
-<li><a href="/AgentSite/viewer/">/</a> for the full reference</li>
 <li><a href="/AgentSite/viewer/token/">Token</a></li>
 <li><a href="/AgentSite/viewer/market-signal/">Market Signal</a></li>
 </ul>

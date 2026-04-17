@@ -81,17 +81,13 @@
 <td><code>USDT</code>, <code>USD</code></td>
 </tr>
 </tbody></table>
-<h2>Input Rules</h2>
+<h2>Endpoint Mapping</h2>
+<p>Underlying endpoint: <code>/token/v2/analysis</code></p>
 <ul>
-<li>Provide either <code>tokenSymbol</code> or <code>tokenAddress</code>.</li>
-<li>When using <code>tokenSymbol</code>, also provide <code>chainId</code>.</li>
-<li>Use <code>holdersLimit</code> only when holder ranking is useful.</li>
-</ul>
-<h2>Rules</h2>
-<ul>
-<li>Any price information must come from <code>searchTokenInfo</code>.</li>
-<li>Do not declare a token unrecognized before invoking this tool.</li>
-<li>Never convert a base asset to a wrapped variant unless the user explicitly asked for it.</li>
+<li>The underlying lookup is query-first: pass the user token symbol or contract address verbatim as the lookup query.</li>
+<li>When the lookup is contract-address based, keep <code>chainId</code> with it.</li>
+<li>Use <code>quoteCurrency</code> only when a non-default quote pair is required.</li>
+<li>Build request parameters from user intent; do not hardcode values.</li>
 </ul>
 <h2>Input Rules</h2>
 <ul>
@@ -104,6 +100,7 @@
 <li>Any price information must come from <code>searchTokenInfo</code>.</li>
 <li>Do not declare a token unrecognized before invoking this tool.</li>
 <li>Never convert a base asset to a wrapped variant unless the user explicitly asked for it.</li>
+<li>If token lookup is not enough for attribution or news validation, follow with <code>webSearch</code> or <code>searchTwitter</code>.</li>
 </ul>
 <h2>Follow-Up Tools</h2>
 <table>
@@ -159,6 +156,8 @@
 <td><code>searchTokenInfo</code> + <code>projectTool</code> + <code>searchTwitter</code> + <code>webSearch</code></td>
 </tr>
 </tbody></table>
+<p>For token or DeFi diligence, compare fundamentals from <code>searchTokenInfo</code> against sentiment from <code>searchTwitter</code> and confirmation from <code>webSearch</code> before drawing a strong conclusion.
+Mandatory alongside fundamentals: for diligence, investigation, or narrative-sensitive token work, <code>searchTwitter</code> is mandatory alongside fundamentals before the conclusion is finalized.</p>
 <h2>Stop Conditions</h2>
 <ul>
 <li>Stop after <code>searchTokenInfo</code> if the user only wanted price, contract, metadata, or symbol validation.</li>
@@ -166,13 +165,12 @@
 <li>Add <code>searchTwitter</code> only when narrative or discussion matters.</li>
 <li>Add <code>webSearch</code> only when external confirmation matters.</li>
 </ul>
-<h2>Fallback</h2>
+<h2>Social-Intel Notes</h2>
 <ul>
-<li>If token lookup is not enough for attribution or news validation, follow with <code>webSearch</code> or <code>searchTwitter</code>.</li>
-</ul>
-<h2>Fallback</h2>
-<ul>
-<li>If token lookup is not enough for attribution or news validation, follow with <code>webSearch</code> or <code>searchTwitter</code>.</li>
+<li>When token metadata exposes official handles, probe those first in <code>searchTwitter</code>.</li>
+<li>Tag social findings as <code>[Official Announcement]</code>, <code>[Community Sentiment]</code>, or <code>[Unverified Claim]</code>.</li>
+<li>When presenting social findings, include handles, timestamps, and links when available.</li>
+<li>Keep community commentary separate from factual token metrics.</li>
 </ul>
 <h2>Do Not</h2>
 <ul>
@@ -203,15 +201,14 @@
 </tbody></table>
 <h2>See Also</h2>
 <ul>
-<li><a href="/AgentSite/viewer/">/</a> for the full reference</li>
 <li><a href="/AgentSite/viewer/project/">Project</a></li>
+<li><a href="/AgentSite/viewer/market-signal/">Market Signal</a></li>
 <li><a href="/AgentSite/viewer/execution/">Execution</a></li>
 <li><a href="/AgentSite/viewer/alert/">Alert</a></li>
 </ul>
 <p>Pages that <strong>Backlink</strong> to here:</p>
 <ul>
 <li><a href="/AgentSite/viewer/">Tool Reference</a></li>
-<li><a href="/AgentSite/viewer/market-signal/">Market Signal</a></li>
 </ul>
 
     </main>

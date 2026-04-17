@@ -24,17 +24,14 @@ Use this page for token identity, price, contract address, metadata, and basic t
 | `holdersLimit` | integer | `10`, `50` |
 | `quoteCurrency` | quote asset string | `USDT`, `USD` |
 
-## Input Rules
+## Endpoint Mapping
 
-- Provide either `tokenSymbol` or `tokenAddress`.
-- When using `tokenSymbol`, also provide `chainId`.
-- Use `holdersLimit` only when holder ranking is useful.
+Underlying endpoint: `/token/v2/analysis`
 
-## Rules
-
-- Any price information must come from `searchTokenInfo`.
-- Do not declare a token unrecognized before invoking this tool.
-- Never convert a base asset to a wrapped variant unless the user explicitly asked for it.
+- The underlying lookup is query-first: pass the user token symbol or contract address verbatim as the lookup query.
+- When the lookup is contract-address based, keep `chainId` with it.
+- Use `quoteCurrency` only when a non-default quote pair is required.
+- Build request parameters from user intent; do not hardcode values.
 
 ## Input Rules
 
@@ -47,6 +44,7 @@ Use this page for token identity, price, contract address, metadata, and basic t
 - Any price information must come from `searchTokenInfo`.
 - Do not declare a token unrecognized before invoking this tool.
 - Never convert a base asset to a wrapped variant unless the user explicitly asked for it.
+- If token lookup is not enough for attribution or news validation, follow with `webSearch` or `searchTwitter`.
 
 ## Follow-Up Tools
 
@@ -66,6 +64,9 @@ Use this page for token identity, price, contract address, metadata, and basic t
 | token plus external confirmation | `searchTokenInfo`, then `webSearch` |
 | full token diligence | `searchTokenInfo` + `projectTool` + `searchTwitter` + `webSearch` |
 
+For token or DeFi diligence, compare fundamentals from `searchTokenInfo` against sentiment from `searchTwitter` and confirmation from `webSearch` before drawing a strong conclusion.
+Mandatory alongside fundamentals: for diligence, investigation, or narrative-sensitive token work, `searchTwitter` is mandatory alongside fundamentals before the conclusion is finalized.
+
 ## Stop Conditions
 
 - Stop after `searchTokenInfo` if the user only wanted price, contract, metadata, or symbol validation.
@@ -73,13 +74,12 @@ Use this page for token identity, price, contract address, metadata, and basic t
 - Add `searchTwitter` only when narrative or discussion matters.
 - Add `webSearch` only when external confirmation matters.
 
-## Fallback
+## Social-Intel Notes
 
-- If token lookup is not enough for attribution or news validation, follow with `webSearch` or `searchTwitter`.
-
-## Fallback
-
-- If token lookup is not enough for attribution or news validation, follow with `webSearch` or `searchTwitter`.
+- When token metadata exposes official handles, probe those first in `searchTwitter`.
+- Tag social findings as `[Official Announcement]`, `[Community Sentiment]`, or `[Unverified Claim]`.
+- When presenting social findings, include handles, timestamps, and links when available.
+- Keep community commentary separate from factual token metrics.
 
 ## Do Not
 
@@ -97,11 +97,10 @@ Use this page for token identity, price, contract address, metadata, and basic t
 
 ## See Also
 
-- [/](/) for the full reference
 - [Project](/AgentSite/project.md)
+- [Market Signal](/AgentSite/market-signal.md)
 - [Execution](/AgentSite/execution.md)
 - [Alert](/AgentSite/alert.md)
 
 Pages that **Backlink** to here:
 - [Tool Reference](/)
-- [Market Signal](/AgentSite/market-signal.md)
