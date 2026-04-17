@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Execution</title>
+    <style>
+      body { margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial; background: #f6f4ef; color: #1b1b1b; }
+      header { position: sticky; top: 0; background: #fff7e8; border-bottom: 1px solid #e7dcc3; padding: 12px 20px; display: flex; gap: 12px; align-items: center; }
+      main { max-width: 960px; margin: 24px auto 72px; padding: 0 20px; line-height: 1.6; }
+      a { color: #0a4ea3; }
+      pre { background: #111827; color: #f9fafb; padding: 16px; border-radius: 8px; overflow-x: auto; }
+      code { background: #f0e7d8; padding: 2px 6px; border-radius: 4px; }
+      pre code { background: transparent; padding: 0; }
+      .meta { color: #5c4b2a; font-size: 0.95rem; }
+    </style>
+  </head>
+  <body>
+    <header>
+      <a href="/agent-site/viewer/">Viewer Home</a>
+      <span>·</span>
+      <a href="/agent-site/execution.md">Raw Markdown</a>
+      <span>·</span>
+      <span class="meta">Static GitHub Pages export</span>
+    </header>
+    <main>
+<h1>Execution</h1>
+<p><strong>Navigation:</strong> <a href="/agent-site/viewer/">Home</a> &gt; <a href="/agent-site/viewer/execution/">execution</a></p>
+<p><strong>Summary:</strong> Swap and transfer calls, parameter shapes, defaults, and hard stop conditions.</p>
+<hr>
+<p>Use this page for swap and transfer setup.</p>
+<h2>Primary Tools</h2>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>Signature</th>
+<th>Required</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>searchTokenInfo</code></td>
+<td><code>searchTokenInfo(tokenSymbol?, tokenAddress?, chainId?, holdersLimit?, quoteCurrency?)</code></td>
+<td><code>tokenSymbol + chainId</code> or <code>tokenAddress</code></td>
+<td>resolve symbol-based token input first</td>
+</tr>
+<tr>
+<td><code>ExecuteSwapTool</code></td>
+<td><code>ExecuteSwapTool(chainId?, amount?, fromTokenAddress?, toTokenAddress?)</code></td>
+<td>none</td>
+<td>swap setup</td>
+</tr>
+<tr>
+<td><code>ExecuteTransferTool</code></td>
+<td><code>ExecuteTransferTool(amount?, chainId?, tokenAddress?, receiveAddress?)</code></td>
+<td>none</td>
+<td>transfer setup</td>
+</tr>
+</tbody></table>
+<h2>Parameter Shapes</h2>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Shape</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>chainId</code></td>
+<td>numeric chain id</td>
+<td><code>1</code>, <code>56</code></td>
+</tr>
+<tr>
+<td><code>amount</code></td>
+<td>amount string</td>
+<td><code>100</code>, <code>0.5</code></td>
+</tr>
+<tr>
+<td><code>fromTokenAddress</code></td>
+<td>EVM contract address</td>
+<td><code>0xC02aaA39b223FE8D0A0E5C4F27eAD9083C756Cc2</code></td>
+</tr>
+<tr>
+<td><code>toTokenAddress</code></td>
+<td>EVM contract address</td>
+<td><code>0xA0b86991c6218b36c1d19d4a2e9eb0ce3606eb48</code></td>
+</tr>
+<tr>
+<td><code>tokenAddress</code></td>
+<td>EVM contract address</td>
+<td><code>0xA0b86991c6218b36c1d19d4a2e9eb0ce3606eb48</code></td>
+</tr>
+<tr>
+<td><code>receiveAddress</code></td>
+<td>EVM address or ENS</td>
+<td><code>0x742d35Cc6634C0532925a3b844Bc454e4438f44e</code>, <code>alice.eth</code></td>
+</tr>
+<tr>
+<td><code>tokenSymbol</code></td>
+<td>exact symbol string</td>
+<td><code>ETH</code>, <code>USDC</code></td>
+</tr>
+</tbody></table>
+<h2>Defaults</h2>
+<ul>
+<li>Default chain is Ethereum (<code>chainId: 1</code>) when chain is ambiguous.</li>
+<li>Swap slippage is fixed at <code>5%</code>.</li>
+<li>ENS is acceptable where wallet input is allowed.</li>
+<li>If <code>receiveAddress</code> is missing, leave it empty; do not guess.</li>
+</ul>
+<h2>Rules</h2>
+<h3><code>ExecuteSwapTool</code></h3>
+<ul>
+<li>The user does not need all parameters upfront.</li>
+<li>Token symbols are not the primary inputs; token addresses are.</li>
+<li>If only symbols are known, resolve them first with <code>searchTokenInfo</code>.</li>
+<li>If a token cannot be resolved or a quote cannot be obtained, the tool should return a failure reason.</li>
+</ul>
+<h3><code>ExecuteTransferTool</code></h3>
+<ul>
+<li>The user does not need all parameters upfront.</li>
+<li>If only a symbol is known, resolve it first with <code>searchTokenInfo</code>.</li>
+<li>Accept wallet addresses and ENS names directly.</li>
+<li>Invalid chain IDs or token addresses should produce a failure reason.</li>
+</ul>
+<h2>Output Notes</h2>
+<ul>
+<li><code>ExecuteSwapTool</code> returns swap parameters for downstream execution.</li>
+<li><code>ExecuteTransferTool</code> returns transfer parameters in JSON, along with token metadata when available.</li>
+</ul>
+<h2>Call Order</h2>
+<table>
+<thead>
+<tr>
+<th>Need</th>
+<th>Calls</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>swap with token addresses already known</td>
+<td><code>ExecuteSwapTool</code></td>
+</tr>
+<tr>
+<td>transfer with token address already known</td>
+<td><code>ExecuteTransferTool</code></td>
+</tr>
+<tr>
+<td>swap by symbol</td>
+<td><code>searchTokenInfo</code>, then <code>ExecuteSwapTool</code></td>
+</tr>
+<tr>
+<td>transfer by symbol</td>
+<td><code>searchTokenInfo</code>, then <code>ExecuteTransferTool</code></td>
+</tr>
+</tbody></table>
+<h2>Stop Conditions</h2>
+<ul>
+<li>Stop after <code>searchTokenInfo</code> if the token address still cannot be resolved.</li>
+<li>Do not move into <code>ExecuteSwapTool</code> or <code>ExecuteTransferTool</code> until required token addresses are clear.</li>
+</ul>
+<h2>Do Not</h2>
+<ul>
+<li>Do not guess token addresses.</li>
+<li>Do not auto-fill <code>receiveAddress</code>.</li>
+</ul>
+<h2>Minimal Examples</h2>
+<table>
+<thead>
+<tr>
+<th>Goal</th>
+<th>Example call</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>swap with addresses</td>
+<td><code>ExecuteSwapTool(chainId=1, amount=&#39;0.5&#39;, fromTokenAddress=&#39;0xC02aaA39b223FE8D0A0E5C4F27eAD9083C756Cc2&#39;, toTokenAddress=&#39;0xA0b86991c6218b36c1d19d4a2e9eb0ce3606eb48&#39;)</code></td>
+</tr>
+<tr>
+<td>transfer with address</td>
+<td><code>ExecuteTransferTool(amount=&#39;100&#39;, chainId=1, tokenAddress=&#39;0xA0b86991c6218b36c1d19d4a2e9eb0ce3606eb48&#39;, receiveAddress=&#39;alice.eth&#39;)</code></td>
+</tr>
+<tr>
+<td>swap by symbol</td>
+<td><code>searchTokenInfo(tokenSymbol=&#39;ETH&#39;, chainId=1)</code>, then <code>ExecuteSwapTool(...)</code></td>
+</tr>
+</tbody></table>
+<h2>See Also</h2>
+<ul>
+<li><a href="/agent-site/viewer/">/</a> for the full reference</li>
+<li><a href="/agent-site/viewer/token/">Token</a></li>
+<li><a href="/agent-site/viewer/wallet/">Wallet</a></li>
+</ul>
+<p>Pages that <strong>Backlink</strong> to here:</p>
+<ul>
+<li><a href="/agent-site/viewer/">Tool Reference</a></li>
+</ul>
+
+    </main>
+  </body>
+</html>

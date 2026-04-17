@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Sahara AI Execution Agent</title>
+    <title>Tool Reference</title>
     <style>
       body { margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial; background: #f6f4ef; color: #1b1b1b; }
       header { position: sticky; top: 0; background: #fff7e8; border-bottom: 1px solid #e7dcc3; padding: 12px 20px; display: flex; gap: 12px; align-items: center; }
@@ -17,97 +17,433 @@
   </head>
   <body>
     <header>
-      <a href="/AgentSite/viewer/">Viewer Home</a>
+      <a href="/agent-site/viewer/">Viewer Home</a>
       <span>·</span>
-      <a href="/AgentSite/index.md">Raw Markdown</a>
+      <a href="/agent-site/index.md">Raw Markdown</a>
       <span>·</span>
       <span class="meta">Static GitHub Pages export</span>
     </header>
     <main>
-<h1>Sahara AI Execution Agent</h1>
-<p><strong>Navigation:</strong> <a href="/AgentSite/viewer/">Home</a></p>
-<p><strong>Summary:</strong> Router page for the layered agent docs. Read this once, then jump to the smallest relevant branch.</p>
+<h1>Tool Reference</h1>
+<p><strong>Navigation:</strong> <a href="/agent-site/viewer/">Home</a></p>
+<p><strong>Summary:</strong> Full tool signatures, scene-page entry points, defaults, and stop conditions.</p>
 <hr>
-<p>This site is organized for low-cost retrieval during tool-calling. Read this page first, then jump to only the layer that matches the current need.</p>
-<h2>Fast Routing Table</h2>
+<p>Use this page for tool signatures and invocation order.</p>
+<h2>Scene Pages</h2>
+<p>If a request clearly matches one scene below, open that page first. Each scene page repeats the signatures, parameter shapes, call order, and stop conditions it needs.</p>
 <table>
 <thead>
 <tr>
-<th>If the current need is...</th>
-<th>Go to</th>
-<th>Why</th>
+<th>Scene</th>
+<th>Open</th>
+<th>Main tools</th>
 </tr>
 </thead>
 <tbody><tr>
-<td>agent identity, hard rules, truth constraints</td>
-<td><a href="/AgentSite/viewer/soul/">soul</a></td>
-<td>Stable behavior and runtime rules</td>
+<td>token lookup and token diligence</td>
+<td><a href="/agent-site/viewer/token/">Token</a></td>
+<td><code>searchTokenInfo</code>, <code>projectTool</code>, <code>searchTwitter</code>, <code>webSearch</code></td>
 </tr>
 <tr>
-<td>user preference shaping, defaults, wallet conventions</td>
-<td><a href="/AgentSite/viewer/memory/">memory</a></td>
-<td>User-specific but durable context</td>
+<td>project review</td>
+<td><a href="/agent-site/viewer/project/">Project</a></td>
+<td><code>projectTool</code>, <code>searchTwitter</code>, <code>webSearch</code>, <code>searchTokenInfo</code></td>
 </tr>
 <tr>
-<td>real capabilities, parameters, execution setup</td>
-<td><a href="/AgentSite/viewer/tool/">tool</a></td>
-<td>Primary source of runtime behavior</td>
+<td>protocol or chain review</td>
+<td><a href="/agent-site/viewer/protocol-chain/">Protocol &amp; Chain</a></td>
+<td><code>protocolTool</code>, <code>chainTool</code>, <code>webSearch</code></td>
 </tr>
 <tr>
-<td>whether there are standalone skills</td>
-<td><a href="/AgentSite/viewer/skill/">skill</a></td>
-<td>Placeholder only at the moment</td>
+<td>market pulse, trends, social, news</td>
+<td><a href="/agent-site/viewer/market-signal/">Market Signal</a></td>
+<td><code>getTrendingInsights</code>, <code>searchTwitter</code>, <code>webSearch</code>, <code>chainTool</code></td>
+</tr>
+<tr>
+<td>wallet review</td>
+<td><a href="/agent-site/viewer/wallet/">Wallet</a></td>
+<td><code>getWalletTokenBalance</code>, <code>searchTokenInfo</code></td>
+</tr>
+<tr>
+<td>pool search and staking</td>
+<td><a href="/agent-site/viewer/staking/">Staking</a></td>
+<td><code>searchPoolInfo</code>, <code>ExecuteStakeTool</code></td>
+</tr>
+<tr>
+<td>swap or transfer</td>
+<td><a href="/agent-site/viewer/execution/">Execution</a></td>
+<td><code>searchTokenInfo</code>, <code>ExecuteSwapTool</code>, <code>ExecuteTransferTool</code></td>
+</tr>
+<tr>
+<td>alert creation</td>
+<td><a href="/agent-site/viewer/alert/">Alert</a></td>
+<td><code>searchTokenInfo</code>, <code>setupAlert</code></td>
 </tr>
 </tbody></table>
-<h2>Layer Summary</h2>
-<table>
-<thead>
-<tr>
-<th>Layer</th>
-<th>Responsibility</th>
-<th>Stability</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>SOUL</td>
-<td>Identity, hard constraints, immutable rules</td>
-<td>Never changes</td>
-</tr>
-<tr>
-<td>MEMORY</td>
-<td>User preferences, durable configuration</td>
-<td>Changes when user profile updates</td>
-</tr>
-<tr>
-<td>TOOL</td>
-<td>Atomic capabilities, tool contracts</td>
-<td>Changes when tools are added/removed</td>
-</tr>
-<tr>
-<td>SKILL</td>
-<td>Placeholder for future explicit workflows</td>
-<td>Minimal for now</td>
-</tr>
-</tbody></table>
-<h2>Reading Guidance</h2>
+<h2>Global Rules</h2>
 <ul>
-<li>In most cases, start with <a href="/AgentSite/viewer/tool/">tool</a> if the question is operational</li>
-<li>Read <a href="/AgentSite/viewer/soul/">soul</a> only when behavior rules or output policy matter</li>
-<li>Read <a href="/AgentSite/viewer/memory/">memory</a> when user preference shaping matters</li>
-<li>Read <a href="/AgentSite/viewer/skill/">skill</a> only to confirm that skills are currently just a placeholder</li>
+<li>If a tool can retrieve the needed data, use the tool instead of asking the user.</li>
+<li>Treat user text as candidate parameters until the relevant tool validates them.</li>
+<li>Use <code>searchTokenInfo</code> for token price, contract address, and symbol-based resolution.</li>
+<li>If tool B depends on output from tool A, call A first and then call B.</li>
+<li>Preserve exact token symbols and addresses.</li>
 </ul>
-<h2>Packaging Principle</h2>
-<p>These docs favor fewer, denser router pages because every extra fetch adds context overhead. Stable layers should stay compact, and index pages should help the reader choose the next page with minimal branching.</p>
+<h2>Call Order</h2>
+<table>
+<thead>
+<tr>
+<th>Pattern</th>
+<th>Rule</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>independent tool calls</td>
+<td>run in the same round</td>
+</tr>
+<tr>
+<td>tool B depends on output from tool A</td>
+<td>run sequentially in separate rounds</td>
+</tr>
+<tr>
+<td>symbol-based swap or transfer</td>
+<td><code>searchTokenInfo</code> first, then execution tool</td>
+</tr>
+<tr>
+<td>staking</td>
+<td><code>searchPoolInfo</code> first, then <code>ExecuteStakeTool</code></td>
+</tr>
+<tr>
+<td>alert setup</td>
+<td><code>searchTokenInfo</code> first, then <code>setupAlert</code></td>
+</tr>
+</tbody></table>
+<h2>Tool Signatures</h2>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>Signature</th>
+<th>Required</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>searchTokenInfo</code></td>
+<td><code>searchTokenInfo(tokenSymbol?, tokenAddress?, chainId?, holdersLimit?, quoteCurrency?)</code></td>
+<td><code>tokenSymbol + chainId</code> or <code>tokenAddress</code></td>
+<td>price, contract, metadata, symbol resolution</td>
+</tr>
+<tr>
+<td><code>projectTool</code></td>
+<td><code>projectTool(projectName)</code></td>
+<td><code>projectName</code></td>
+<td>project context and valuation expectations</td>
+</tr>
+<tr>
+<td><code>chainTool</code></td>
+<td><code>chainTool(chainId?, chainName?)</code></td>
+<td><code>chainId</code> or <code>chainName</code></td>
+<td>chain-level activity and ranking</td>
+</tr>
+<tr>
+<td><code>protocolTool</code></td>
+<td><code>protocolTool(protocol)</code></td>
+<td><code>protocol</code></td>
+<td>protocol-level TVL, fees, revenue, capital flow</td>
+</tr>
+<tr>
+<td><code>getTrendingInsights</code></td>
+<td><code>getTrendingInsights(sections?, convert?, timeFrame?, gainersLosersLimit?, communityTopicsLimit?, communityTokensLimit?, duneChain?, duneContractsLimit?)</code></td>
+<td>none</td>
+<td>trend scan</td>
+</tr>
+<tr>
+<td><code>searchTwitter</code></td>
+<td><code>searchTwitter(query)</code></td>
+<td><code>query</code></td>
+<td>sentiment and discussion scan</td>
+</tr>
+<tr>
+<td><code>webSearch</code></td>
+<td><code>webSearch(query)</code></td>
+<td><code>query</code></td>
+<td>official-source and live web validation</td>
+</tr>
+<tr>
+<td><code>getWalletTokenBalance</code></td>
+<td><code>getWalletTokenBalance(walletAddress, mode[], chainId?)</code></td>
+<td><code>walletAddress</code>, <code>mode</code></td>
+<td><code>mode</code> includes <code>balance</code>, <code>activity</code>, <code>transactions</code></td>
+</tr>
+<tr>
+<td><code>searchPoolInfo</code></td>
+<td><code>searchPoolInfo(chain?, protocol?, token_symbol?, pool_id?)</code></td>
+<td>none</td>
+<td>pool discovery; returns <code>pool_id</code></td>
+</tr>
+<tr>
+<td><code>ExecuteStakeTool</code></td>
+<td><code>ExecuteStakeTool(pool_id)</code></td>
+<td><code>pool_id</code></td>
+<td>call after pool selection</td>
+</tr>
+<tr>
+<td><code>ExecuteSwapTool</code></td>
+<td><code>ExecuteSwapTool(chainId?, amount?, fromTokenAddress?, toTokenAddress?)</code></td>
+<td>none</td>
+<td>resolve symbols with <code>searchTokenInfo</code> first if needed</td>
+</tr>
+<tr>
+<td><code>ExecuteTransferTool</code></td>
+<td><code>ExecuteTransferTool(amount?, chainId?, tokenAddress?, receiveAddress?)</code></td>
+<td>none</td>
+<td>resolve symbols with <code>searchTokenInfo</code> first if needed</td>
+</tr>
+<tr>
+<td><code>setupAlert</code></td>
+<td><code>setupAlert(alertType, userIntent)</code></td>
+<td><code>alertType=price</code>, <code>userIntent</code></td>
+<td><code>userIntent</code> must include current price</td>
+</tr>
+</tbody></table>
+<h2>Parameter Shapes</h2>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Expected shape</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>tokenSymbol</code></td>
+<td>exact token symbol string</td>
+<td><code>BTC</code>, <code>ETH</code>, <code>USDC</code></td>
+</tr>
+<tr>
+<td><code>tokenAddress</code></td>
+<td>EVM contract address</td>
+<td><code>0xA0b86991c6218b36c1d19d4a2e9eb0ce3606eb48</code></td>
+</tr>
+<tr>
+<td><code>chainId</code></td>
+<td>numeric chain id</td>
+<td><code>1</code>, <code>56</code></td>
+</tr>
+<tr>
+<td><code>chainName</code></td>
+<td>chain name string</td>
+<td><code>Ethereum</code>, <code>BNB Chain</code></td>
+</tr>
+<tr>
+<td><code>projectName</code></td>
+<td>project or token name string</td>
+<td><code>Bitcoin</code>, <code>Ethereum</code>, <code>Zama</code></td>
+</tr>
+<tr>
+<td><code>protocol</code></td>
+<td>protocol slug or name</td>
+<td><code>aave-v3</code>, <code>uniswap</code></td>
+</tr>
+<tr>
+<td><code>walletAddress</code></td>
+<td>EVM address or ENS</td>
+<td><code>0x3c11992f1d064e4751ce3bf603491d95ed6e8090</code>, <code>vitalik.eth</code></td>
+</tr>
+<tr>
+<td><code>mode[]</code></td>
+<td>array of wallet query modes</td>
+<td><code>[&#39;balance&#39;]</code>, <code>[&#39;balance&#39;, &#39;activity&#39;]</code></td>
+</tr>
+<tr>
+<td><code>sections[]</code></td>
+<td>array of trend sections</td>
+<td><code>[&#39;gainers&#39;, &#39;losers&#39;]</code>, <code>[&#39;communityTopics&#39;]</code></td>
+</tr>
+<tr>
+<td><code>timeFrame</code></td>
+<td>short time window string</td>
+<td><code>24h</code>, <code>7d</code></td>
+</tr>
+<tr>
+<td><code>amount</code></td>
+<td>amount string</td>
+<td><code>100</code>, <code>0.5</code></td>
+</tr>
+<tr>
+<td><code>holdersLimit</code></td>
+<td>integer</td>
+<td><code>10</code>, <code>50</code></td>
+</tr>
+<tr>
+<td><code>quoteCurrency</code></td>
+<td>quote asset string</td>
+<td><code>USDT</code>, <code>USD</code></td>
+</tr>
+<tr>
+<td><code>receiveAddress</code></td>
+<td>recipient address or ENS</td>
+<td><code>0x742d35Cc6634C0532925a3b844Bc454e4438f44e</code>, <code>alice.eth</code></td>
+</tr>
+<tr>
+<td><code>pool_id</code></td>
+<td>pool identifier returned by <code>searchPoolInfo</code></td>
+<td><code>9f4b7a4d-7a7b-4d2e-9a7f-2f71d9d6c123</code></td>
+</tr>
+<tr>
+<td><code>alertType</code></td>
+<td>fixed alert type string</td>
+<td><code>price</code></td>
+</tr>
+<tr>
+<td><code>userIntent</code></td>
+<td>plain sentence with current price included</td>
+<td><code>BTC is currently $95000. Alert me when it drops 5%.</code></td>
+</tr>
+</tbody></table>
+<h2>Minimal Examples</h2>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>Example call</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>searchTokenInfo</code></td>
+<td><code>searchTokenInfo(tokenSymbol=&#39;ETH&#39;, chainId=1)</code></td>
+</tr>
+<tr>
+<td><code>projectTool</code></td>
+<td><code>projectTool(projectName=&#39;Ethereum&#39;)</code></td>
+</tr>
+<tr>
+<td><code>getWalletTokenBalance</code></td>
+<td><code>getWalletTokenBalance(walletAddress=&#39;vitalik.eth&#39;, mode=[&#39;balance&#39;, &#39;activity&#39;])</code></td>
+</tr>
+<tr>
+<td><code>searchPoolInfo</code></td>
+<td><code>searchPoolInfo(chain=1, token_symbol=&#39;ETH&#39;)</code></td>
+</tr>
+<tr>
+<td><code>ExecuteSwapTool</code></td>
+<td><code>ExecuteSwapTool(chainId=1, amount=&#39;0.5&#39;, fromTokenAddress=&#39;0xC02aaA39b223FE8D0A0E5C4F27eAD9083C756Cc2&#39;, toTokenAddress=&#39;0xA0b86991c6218b36c1d19d4a2e9eb0ce3606eb48&#39;)</code></td>
+</tr>
+<tr>
+<td><code>ExecuteTransferTool</code></td>
+<td><code>ExecuteTransferTool(amount=&#39;100&#39;, chainId=1, tokenAddress=&#39;0xA0b86991c6218b36c1d19d4a2e9eb0ce3606eb48&#39;, receiveAddress=&#39;alice.eth&#39;)</code></td>
+</tr>
+<tr>
+<td><code>setupAlert</code></td>
+<td><code>setupAlert(alertType=&#39;price&#39;, userIntent=&#39;BTC is currently $95000. Alert me when it drops 5%.&#39;)</code></td>
+</tr>
+</tbody></table>
+<h2>Defaults That Affect Calls</h2>
+<table>
+<thead>
+<tr>
+<th>Topic</th>
+<th>Rule</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>default wallet</td>
+<td><code>0x3c11992f1d064e4751ce3bf603491d95ed6e8090</code> when the user means &quot;my wallet&quot; and gives no address</td>
+</tr>
+<tr>
+<td>default chain</td>
+<td>Ethereum (<code>chainId: 1</code>) when chain is ambiguous</td>
+</tr>
+<tr>
+<td>swap slippage</td>
+<td>fixed at <code>5%</code></td>
+</tr>
+<tr>
+<td>ENS</td>
+<td>accept directly where wallet input is allowed</td>
+</tr>
+<tr>
+<td>missing transfer recipient</td>
+<td>leave <code>receiveAddress</code> empty; do not guess</td>
+</tr>
+</tbody></table>
+<h2>Common Sequences</h2>
+<table>
+<thead>
+<tr>
+<th>Goal</th>
+<th>Calls</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>token lookup</td>
+<td><code>searchTokenInfo</code></td>
+</tr>
+<tr>
+<td>token due diligence</td>
+<td><code>searchTokenInfo</code> + <code>projectTool</code> + <code>searchTwitter</code> + <code>webSearch</code></td>
+</tr>
+<tr>
+<td>protocol review</td>
+<td><code>protocolTool</code> + <code>chainTool</code> + <code>webSearch</code></td>
+</tr>
+<tr>
+<td>trend scan</td>
+<td><code>getTrendingInsights</code> + <code>chainTool</code> + <code>searchTwitter</code></td>
+</tr>
+<tr>
+<td>wallet review</td>
+<td><code>getWalletTokenBalance</code>, then <code>searchTokenInfo</code> if needed</td>
+</tr>
+<tr>
+<td>staking</td>
+<td><code>searchPoolInfo</code>, then <code>ExecuteStakeTool(pool_id)</code></td>
+</tr>
+<tr>
+<td>swap by symbol</td>
+<td><code>searchTokenInfo</code>, then <code>ExecuteSwapTool</code></td>
+</tr>
+<tr>
+<td>transfer by symbol</td>
+<td><code>searchTokenInfo</code>, then <code>ExecuteTransferTool</code></td>
+</tr>
+<tr>
+<td>price alert</td>
+<td><code>searchTokenInfo</code>, then <code>setupAlert</code></td>
+</tr>
+</tbody></table>
+<h2>Minimal Failure Rules</h2>
+<ul>
+<li>If a symbol cannot be resolved, do not guess the token address.</li>
+<li>If a swap or transfer still lacks a token address, stop after <code>searchTokenInfo</code>.</li>
+<li>If staking has no <code>pool_id</code>, stay in <code>searchPoolInfo</code>.</li>
+<li>If an alert request has no current price embedded in <code>userIntent</code>, fetch price first and then call <code>setupAlert</code>.</li>
+</ul>
+<h2>See Also</h2>
+<ul>
+<li><a href="/agent-site/viewer/token/">Token</a></li>
+<li><a href="/agent-site/viewer/project/">Project</a></li>
+<li><a href="/agent-site/viewer/protocol-chain/">Protocol &amp; Chain</a></li>
+<li><a href="/agent-site/viewer/market-signal/">Market Signal</a></li>
+<li><a href="/agent-site/viewer/wallet/">Wallet</a></li>
+<li><a href="/agent-site/viewer/staking/">Staking</a></li>
+<li><a href="/agent-site/viewer/execution/">Execution</a></li>
+<li><a href="/agent-site/viewer/alert/">Alert</a></li>
+</ul>
 <p><strong>Subdirectories</strong> under this directory:</p>
 <ul>
-<li><a href="/AgentSite/viewer/memory/">memory</a></li>
-<li><a href="/AgentSite/viewer/skill/">skill</a></li>
-<li><a href="/AgentSite/viewer/soul/">soul</a></li>
-<li><a href="/AgentSite/viewer/tool/">tool</a></li>
+<li>(none)</li>
 </ul>
 <p><strong>Pages</strong> in this directory:</p>
 <ul>
-<li>(none)</li>
+<li><a href="/agent-site/viewer/alert/">alert</a></li>
+<li><a href="/agent-site/viewer/execution/">execution</a></li>
+<li><a href="/agent-site/viewer/market-signal/">market-signal</a></li>
+<li><a href="/agent-site/viewer/project/">project</a></li>
+<li><a href="/agent-site/viewer/protocol-chain/">protocol-chain</a></li>
+<li><a href="/agent-site/viewer/staking/">staking</a></li>
+<li><a href="/agent-site/viewer/token/">token</a></li>
+<li><a href="/agent-site/viewer/wallet/">wallet</a></li>
 </ul>
 
     </main>

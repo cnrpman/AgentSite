@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Market Signal</title>
+    <style>
+      body { margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial; background: #f6f4ef; color: #1b1b1b; }
+      header { position: sticky; top: 0; background: #fff7e8; border-bottom: 1px solid #e7dcc3; padding: 12px 20px; display: flex; gap: 12px; align-items: center; }
+      main { max-width: 960px; margin: 24px auto 72px; padding: 0 20px; line-height: 1.6; }
+      a { color: #0a4ea3; }
+      pre { background: #111827; color: #f9fafb; padding: 16px; border-radius: 8px; overflow-x: auto; }
+      code { background: #f0e7d8; padding: 2px 6px; border-radius: 4px; }
+      pre code { background: transparent; padding: 0; }
+      .meta { color: #5c4b2a; font-size: 0.95rem; }
+    </style>
+  </head>
+  <body>
+    <header>
+      <a href="/agent-site/viewer/">Viewer Home</a>
+      <span>·</span>
+      <a href="/agent-site/market-signal.md">Raw Markdown</a>
+      <span>·</span>
+      <span class="meta">Static GitHub Pages export</span>
+    </header>
+    <main>
+<h1>Market Signal</h1>
+<p><strong>Navigation:</strong> <a href="/agent-site/viewer/">Home</a> &gt; <a href="/agent-site/viewer/market-signal/">market-signal</a></p>
+<p><strong>Summary:</strong> Trend scanning, social discussion, external confirmation, and their call order.</p>
+<hr>
+<p>Use this page for market pulse, trending movers, community discussion, and external validation.</p>
+<h2>Primary Tools</h2>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>Signature</th>
+<th>Required</th>
+<th>Use when</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>getTrendingInsights</code></td>
+<td><code>getTrendingInsights(sections?, convert?, timeFrame?, gainersLosersLimit?, communityTopicsLimit?, communityTokensLimit?, duneChain?, duneContractsLimit?)</code></td>
+<td>none</td>
+<td>trend scan and market pulse</td>
+</tr>
+<tr>
+<td><code>searchTwitter</code></td>
+<td><code>searchTwitter(query)</code></td>
+<td><code>query</code></td>
+<td>social discussion and rumor scan</td>
+</tr>
+<tr>
+<td><code>webSearch</code></td>
+<td><code>webSearch(query)</code></td>
+<td><code>query</code></td>
+<td>official-source and live external validation</td>
+</tr>
+<tr>
+<td><code>chainTool</code></td>
+<td><code>chainTool(chainId?, chainName?)</code></td>
+<td><code>chainId</code> or <code>chainName</code></td>
+<td>when a trend needs chain-level context</td>
+</tr>
+</tbody></table>
+<h2>Parameter Shapes</h2>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Shape</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>sections[]</code></td>
+<td>trend section array</td>
+<td><code>[&#39;gainers&#39;, &#39;losers&#39;]</code>, <code>[&#39;communityTopics&#39;]</code></td>
+</tr>
+<tr>
+<td><code>timeFrame</code></td>
+<td>short time window string</td>
+<td><code>24h</code>, <code>7d</code></td>
+</tr>
+<tr>
+<td><code>convert</code></td>
+<td>quote currency string</td>
+<td><code>USD</code></td>
+</tr>
+<tr>
+<td><code>query</code></td>
+<td>natural search string</td>
+<td><code>Zama</code>, <code>ETH ETF</code>, <code>Base ecosystem</code></td>
+</tr>
+<tr>
+<td><code>chainId</code></td>
+<td>numeric chain id</td>
+<td><code>1</code>, <code>56</code></td>
+</tr>
+<tr>
+<td><code>chainName</code></td>
+<td>chain name string</td>
+<td><code>Ethereum</code>, <code>BNB Chain</code></td>
+</tr>
+</tbody></table>
+<h2>Range Notes</h2>
+<ul>
+<li><code>gainersLosersLimit</code>: <code>1-100</code></li>
+<li><code>communityTopicsLimit</code>: <code>1-100</code></li>
+<li><code>communityTokensLimit</code>: <code>1-100</code></li>
+<li><code>duneContractsLimit</code>: <code>1-100</code></li>
+<li><code>duneChain</code>: chain slug such as <code>ethereum</code> or <code>bnb</code></li>
+</ul>
+<h2>Tool Notes</h2>
+<h3><code>getTrendingInsights</code></h3>
+<ul>
+<li>All inputs are optional.</li>
+<li>Use section filters when a narrower result set is preferred.</li>
+<li>Dune-specific parameters only matter when contract-trend output is requested.</li>
+</ul>
+<h3><code>searchTwitter</code></h3>
+<p>Successful results may include:</p>
+<ul>
+<li><code>screen_name</code></li>
+<li><code>text</code></li>
+<li><code>created_at</code></li>
+<li>engagement or metadata fields when available</li>
+</ul>
+<h3><code>webSearch</code></h3>
+<p>Returns JSON with:</p>
+<ul>
+<li><code>success</code></li>
+<li><code>data</code>, including <code>output</code> and <code>usage</code></li>
+<li><code>error</code></li>
+</ul>
+<h2>Call Order</h2>
+<table>
+<thead>
+<tr>
+<th>Need</th>
+<th>Calls</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>market pulse only</td>
+<td><code>getTrendingInsights</code></td>
+</tr>
+<tr>
+<td>trend plus social chatter</td>
+<td><code>getTrendingInsights</code>, then <code>searchTwitter</code></td>
+</tr>
+<tr>
+<td>trend plus chain context</td>
+<td><code>getTrendingInsights</code>, then <code>chainTool</code></td>
+</tr>
+<tr>
+<td>claim validation</td>
+<td>relevant trend or social tool, then <code>webSearch</code></td>
+</tr>
+<tr>
+<td>social scan only</td>
+<td><code>searchTwitter</code></td>
+</tr>
+</tbody></table>
+<h2>Stop Conditions</h2>
+<ul>
+<li>Stop after <code>getTrendingInsights</code> if the user only wanted a trend scan.</li>
+<li>Stop after <code>searchTwitter</code> if the user only wanted discussion.</li>
+<li>Add <code>webSearch</code> only when the answer depends on external confirmation.</li>
+<li>Add <code>chainTool</code> only when a trend needs chain-level explanation.</li>
+</ul>
+<h2>Do Not</h2>
+<ul>
+<li>Do not start with <code>webSearch</code> for a generic trend scan.</li>
+<li>Do not use <code>searchTwitter</code> as factual validation by itself.</li>
+</ul>
+<h2>Minimal Examples</h2>
+<table>
+<thead>
+<tr>
+<th>Goal</th>
+<th>Example call</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>trend scan</td>
+<td><code>getTrendingInsights(sections=[&#39;gainers&#39;], timeFrame=&#39;24h&#39;)</code></td>
+</tr>
+<tr>
+<td>social scan</td>
+<td><code>searchTwitter(query=&#39;Zama&#39;)</code></td>
+</tr>
+<tr>
+<td>external validation</td>
+<td><code>webSearch(query=&#39;official Zama launch announcement&#39;)</code></td>
+</tr>
+</tbody></table>
+<h2>See Also</h2>
+<ul>
+<li><a href="/agent-site/viewer/">/</a> for the full reference</li>
+<li><a href="/agent-site/viewer/protocol-chain/">Protocol &amp; Chain</a></li>
+<li><a href="/agent-site/viewer/token/">Token</a></li>
+</ul>
+<p>Pages that <strong>Backlink</strong> to here:</p>
+<ul>
+<li><a href="/agent-site/viewer/">Tool Reference</a></li>
+<li><a href="/agent-site/viewer/project/">Project</a></li>
+</ul>
+
+    </main>
+  </body>
+</html>

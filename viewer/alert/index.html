@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Alert</title>
+    <style>
+      body { margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial; background: #f6f4ef; color: #1b1b1b; }
+      header { position: sticky; top: 0; background: #fff7e8; border-bottom: 1px solid #e7dcc3; padding: 12px 20px; display: flex; gap: 12px; align-items: center; }
+      main { max-width: 960px; margin: 24px auto 72px; padding: 0 20px; line-height: 1.6; }
+      a { color: #0a4ea3; }
+      pre { background: #111827; color: #f9fafb; padding: 16px; border-radius: 8px; overflow-x: auto; }
+      code { background: #f0e7d8; padding: 2px 6px; border-radius: 4px; }
+      pre code { background: transparent; padding: 0; }
+      .meta { color: #5c4b2a; font-size: 0.95rem; }
+    </style>
+  </head>
+  <body>
+    <header>
+      <a href="/agent-site/viewer/">Viewer Home</a>
+      <span>·</span>
+      <a href="/agent-site/alert.md">Raw Markdown</a>
+      <span>·</span>
+      <span class="meta">Static GitHub Pages export</span>
+    </header>
+    <main>
+<h1>Alert</h1>
+<p><strong>Navigation:</strong> <a href="/agent-site/viewer/">Home</a> &gt; <a href="/agent-site/viewer/alert/">alert</a></p>
+<p><strong>Summary:</strong> Price alert setup with the exact userIntent shape and hard prerequisites.</p>
+<hr>
+<p>Use this page for alert creation.</p>
+<h2>Primary Tools</h2>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>Signature</th>
+<th>Required</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>searchTokenInfo</code></td>
+<td><code>searchTokenInfo(tokenSymbol?, tokenAddress?, chainId?, holdersLimit?, quoteCurrency?)</code></td>
+<td><code>tokenSymbol + chainId</code> or <code>tokenAddress</code></td>
+<td>fetch current price first</td>
+</tr>
+<tr>
+<td><code>setupAlert</code></td>
+<td><code>setupAlert(alertType, userIntent)</code></td>
+<td><code>alertType=price</code>, <code>userIntent</code></td>
+<td><code>userIntent</code> must include the current price</td>
+</tr>
+</tbody></table>
+<h2>Parameter Shapes</h2>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Shape</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>alertType</code></td>
+<td>fixed string</td>
+<td><code>price</code></td>
+</tr>
+<tr>
+<td><code>userIntent</code></td>
+<td>plain sentence with current price included</td>
+<td><code>BTC is currently $95000. Alert me when it drops 5%.</code></td>
+</tr>
+<tr>
+<td><code>tokenSymbol</code></td>
+<td>exact symbol string</td>
+<td><code>BTC</code>, <code>ETH</code></td>
+</tr>
+<tr>
+<td><code>chainId</code></td>
+<td>numeric chain id</td>
+<td><code>1</code>, <code>56</code></td>
+</tr>
+</tbody></table>
+<h2>Workflow</h2>
+<ol>
+<li>Fetch the current price with <code>searchTokenInfo</code>.</li>
+<li>Rewrite the request so <code>userIntent</code> includes both the user&#39;s request and the current price.</li>
+<li>Call <code>setupAlert</code>.</li>
+</ol>
+<h2>Output Shape</h2>
+<ul>
+<li><code>success</code>: boolean</li>
+<li><code>data</code>: parsed alert conditions array with asset, condition type, target price, and note</li>
+<li><code>error</code>: failure reason when parsing fails</li>
+</ul>
+<h2>Call Order</h2>
+<table>
+<thead>
+<tr>
+<th>Need</th>
+<th>Calls</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>any price alert</td>
+<td><code>searchTokenInfo</code>, then <code>setupAlert</code></td>
+</tr>
+</tbody></table>
+<h2>Stop Conditions</h2>
+<ul>
+<li>Do not call <code>setupAlert</code> until the current price has been fetched.</li>
+<li>Do not call <code>setupAlert</code> if <code>userIntent</code> does not include the current price.</li>
+</ul>
+<h2>Minimal Examples</h2>
+<table>
+<thead>
+<tr>
+<th>Goal</th>
+<th>Example call</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>fetch price first</td>
+<td><code>searchTokenInfo(tokenSymbol=&#39;BTC&#39;, chainId=1)</code></td>
+</tr>
+<tr>
+<td>create alert</td>
+<td><code>setupAlert(alertType=&#39;price&#39;, userIntent=&#39;BTC is currently $95000. Alert me when it drops 5%.&#39;)</code></td>
+</tr>
+</tbody></table>
+<h2>See Also</h2>
+<ul>
+<li><a href="/agent-site/viewer/">/</a> for the full reference</li>
+<li><a href="/agent-site/viewer/token/">Token</a></li>
+</ul>
+<p>Pages that <strong>Backlink</strong> to here:</p>
+<ul>
+<li><a href="/agent-site/viewer/">Tool Reference</a></li>
+</ul>
+
+    </main>
+  </body>
+</html>
