@@ -94,7 +94,6 @@ Use `webSearch` only after tool output when official-source confirmation or live
 
 ## See Also
 
-- [/](/) for the full reference
 - [Market Signal](/AgentSite/market-signal.md)
 
 Pages that **Backlink** to here:

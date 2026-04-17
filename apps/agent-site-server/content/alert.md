@@ -52,5 +52,4 @@ Use this page for alert creation.
 
 ## See Also
 
-- [/](/) for the full reference
 - [Token](/token/)

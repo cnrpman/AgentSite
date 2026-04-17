@@ -77,6 +77,5 @@ Use this page for wallet balances, activity, and transactions.
 
 ## See Also
 
-- [/](/) for the full reference
 - [Execution](/execution/)
 - [Staking](/staking/)

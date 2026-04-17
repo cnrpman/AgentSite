@@ -76,5 +76,4 @@ Underlying endpoint: `/pool/analysis`
 
 ## See Also
 
-- [/](/) for the full reference
 - [Wallet](/wallet/)

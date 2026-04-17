@@ -93,7 +93,6 @@ Mandatory alongside fundamentals: for diligence, investigation, or narrative-sen
 
 ## See Also
 
-- [/](/) for the full reference
 - [Project](/project/)
 - [Market Signal](/market-signal/)
 - [Execution](/execution/)

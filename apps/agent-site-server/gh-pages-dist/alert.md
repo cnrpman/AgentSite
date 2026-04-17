@@ -56,7 +56,6 @@ Use this page for alert creation.
 
 ## See Also
 
-- [/](/) for the full reference
 - [Token](/AgentSite/token.md)
 
 Pages that **Backlink** to here:

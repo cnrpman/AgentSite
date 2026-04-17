@@ -102,7 +102,6 @@ Returns JSON with:
 
 ## See Also
 
-- [/](/) for the full reference
 - [Protocol & Chain](/AgentSite/protocol-chain.md)
 - [Token](/AgentSite/token.md)
 

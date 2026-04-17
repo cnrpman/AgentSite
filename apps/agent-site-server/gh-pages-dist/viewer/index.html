@@ -84,7 +84,8 @@
 <ol>
 <li>Open this homepage first for shared identity, runtime, output, defaults, and verification rules.</li>
 <li>Select the smallest matching scene page from the table above.</li>
-<li>Execute from that scene page if the route, parameters, output shape, and stop conditions are already clear.</li>
+<li>If no scene clearly matches, stay on this homepage first and route from <code>Runtime Query Routing</code>, <code>Tool Signatures</code>, and <code>Common Sequences</code> instead of forcing a scene-page match.</li>
+<li>Execute from the selected scene page or homepage route once the route, parameters, output shape, and stop conditions are already clear.</li>
 <li>If evidence is incomplete or the request crosses scenes, open one additional relevant scene page.</li>
 <li>Continue traversal until identity, runtime policy, output policy, and tool contracts needed for the answer are clear across the homepage plus the selected scene pages.</li>
 </ol>
@@ -92,56 +93,10 @@
 <ul>
 <li>Do not preload all scene pages.</li>
 <li>Start with the smallest relevant page set: homepage plus one scene page.</li>
+<li>If no scene clearly matches, homepage-only routing is valid until a scene-specific contract becomes necessary.</li>
 <li>Expand to a second scene page only when validation, dependency, or adjacent context requires it.</li>
 <li>Stop page traversal as soon as routing, parameter, output, and verification rules are sufficiently clear.</li>
 <li>Prefer retrying tools and narrowing the request over opening many pages by default.</li>
-</ul>
-<h2>Shallow Site Map</h2>
-<table>
-<thead>
-<tr>
-<th>Layer in Current Topology</th>
-<th>Location</th>
-<th>Role</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>shared rules</td>
-<td>home (<code>/</code>)</td>
-<td>identity, runtime, output, defaults, verification, and cross-scene policy</td>
-</tr>
-<tr>
-<td>token diligence</td>
-<td><a href="/AgentSite/viewer/token/">Token</a></td>
-<td>token lookup plus token-specific follow-ups</td>
-</tr>
-<tr>
-<td>project diligence</td>
-<td><a href="/AgentSite/viewer/project/">Project</a></td>
-<td>project context, valuation framing, and project verification</td>
-</tr>
-<tr>
-<td>protocol or chain review</td>
-<td><a href="/AgentSite/viewer/protocol-chain/">Protocol &amp; Chain</a></td>
-<td>protocol and chain analysis rules</td>
-</tr>
-<tr>
-<td>market pulse and social narrative</td>
-<td><a href="/AgentSite/viewer/market-signal/">Market Signal</a></td>
-<td>trend, social, and external validation rules</td>
-</tr>
-<tr>
-<td>wallet, staking, execution, alert</td>
-<td><a href="/AgentSite/viewer/wallet/">Wallet</a>, <a href="/AgentSite/viewer/staking/">Staking</a>, <a href="/AgentSite/viewer/execution/">Execution</a>, <a href="/AgentSite/viewer/alert/">Alert</a></td>
-<td>execution-oriented closed leaves</td>
-</tr>
-</tbody></table>
-<h2>Depth Limit</h2>
-<ul>
-<li>Preferred depth is homepage -&gt; one scene page.</li>
-<li>Homepage -&gt; two scene pages is acceptable when one scene supplies the primary tool contract and another supplies validation context.</li>
-<li>Avoid browsing a third scene page unless the request genuinely spans multiple workflows.</li>
-<li>Keep the homepage thin on scene-specific detail and keep scene pages closed over their local workflow.</li>
 </ul>
 <h2>Identity and Truth Rules</h2>
 <ul>
@@ -265,10 +220,6 @@
 </tr>
 </thead>
 <tbody><tr>
-<td>default wallet</td>
-<td><code>0x3c11992f1d064e4751ce3bf603491d95ed6e8090</code> when the user means &quot;my wallet&quot; and gives no address</td>
-</tr>
-<tr>
 <td>default chain</td>
 <td>Ethereum (<code>chainId: 1</code>) when chain is ambiguous</td>
 </tr>
@@ -715,19 +666,6 @@
 <li>If staking has no <code>pool_id</code>, stay in <code>searchPoolInfo</code>.</li>
 <li>If an alert request has no current price embedded in <code>userIntent</code>, fetch price first and then call <code>setupAlert</code>.</li>
 </ul>
-<h2>See Also</h2>
-<ul>
-<li><a href="/AgentSite/viewer/token/">Token</a></li>
-<li><a href="/AgentSite/viewer/project/">Project</a></li>
-<li><a href="/AgentSite/viewer/protocol-chain/">Protocol &amp; Chain</a></li>
-<li><a href="/AgentSite/viewer/market-signal/">Market Signal</a></li>
-<li><a href="/AgentSite/viewer/wallet/">Wallet</a></li>
-<li><a href="/AgentSite/viewer/staking/">Staking</a></li>
-<li><a href="/AgentSite/viewer/execution/">Execution</a></li>
-<li><a href="/AgentSite/viewer/alert/">Alert</a></li>
-</ul>
-<h2>Packaging Note</h2>
-<p>Keep the homepage dense with shared rules and keep scene pages explicit and closed over their local workflow. This preserves the <code>master</code> homepage -&gt; scene-page topology while still carrying the higher-value shared guidance that also existed in <code>xty</code>.</p>
 <p><strong>Subdirectories</strong> under this directory:</p>
 <ul>
 <li>(none)</li>

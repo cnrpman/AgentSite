@@ -80,6 +80,5 @@ Mandatory alongside fundamentals: for diligence, investigation, or narrative-sen
 
 ## See Also
 
-- [/](/) for the full reference
 - [Token](/token/)
 - [Market Signal](/market-signal/)

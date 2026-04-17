@@ -98,6 +98,5 @@ Returns JSON with:
 
 ## See Also
 
-- [/](/) for the full reference
 - [Protocol & Chain](/protocol-chain/)
 - [Token](/token/)

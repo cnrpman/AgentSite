@@ -27,35 +27,19 @@ If a request clearly matches one scene below, open that page first. Each scene p
 
 1. Open this homepage first for shared identity, runtime, output, defaults, and verification rules.
 2. Select the smallest matching scene page from the table above.
-3. Execute from that scene page if the route, parameters, output shape, and stop conditions are already clear.
-4. If evidence is incomplete or the request crosses scenes, open one additional relevant scene page.
-5. Continue traversal until identity, runtime policy, output policy, and tool contracts needed for the answer are clear across the homepage plus the selected scene pages.
+3. If no scene clearly matches, stay on this homepage first and route from `Runtime Query Routing`, `Tool Signatures`, and `Common Sequences` instead of forcing a scene-page match.
+4. Execute from the selected scene page or homepage route once the route, parameters, output shape, and stop conditions are already clear.
+5. If evidence is incomplete or the request crosses scenes, open one additional relevant scene page.
+6. Continue traversal until identity, runtime policy, output policy, and tool contracts needed for the answer are clear across the homepage plus the selected scene pages.
 
 ## Progressive Disclosure Contract
 
 - Do not preload all scene pages.
 - Start with the smallest relevant page set: homepage plus one scene page.
+- If no scene clearly matches, homepage-only routing is valid until a scene-specific contract becomes necessary.
 - Expand to a second scene page only when validation, dependency, or adjacent context requires it.
 - Stop page traversal as soon as routing, parameter, output, and verification rules are sufficiently clear.
 - Prefer retrying tools and narrowing the request over opening many pages by default.
-
-## Shallow Site Map
-
-| Layer in Current Topology | Location | Role |
-|---------------------------|----------|------|
-| shared rules | home (`/`) | identity, runtime, output, defaults, verification, and cross-scene policy |
-| token diligence | [Token](/AgentSite/token.md) | token lookup plus token-specific follow-ups |
-| project diligence | [Project](/AgentSite/project.md) | project context, valuation framing, and project verification |
-| protocol or chain review | [Protocol & Chain](/AgentSite/protocol-chain.md) | protocol and chain analysis rules |
-| market pulse and social narrative | [Market Signal](/AgentSite/market-signal.md) | trend, social, and external validation rules |
-| wallet, staking, execution, alert | [Wallet](/AgentSite/wallet.md), [Staking](/AgentSite/staking.md), [Execution](/AgentSite/execution.md), [Alert](/AgentSite/alert.md) | execution-oriented closed leaves |
-
-## Depth Limit
-
-- Preferred depth is homepage -> one scene page.
-- Homepage -> two scene pages is acceptable when one scene supplies the primary tool contract and another supplies validation context.
-- Avoid browsing a third scene page unless the request genuinely spans multiple workflows.
-- Keep the homepage thin on scene-specific detail and keep scene pages closed over their local workflow.
 
 ## Identity and Truth Rules
 
@@ -122,7 +106,6 @@ If a request clearly matches one scene below, open that page first. Each scene p
 
 | Topic | Rule |
 |-------|------|
-| default wallet | `0x3c11992f1d064e4751ce3bf603491d95ed6e8090` when the user means "my wallet" and gives no address |
 | default chain | Ethereum (`chainId: 1`) when chain is ambiguous |
 | swap slippage | fixed at `5%` |
 | ENS | accept directly where wallet input is allowed |
@@ -267,21 +250,6 @@ For token, project, and DeFi diligence, reconcile fundamentals with both social 
 - If a swap or transfer still lacks a token address, stop after `searchTokenInfo`.
 - If staking has no `pool_id`, stay in `searchPoolInfo`.
 - If an alert request has no current price embedded in `userIntent`, fetch price first and then call `setupAlert`.
-
-## See Also
-
-- [Token](/AgentSite/token.md)
-- [Project](/AgentSite/project.md)
-- [Protocol & Chain](/AgentSite/protocol-chain.md)
-- [Market Signal](/AgentSite/market-signal.md)
-- [Wallet](/AgentSite/wallet.md)
-- [Staking](/AgentSite/staking.md)
-- [Execution](/AgentSite/execution.md)
-- [Alert](/AgentSite/alert.md)
-
-## Packaging Note
-
-Keep the homepage dense with shared rules and keep scene pages explicit and closed over their local workflow. This preserves the `master` homepage -> scene-page topology while still carrying the higher-value shared guidance that also existed in `xty`.
 
 **Subdirectories** under this directory:
 - (none)

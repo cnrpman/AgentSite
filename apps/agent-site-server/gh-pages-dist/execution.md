@@ -85,7 +85,6 @@ Use this page for swap and transfer setup.
 
 ## See Also
 
-- [/](/) for the full reference
 - [Token](/AgentSite/token.md)
 - [Wallet](/AgentSite/wallet.md)
 

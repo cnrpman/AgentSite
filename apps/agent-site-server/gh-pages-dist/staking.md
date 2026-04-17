@@ -80,7 +80,6 @@ Underlying endpoint: `/pool/analysis`
 
 ## See Also
 
-- [/](/) for the full reference
 - [Wallet](/AgentSite/wallet.md)
 
 Pages that **Backlink** to here:

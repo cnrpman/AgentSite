@@ -81,6 +81,5 @@ Use this page for swap and transfer setup.
 
 ## See Also
 
-- [/](/) for the full reference
 - [Token](/token/)
 - [Wallet](/wallet/)
