@@ -1,6 +1,6 @@
 # Wallet
 
-**Navigation:** [Home](/) > [wallet](/agent-site/wallet.md)
+**Navigation:** [Home](/) > [wallet](/AgentSite/wallet.md)
 
 **Summary:** Wallet review with mode selection, address shapes, and token follow-up.
 
@@ -82,8 +82,8 @@ Use this page for wallet balances, activity, and transactions.
 ## See Also
 
 - [/](/) for the full reference
-- [Execution](/agent-site/execution.md)
-- [Staking](/agent-site/staking.md)
+- [Execution](/AgentSite/execution.md)
+- [Staking](/AgentSite/staking.md)
 
 Pages that **Backlink** to here:
 - [Tool Reference](/)

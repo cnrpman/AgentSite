@@ -1,6 +1,6 @@
 # Project
 
-**Navigation:** [Home](/) > [project](/agent-site/project.md)
+**Navigation:** [Home](/) > [project](/AgentSite/project.md)
 
 **Summary:** Project-level context, valuation expectations, and project follow-up calls.
 
@@ -73,8 +73,8 @@ Use this page when the question is about a named project rather than just a toke
 ## See Also
 
 - [/](/) for the full reference
-- [Token](/agent-site/token.md)
-- [Market Signal](/agent-site/market-signal.md)
+- [Token](/AgentSite/token.md)
+- [Market Signal](/AgentSite/market-signal.md)
 
 Pages that **Backlink** to here:
 - [Tool Reference](/)

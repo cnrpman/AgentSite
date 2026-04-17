@@ -1,6 +1,6 @@
 # Execution
 
-**Navigation:** [Home](/) > [execution](/agent-site/execution.md)
+**Navigation:** [Home](/) > [execution](/AgentSite/execution.md)
 
 **Summary:** Swap and transfer calls, parameter shapes, defaults, and hard stop conditions.
 
@@ -86,8 +86,8 @@ Use this page for swap and transfer setup.
 ## See Also
 
 - [/](/) for the full reference
-- [Token](/agent-site/token.md)
-- [Wallet](/agent-site/wallet.md)
+- [Token](/AgentSite/token.md)
+- [Wallet](/AgentSite/wallet.md)
 
 Pages that **Backlink** to here:
 - [Tool Reference](/)

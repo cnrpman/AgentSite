@@ -1,6 +1,6 @@
 # Protocol & Chain
 
-**Navigation:** [Home](/) > [protocol-chain](/agent-site/protocol-chain.md)
+**Navigation:** [Home](/) > [protocol-chain](/AgentSite/protocol-chain.md)
 
 **Summary:** Protocol-level and chain-level review with the minimum tool choice logic.
 
@@ -86,7 +86,7 @@ Use this page for protocol review, chain review, and protocol-versus-chain conte
 ## See Also
 
 - [/](/) for the full reference
-- [Market Signal](/agent-site/market-signal.md)
+- [Market Signal](/AgentSite/market-signal.md)
 
 Pages that **Backlink** to here:
 - [Tool Reference](/)

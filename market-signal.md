@@ -1,6 +1,6 @@
 # Market Signal
 
-**Navigation:** [Home](/) > [market-signal](/agent-site/market-signal.md)
+**Navigation:** [Home](/) > [market-signal](/AgentSite/market-signal.md)
 
 **Summary:** Trend scanning, social discussion, external confirmation, and their call order.
 
@@ -94,9 +94,9 @@ Returns JSON with:
 ## See Also
 
 - [/](/) for the full reference
-- [Protocol & Chain](/agent-site/protocol-chain.md)
-- [Token](/agent-site/token.md)
+- [Protocol & Chain](/AgentSite/protocol-chain.md)
+- [Token](/AgentSite/token.md)
 
 Pages that **Backlink** to here:
 - [Tool Reference](/)
-- [Project](/agent-site/project.md)
+- [Project](/AgentSite/project.md)

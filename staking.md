@@ -1,6 +1,6 @@
 # Staking
 
-**Navigation:** [Home](/) > [staking](/agent-site/staking.md)
+**Navigation:** [Home](/) > [staking](/AgentSite/staking.md)
 
 **Summary:** Pool search and stake execution with the minimum required sequencing.
 
@@ -72,7 +72,7 @@ Use this page for pool discovery, staking options, and stake execution.
 ## See Also
 
 - [/](/) for the full reference
-- [Wallet](/agent-site/wallet.md)
+- [Wallet](/AgentSite/wallet.md)
 
 Pages that **Backlink** to here:
 - [Tool Reference](/)

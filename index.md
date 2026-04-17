@@ -14,14 +14,14 @@ If a request clearly matches one scene below, open that page first. Each scene p
 
 | Scene | Open | Main tools |
 |-------|------|------------|
-| token lookup and token diligence | [Token](/agent-site/token.md) | `searchTokenInfo`, `projectTool`, `searchTwitter`, `webSearch` |
-| project review | [Project](/agent-site/project.md) | `projectTool`, `searchTwitter`, `webSearch`, `searchTokenInfo` |
-| protocol or chain review | [Protocol & Chain](/agent-site/protocol-chain.md) | `protocolTool`, `chainTool`, `webSearch` |
-| market pulse, trends, social, news | [Market Signal](/agent-site/market-signal.md) | `getTrendingInsights`, `searchTwitter`, `webSearch`, `chainTool` |
-| wallet review | [Wallet](/agent-site/wallet.md) | `getWalletTokenBalance`, `searchTokenInfo` |
-| pool search and staking | [Staking](/agent-site/staking.md) | `searchPoolInfo`, `ExecuteStakeTool` |
-| swap or transfer | [Execution](/agent-site/execution.md) | `searchTokenInfo`, `ExecuteSwapTool`, `ExecuteTransferTool` |
-| alert creation | [Alert](/agent-site/alert.md) | `searchTokenInfo`, `setupAlert` |
+| token lookup and token diligence | [Token](/AgentSite/token.md) | `searchTokenInfo`, `projectTool`, `searchTwitter`, `webSearch` |
+| project review | [Project](/AgentSite/project.md) | `projectTool`, `searchTwitter`, `webSearch`, `searchTokenInfo` |
+| protocol or chain review | [Protocol & Chain](/AgentSite/protocol-chain.md) | `protocolTool`, `chainTool`, `webSearch` |
+| market pulse, trends, social, news | [Market Signal](/AgentSite/market-signal.md) | `getTrendingInsights`, `searchTwitter`, `webSearch`, `chainTool` |
+| wallet review | [Wallet](/AgentSite/wallet.md) | `getWalletTokenBalance`, `searchTokenInfo` |
+| pool search and staking | [Staking](/AgentSite/staking.md) | `searchPoolInfo`, `ExecuteStakeTool` |
+| swap or transfer | [Execution](/AgentSite/execution.md) | `searchTokenInfo`, `ExecuteSwapTool`, `ExecuteTransferTool` |
+| alert creation | [Alert](/AgentSite/alert.md) | `searchTokenInfo`, `setupAlert` |
 
 ## Global Rules
 
@@ -126,24 +126,24 @@ If a request clearly matches one scene below, open that page first. Each scene p
 
 ## See Also
 
-- [Token](/agent-site/token.md)
-- [Project](/agent-site/project.md)
-- [Protocol & Chain](/agent-site/protocol-chain.md)
-- [Market Signal](/agent-site/market-signal.md)
-- [Wallet](/agent-site/wallet.md)
-- [Staking](/agent-site/staking.md)
-- [Execution](/agent-site/execution.md)
-- [Alert](/agent-site/alert.md)
+- [Token](/AgentSite/token.md)
+- [Project](/AgentSite/project.md)
+- [Protocol & Chain](/AgentSite/protocol-chain.md)
+- [Market Signal](/AgentSite/market-signal.md)
+- [Wallet](/AgentSite/wallet.md)
+- [Staking](/AgentSite/staking.md)
+- [Execution](/AgentSite/execution.md)
+- [Alert](/AgentSite/alert.md)
 
 **Subdirectories** under this directory:
 - (none)
 
 **Pages** in this directory:
-- [alert](/agent-site/alert.md)
-- [execution](/agent-site/execution.md)
-- [market-signal](/agent-site/market-signal.md)
-- [project](/agent-site/project.md)
-- [protocol-chain](/agent-site/protocol-chain.md)
-- [staking](/agent-site/staking.md)
-- [token](/agent-site/token.md)
-- [wallet](/agent-site/wallet.md)
+- [alert](/AgentSite/alert.md)
+- [execution](/AgentSite/execution.md)
+- [market-signal](/AgentSite/market-signal.md)
+- [project](/AgentSite/project.md)
+- [protocol-chain](/AgentSite/protocol-chain.md)
+- [staking](/AgentSite/staking.md)
+- [token](/AgentSite/token.md)
+- [wallet](/AgentSite/wallet.md)
