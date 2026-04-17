@@ -26,9 +26,8 @@ The root scripts proxy to `apps/agent-site-server`.
 For GitHub Pages export:
 
 - `yarn --ignore-engines build`
-- `yarn --ignore-engines export:gh-pages`
 
-This produces a dual-output static bundle where raw Markdown remains available as `.md` files and a readable static viewer is generated under `viewer/`.
+`yarn build` now produces both `dist/` and `apps/agent-site-server/gh-pages-dist/`. No separate branch-switching flow is required for local export generation.
 
 ## Content Architecture
 

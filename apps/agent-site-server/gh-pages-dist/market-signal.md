@@ -1,7 +1,11 @@
+# Market Signal
+
+**Navigation:** [Home](/) > [market-signal](/agent-site/market-signal.md)
+
+**Summary:** Trend scanning, social discussion, external confirmation, and their call order.
+
 ---
-title: Market Signal
-summary: Trend scanning, social discussion, external confirmation, and their call order.
----
+
 Use this page for market pulse, trending movers, community discussion, and external validation.
 
 ## Primary Tools
@@ -90,5 +94,9 @@ Returns JSON with:
 ## See Also
 
 - [/](/) for the full reference
-- [Protocol & Chain](/protocol-chain/)
-- [Token](/token/)
+- [Protocol & Chain](/agent-site/protocol-chain.md)
+- [Token](/agent-site/token.md)
+
+Pages that **Backlink** to here:
+- [Tool Reference](/)
+- [Project](/agent-site/project.md)

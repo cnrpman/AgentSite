@@ -7,9 +7,10 @@
     "node": ">=20"
   },
   "scripts": {
-    "build": "tsx src/build.ts",
+    "build:content": "tsx src/build.ts",
+    "build": "yarn build:content && tsx src/export-gh-pages.ts",
     "check": "tsx src/check.ts",
-    "export:gh-pages": "tsx src/export-gh-pages.ts",
+    "export:gh-pages": "yarn build:content && tsx src/export-gh-pages.ts",
     "build:server": "tsc -p tsconfig.json",
     "dev": "tsx watch src/server.ts",
     "start": "node build/server.js"

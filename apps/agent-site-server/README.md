@@ -25,9 +25,9 @@ Viewer is available at `http://localhost:3000/viewer/`.
 
 ## Scripts
 
-- `yarn build` → generate `dist/` from `content/` and run checks
+- `yarn build` → generate `dist/` from `content/`, run checks, and also generate `gh-pages-dist/`
 - `yarn run check` → validate page contract, links, reachability, and print a token-budget report for generated Markdown
-- `yarn export:gh-pages` → generate `gh-pages-dist/` with both raw Markdown and static viewer HTML
+- `yarn export:gh-pages` → alias for the same export flow when you want to think in GitHub Pages terms
 - `yarn dev` → run Fastify server with TS runtime (`tsx watch`)
 - `yarn build:server` → compile TypeScript to `build/`
 - `yarn start` → run compiled server (`node build/server.js`)
@@ -106,7 +106,7 @@ Cache headers and ETag are set for all Markdown responses.
 
 ## GitHub Pages Export
 
-`yarn export:gh-pages` creates `gh-pages-dist/` with both artifacts that matter for this project:
+`yarn build` already creates `gh-pages-dist/` with both artifacts that matter for this project:
 
 - raw Markdown pages preserved as `.md` files for agents
 - matching human-readable static pages under `viewer/`
@@ -116,6 +116,8 @@ The export also adds:
 - `index.html` as a landing page linking to both modes
 - `.nojekyll` so GitHub Pages serves Markdown files as raw files instead of transforming them away
 - `llms.txt` copied from the Markdown homepage
+
+This flow does not require switching to or managing a `gh-pages` branch locally. The generated `gh-pages-dist/` directory is the publishable artifact.
 
 Environment variables:
 - `MARKDOWN_PORT` (markdown service port, default 3000)

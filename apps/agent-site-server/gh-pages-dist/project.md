@@ -1,7 +1,11 @@
+# Project
+
+**Navigation:** [Home](/) > [project](/agent-site/project.md)
+
+**Summary:** Project-level context, valuation expectations, and project follow-up calls.
+
 ---
-title: Project
-summary: Project-level context, valuation expectations, and project follow-up calls.
----
+
 Use this page when the question is about a named project rather than just a token contract.
 
 ## Primary Tool
@@ -69,5 +73,8 @@ Use this page when the question is about a named project rather than just a toke
 ## See Also
 
 - [/](/) for the full reference
-- [Token](/token/)
-- [Market Signal](/market-signal/)
+- [Token](/agent-site/token.md)
+- [Market Signal](/agent-site/market-signal.md)
+
+Pages that **Backlink** to here:
+- [Tool Reference](/)

@@ -1,7 +1,11 @@
+# Token
+
+**Navigation:** [Home](/) > [token](/agent-site/token.md)
+
+**Summary:** Token lookup, price, contract, metadata, and token-level follow-up calls.
+
 ---
-title: Token
-summary: Token lookup, price, contract, metadata, and token-level follow-up calls.
----
+
 Use this page for token identity, price, contract address, metadata, and basic token diligence.
 
 ## Primary Tool
@@ -94,6 +98,10 @@ Use this page for token identity, price, contract address, metadata, and basic t
 ## See Also
 
 - [/](/) for the full reference
-- [Project](/project/)
-- [Execution](/execution/)
-- [Alert](/alert/)
+- [Project](/agent-site/project.md)
+- [Execution](/agent-site/execution.md)
+- [Alert](/agent-site/alert.md)
+
+Pages that **Backlink** to here:
+- [Tool Reference](/)
+- [Market Signal](/agent-site/market-signal.md)

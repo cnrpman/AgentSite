@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Token</title>
+    <style>
+      body { margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial; background: #f6f4ef; color: #1b1b1b; }
+      header { position: sticky; top: 0; background: #fff7e8; border-bottom: 1px solid #e7dcc3; padding: 12px 20px; display: flex; gap: 12px; align-items: center; }
+      main { max-width: 960px; margin: 24px auto 72px; padding: 0 20px; line-height: 1.6; }
+      a { color: #0a4ea3; }
+      pre { background: #111827; color: #f9fafb; padding: 16px; border-radius: 8px; overflow-x: auto; }
+      code { background: #f0e7d8; padding: 2px 6px; border-radius: 4px; }
+      pre code { background: transparent; padding: 0; }
+      .meta { color: #5c4b2a; font-size: 0.95rem; }
+    </style>
+  </head>
+  <body>
+    <header>
+      <a href="/agent-site/viewer/">Viewer Home</a>
+      <span>·</span>
+      <a href="/agent-site/token.md">Raw Markdown</a>
+      <span>·</span>
+      <span class="meta">Static GitHub Pages export</span>
+    </header>
+    <main>
+<h1>Token</h1>
+<p><strong>Navigation:</strong> <a href="/agent-site/viewer/">Home</a> &gt; <a href="/agent-site/viewer/token/">token</a></p>
+<p><strong>Summary:</strong> Token lookup, price, contract, metadata, and token-level follow-up calls.</p>
+<hr>
+<p>Use this page for token identity, price, contract address, metadata, and basic token diligence.</p>
+<h2>Primary Tool</h2>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>Signature</th>
+<th>Required</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>searchTokenInfo</code></td>
+<td><code>searchTokenInfo(tokenSymbol?, tokenAddress?, chainId?, holdersLimit?, quoteCurrency?)</code></td>
+<td><code>tokenSymbol + chainId</code> or <code>tokenAddress</code></td>
+<td>primary token lookup tool</td>
+</tr>
+</tbody></table>
+<h2>Parameter Shapes</h2>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Shape</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>tokenSymbol</code></td>
+<td>exact symbol string</td>
+<td><code>ETH</code>, <code>USDC</code>, <code>BTC</code></td>
+</tr>
+<tr>
+<td><code>tokenAddress</code></td>
+<td>EVM address</td>
+<td><code>0xA0b86991c6218b36c1d19d4a2e9eb0ce3606eb48</code></td>
+</tr>
+<tr>
+<td><code>chainId</code></td>
+<td>numeric chain id</td>
+<td><code>1</code>, <code>56</code></td>
+</tr>
+<tr>
+<td><code>holdersLimit</code></td>
+<td>integer</td>
+<td><code>10</code>, <code>50</code></td>
+</tr>
+<tr>
+<td><code>quoteCurrency</code></td>
+<td>quote asset string</td>
+<td><code>USDT</code>, <code>USD</code></td>
+</tr>
+</tbody></table>
+<h2>Input Rules</h2>
+<ul>
+<li>Provide either <code>tokenSymbol</code> or <code>tokenAddress</code>.</li>
+<li>When using <code>tokenSymbol</code>, also provide <code>chainId</code>.</li>
+<li>Use <code>holdersLimit</code> only when holder ranking is useful.</li>
+</ul>
+<h2>Rules</h2>
+<ul>
+<li>Any price information must come from <code>searchTokenInfo</code>.</li>
+<li>Do not declare a token unrecognized before invoking this tool.</li>
+<li>Never convert a base asset to a wrapped variant unless the user explicitly asked for it.</li>
+</ul>
+<h2>Input Rules</h2>
+<ul>
+<li>Provide either <code>tokenSymbol</code> or <code>tokenAddress</code>.</li>
+<li>When using <code>tokenSymbol</code>, also provide <code>chainId</code>.</li>
+<li>Use <code>holdersLimit</code> only when holder ranking is useful.</li>
+</ul>
+<h2>Rules</h2>
+<ul>
+<li>Any price information must come from <code>searchTokenInfo</code>.</li>
+<li>Do not declare a token unrecognized before invoking this tool.</li>
+<li>Never convert a base asset to a wrapped variant unless the user explicitly asked for it.</li>
+</ul>
+<h2>Follow-Up Tools</h2>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>Signature</th>
+<th>Use when</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>projectTool</code></td>
+<td><code>projectTool(projectName)</code></td>
+<td>token maps to a broader project and you need project context</td>
+</tr>
+<tr>
+<td><code>searchTwitter</code></td>
+<td><code>searchTwitter(query)</code></td>
+<td>you need social discussion or rumor scan</td>
+</tr>
+<tr>
+<td><code>webSearch</code></td>
+<td><code>webSearch(query)</code></td>
+<td>you need official-source or open-web validation</td>
+</tr>
+</tbody></table>
+<h2>Call Order</h2>
+<table>
+<thead>
+<tr>
+<th>Need</th>
+<th>Calls</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>token price, contract, metadata</td>
+<td><code>searchTokenInfo</code></td>
+</tr>
+<tr>
+<td>token plus project context</td>
+<td><code>searchTokenInfo</code>, then <code>projectTool</code></td>
+</tr>
+<tr>
+<td>token plus social chatter</td>
+<td><code>searchTokenInfo</code>, then <code>searchTwitter</code></td>
+</tr>
+<tr>
+<td>token plus external confirmation</td>
+<td><code>searchTokenInfo</code>, then <code>webSearch</code></td>
+</tr>
+<tr>
+<td>full token diligence</td>
+<td><code>searchTokenInfo</code> + <code>projectTool</code> + <code>searchTwitter</code> + <code>webSearch</code></td>
+</tr>
+</tbody></table>
+<h2>Stop Conditions</h2>
+<ul>
+<li>Stop after <code>searchTokenInfo</code> if the user only wanted price, contract, metadata, or symbol validation.</li>
+<li>Add <code>projectTool</code> only when the token maps to a broader project question.</li>
+<li>Add <code>searchTwitter</code> only when narrative or discussion matters.</li>
+<li>Add <code>webSearch</code> only when external confirmation matters.</li>
+</ul>
+<h2>Fallback</h2>
+<ul>
+<li>If token lookup is not enough for attribution or news validation, follow with <code>webSearch</code> or <code>searchTwitter</code>.</li>
+</ul>
+<h2>Fallback</h2>
+<ul>
+<li>If token lookup is not enough for attribution or news validation, follow with <code>webSearch</code> or <code>searchTwitter</code>.</li>
+</ul>
+<h2>Do Not</h2>
+<ul>
+<li>Do not start with <code>webSearch</code> for token identity or price.</li>
+<li>Do not guess token addresses.</li>
+<li>Do not normalize token symbols or silently map them to wrapped variants.</li>
+</ul>
+<h2>Minimal Examples</h2>
+<table>
+<thead>
+<tr>
+<th>Goal</th>
+<th>Example call</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>lookup by symbol</td>
+<td><code>searchTokenInfo(tokenSymbol=&#39;ETH&#39;, chainId=1)</code></td>
+</tr>
+<tr>
+<td>lookup by address</td>
+<td><code>searchTokenInfo(tokenAddress=&#39;0xA0b86991c6218b36c1d19d4a2e9eb0ce3606eb48&#39;)</code></td>
+</tr>
+<tr>
+<td>token with holder view</td>
+<td><code>searchTokenInfo(tokenSymbol=&#39;ETH&#39;, chainId=1, holdersLimit=10)</code></td>
+</tr>
+</tbody></table>
+<h2>See Also</h2>
+<ul>
+<li><a href="/agent-site/viewer/">/</a> for the full reference</li>
+<li><a href="/agent-site/viewer/project/">Project</a></li>
+<li><a href="/agent-site/viewer/execution/">Execution</a></li>
+<li><a href="/agent-site/viewer/alert/">Alert</a></li>
+</ul>
+<p>Pages that <strong>Backlink</strong> to here:</p>
+<ul>
+<li><a href="/agent-site/viewer/">Tool Reference</a></li>
+<li><a href="/agent-site/viewer/market-signal/">Market Signal</a></li>
+</ul>
+
+    </main>
+  </body>
+</html>

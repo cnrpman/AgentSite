@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Wallet</title>
+    <style>
+      body { margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial; background: #f6f4ef; color: #1b1b1b; }
+      header { position: sticky; top: 0; background: #fff7e8; border-bottom: 1px solid #e7dcc3; padding: 12px 20px; display: flex; gap: 12px; align-items: center; }
+      main { max-width: 960px; margin: 24px auto 72px; padding: 0 20px; line-height: 1.6; }
+      a { color: #0a4ea3; }
+      pre { background: #111827; color: #f9fafb; padding: 16px; border-radius: 8px; overflow-x: auto; }
+      code { background: #f0e7d8; padding: 2px 6px; border-radius: 4px; }
+      pre code { background: transparent; padding: 0; }
+      .meta { color: #5c4b2a; font-size: 0.95rem; }
+    </style>
+  </head>
+  <body>
+    <header>
+      <a href="/agent-site/viewer/">Viewer Home</a>
+      <span>·</span>
+      <a href="/agent-site/wallet.md">Raw Markdown</a>
+      <span>·</span>
+      <span class="meta">Static GitHub Pages export</span>
+    </header>
+    <main>
+<h1>Wallet</h1>
+<p><strong>Navigation:</strong> <a href="/agent-site/viewer/">Home</a> &gt; <a href="/agent-site/viewer/wallet/">wallet</a></p>
+<p><strong>Summary:</strong> Wallet review with mode selection, address shapes, and token follow-up.</p>
+<hr>
+<p>Use this page for wallet balances, activity, and transactions.</p>
+<h2>Primary Tool</h2>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>Signature</th>
+<th>Required</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>getWalletTokenBalance</code></td>
+<td><code>getWalletTokenBalance(walletAddress, mode[], chainId?)</code></td>
+<td><code>walletAddress</code>, <code>mode</code></td>
+<td>wallet review tool</td>
+</tr>
+</tbody></table>
+<h2>Parameter Shapes</h2>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Shape</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>walletAddress</code></td>
+<td>EVM address or ENS</td>
+<td><code>0x3c11992f1d064e4751ce3bf603491d95ed6e8090</code>, <code>vitalik.eth</code></td>
+</tr>
+<tr>
+<td><code>mode[]</code></td>
+<td>wallet query mode array</td>
+<td><code>[&#39;balance&#39;]</code>, <code>[&#39;balance&#39;, &#39;activity&#39;]</code>, <code>[&#39;transactions&#39;]</code></td>
+</tr>
+<tr>
+<td><code>chainId</code></td>
+<td>numeric chain id</td>
+<td><code>1</code>, <code>56</code></td>
+</tr>
+</tbody></table>
+<h2>Mode Selection</h2>
+<table>
+<thead>
+<tr>
+<th>Need</th>
+<th><code>mode</code></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>current holdings</td>
+<td><code>[&#39;balance&#39;]</code></td>
+</tr>
+<tr>
+<td>behavior summary</td>
+<td><code>[&#39;activity&#39;]</code></td>
+</tr>
+<tr>
+<td>transaction history</td>
+<td><code>[&#39;transactions&#39;]</code></td>
+</tr>
+<tr>
+<td>full review</td>
+<td><code>[&#39;balance&#39;, &#39;activity&#39;]</code></td>
+</tr>
+</tbody></table>
+<h2>Mode Output</h2>
+<table>
+<thead>
+<tr>
+<th>Mode</th>
+<th>What it returns</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>balance</code></td>
+<td>token balances, optionally filtered by chain</td>
+</tr>
+<tr>
+<td><code>activity</code></td>
+<td>trimmed activity timeline including transfers and approvals</td>
+</tr>
+<tr>
+<td><code>transactions</code></td>
+<td>filtered transaction history with decoded transfers</td>
+</tr>
+</tbody></table>
+<h2>Follow-Up Tool</h2>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>Signature</th>
+<th>Use when</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>searchTokenInfo</code></td>
+<td><code>searchTokenInfo(tokenSymbol?, tokenAddress?, chainId?, holdersLimit?, quoteCurrency?)</code></td>
+<td>returned balances need token metadata or price</td>
+</tr>
+</tbody></table>
+<h2>Defaults</h2>
+<ul>
+<li>If the user clearly means &quot;my wallet&quot; and provides no address, use <code>0x3c11992f1d064e4751ce3bf603491d95ed6e8090</code>.</li>
+<li>If chain is ambiguous, Ethereum (<code>chainId: 1</code>) is the default.</li>
+</ul>
+<h2>Usage Notes</h2>
+<ul>
+<li>No chain filter: get balances across all supported chains.</li>
+<li>With <code>chainId</code> in <code>balance</code> mode: limit balances to one chain.</li>
+<li>Combine modes when a single wallet review needs balances plus behavior.</li>
+</ul>
+<h2>Call Order</h2>
+<table>
+<thead>
+<tr>
+<th>Need</th>
+<th>Calls</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>wallet balances</td>
+<td><code>getWalletTokenBalance</code></td>
+</tr>
+<tr>
+<td>wallet review with token metadata</td>
+<td><code>getWalletTokenBalance</code>, then <code>searchTokenInfo</code> for specific assets</td>
+</tr>
+</tbody></table>
+<h2>Stop Conditions</h2>
+<ul>
+<li>Stop after <code>getWalletTokenBalance</code> if balances, activity, or transactions already answer the question.</li>
+<li>Add <code>searchTokenInfo</code> only for assets that need token metadata or price.</li>
+</ul>
+<h2>Do Not</h2>
+<ul>
+<li>Do not jump to swap, transfer, or staking tools before the wallet state is clear.</li>
+</ul>
+<h2>Minimal Examples</h2>
+<table>
+<thead>
+<tr>
+<th>Goal</th>
+<th>Example call</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>balances</td>
+<td><code>getWalletTokenBalance(walletAddress=&#39;vitalik.eth&#39;, mode=[&#39;balance&#39;])</code></td>
+</tr>
+<tr>
+<td>full review</td>
+<td><code>getWalletTokenBalance(walletAddress=&#39;vitalik.eth&#39;, mode=[&#39;balance&#39;, &#39;activity&#39;])</code></td>
+</tr>
+</tbody></table>
+<h2>See Also</h2>
+<ul>
+<li><a href="/agent-site/viewer/">/</a> for the full reference</li>
+<li><a href="/agent-site/viewer/execution/">Execution</a></li>
+<li><a href="/agent-site/viewer/staking/">Staking</a></li>
+</ul>
+<p>Pages that <strong>Backlink</strong> to here:</p>
+<ul>
+<li><a href="/agent-site/viewer/">Tool Reference</a></li>
+</ul>
+
+    </main>
+  </body>
+</html>

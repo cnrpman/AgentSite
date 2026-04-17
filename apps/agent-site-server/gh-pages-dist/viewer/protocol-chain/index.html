@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Protocol &amp; Chain</title>
+    <style>
+      body { margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial; background: #f6f4ef; color: #1b1b1b; }
+      header { position: sticky; top: 0; background: #fff7e8; border-bottom: 1px solid #e7dcc3; padding: 12px 20px; display: flex; gap: 12px; align-items: center; }
+      main { max-width: 960px; margin: 24px auto 72px; padding: 0 20px; line-height: 1.6; }
+      a { color: #0a4ea3; }
+      pre { background: #111827; color: #f9fafb; padding: 16px; border-radius: 8px; overflow-x: auto; }
+      code { background: #f0e7d8; padding: 2px 6px; border-radius: 4px; }
+      pre code { background: transparent; padding: 0; }
+      .meta { color: #5c4b2a; font-size: 0.95rem; }
+    </style>
+  </head>
+  <body>
+    <header>
+      <a href="/agent-site/viewer/">Viewer Home</a>
+      <span>·</span>
+      <a href="/agent-site/protocol-chain.md">Raw Markdown</a>
+      <span>·</span>
+      <span class="meta">Static GitHub Pages export</span>
+    </header>
+    <main>
+<h1>Protocol &amp; Chain</h1>
+<p><strong>Navigation:</strong> <a href="/agent-site/viewer/">Home</a> &gt; <a href="/agent-site/viewer/protocol-chain/">protocol-chain</a></p>
+<p><strong>Summary:</strong> Protocol-level and chain-level review with the minimum tool choice logic.</p>
+<hr>
+<p>Use this page for protocol review, chain review, and protocol-versus-chain context.</p>
+<h2>Primary Tools</h2>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>Signature</th>
+<th>Required</th>
+<th>Use when</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>protocolTool</code></td>
+<td><code>protocolTool(protocol)</code></td>
+<td><code>protocol</code></td>
+<td>the subject is a named protocol</td>
+</tr>
+<tr>
+<td><code>chainTool</code></td>
+<td><code>chainTool(chainId?, chainName?)</code></td>
+<td><code>chainId</code> or <code>chainName</code></td>
+<td>the subject is a chain, ecosystem, or chain rotation question</td>
+</tr>
+</tbody></table>
+<h2>Parameter Shapes</h2>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Shape</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>protocol</code></td>
+<td>protocol slug or name</td>
+<td><code>aave-v3</code>, <code>uniswap</code></td>
+</tr>
+<tr>
+<td><code>chainId</code></td>
+<td>numeric chain id</td>
+<td><code>1</code>, <code>56</code></td>
+</tr>
+<tr>
+<td><code>chainName</code></td>
+<td>chain name string</td>
+<td><code>Ethereum</code>, <code>BNB Chain</code></td>
+</tr>
+</tbody></table>
+<ul>
+<li>At least one of <code>chainId</code> or <code>chainName</code> must be provided for <code>chainTool</code>.</li>
+<li>If <code>chainId</code> is provided, it can be mapped to <code>chainName</code>.</li>
+</ul>
+<h2>Follow-Up Tool</h2>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>Signature</th>
+<th>Use when</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>webSearch</code></td>
+<td><code>webSearch(query)</code></td>
+<td>official-source or live external confirmation is needed</td>
+</tr>
+</tbody></table>
+<h2>When To Call</h2>
+<h3><code>protocolTool</code></h3>
+<ul>
+<li>Protocol due diligence</li>
+<li>TVL or fee trend review</li>
+<li>Revenue quality checks</li>
+<li>Capital-flow interpretation</li>
+</ul>
+<h3><code>chainTool</code></h3>
+<ul>
+<li>Chain comparison</li>
+<li>DEX activity review</li>
+<li>TVL trend review</li>
+<li>Protocol dominance analysis</li>
+<li>Trading-pattern scans at the chain level</li>
+</ul>
+<h2>Output Notes</h2>
+<ul>
+<li><code>protocolTool</code> returns a markdown-formatted protocol analysis intended for direct downstream use.</li>
+<li><code>chainTool</code> returns chain-level activity and ranking analysis.</li>
+</ul>
+<h2>Call Order</h2>
+<table>
+<thead>
+<tr>
+<th>Need</th>
+<th>Calls</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>protocol review</td>
+<td><code>protocolTool</code></td>
+</tr>
+<tr>
+<td>chain review</td>
+<td><code>chainTool</code></td>
+</tr>
+<tr>
+<td>protocol with chain context</td>
+<td><code>protocolTool</code>, then <code>chainTool</code></td>
+</tr>
+<tr>
+<td>chain with external confirmation</td>
+<td><code>chainTool</code>, then <code>webSearch</code></td>
+</tr>
+<tr>
+<td>protocol with external confirmation</td>
+<td><code>protocolTool</code>, then <code>webSearch</code></td>
+</tr>
+</tbody></table>
+<h2>Stop Conditions</h2>
+<ul>
+<li>Stop after <code>protocolTool</code> if the answer only needs protocol-level TVL, fees, revenue, or capital-flow context.</li>
+<li>Stop after <code>chainTool</code> if the answer only needs chain-level activity and ranking.</li>
+<li>Add <code>webSearch</code> only when external confirmation matters.</li>
+</ul>
+<h2>Do Not</h2>
+<ul>
+<li>Do not start with <code>webSearch</code> for a straightforward protocol or chain review.</li>
+<li>Do not use <code>chainTool</code> as a substitute for a named protocol question.</li>
+</ul>
+<h2>Minimal Examples</h2>
+<table>
+<thead>
+<tr>
+<th>Goal</th>
+<th>Example call</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>protocol review</td>
+<td><code>protocolTool(protocol=&#39;aave-v3&#39;)</code></td>
+</tr>
+<tr>
+<td>chain review</td>
+<td><code>chainTool(chainId=1)</code></td>
+</tr>
+<tr>
+<td>chain review by name</td>
+<td><code>chainTool(chainName=&#39;Ethereum&#39;)</code></td>
+</tr>
+</tbody></table>
+<h2>See Also</h2>
+<ul>
+<li><a href="/agent-site/viewer/">/</a> for the full reference</li>
+<li><a href="/agent-site/viewer/market-signal/">Market Signal</a></li>
+</ul>
+<p>Pages that <strong>Backlink</strong> to here:</p>
+<ul>
+<li><a href="/agent-site/viewer/">Tool Reference</a></li>
+</ul>
+
+    </main>
+  </body>
+</html>
