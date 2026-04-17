@@ -26,8 +26,10 @@ The root scripts proxy to `apps/agent-site-server`.
 For GitHub Pages export:
 
 - `yarn --ignore-engines build`
+- `yarn publish:gh-pages`
 
 `yarn build` now produces both `dist/` and `apps/agent-site-server/gh-pages-dist/`. No separate branch-switching flow is required for local export generation.
+`yarn publish:gh-pages` syncs `gh-pages-dist/` into the local `gh-pages` branch and pushes it to `origin`.
 
 ## Content Architecture
 

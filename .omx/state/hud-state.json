@@ -1,6 +1,6 @@
 {
-  "last_turn_at": "2026-04-17T10:04:58.952Z",
-  "turn_count": 20,
-  "last_progress_at": "2026-04-17T10:04:58.952Z",
-  "last_agent_output": "按你现在这套“`build` 直接产出 `gh-pages-dist/`、不切 `gh-pages` 分支”的思路，GitHub 上**最少**只要配这些：\n\n1. 仓库 `Settings -> P"
+  "last_turn_at": "2026-04-17T10:12:57.955Z",
+  "turn_count": 22,
+  "last_progress_at": "2026-04-17T10:12:57.955Z",
+  "last_agent_output": "做完了。\n\n- 新增 `yarn publish:gh-pages`\n- 它会：\n  - `yarn build`\n  - 用临时 worktree 更新 `gh-pages` 分支根目录\n  - 自"
 }

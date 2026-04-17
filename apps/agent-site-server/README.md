@@ -28,6 +28,7 @@ Viewer is available at `http://localhost:3000/viewer/`.
 - `yarn build` → generate `dist/` from `content/`, run checks, and also generate `gh-pages-dist/`
 - `yarn run check` → validate page contract, links, reachability, and print a token-budget report for generated Markdown
 - `yarn export:gh-pages` → alias for the same export flow when you want to think in GitHub Pages terms
+- `yarn publish:gh-pages` → build, sync `gh-pages-dist/` into the `gh-pages` branch, commit, and push
 - `yarn dev` → run Fastify server with TS runtime (`tsx watch`)
 - `yarn build:server` → compile TypeScript to `build/`
 - `yarn start` → run compiled server (`node build/server.js`)
@@ -118,6 +119,7 @@ The export also adds:
 - `llms.txt` copied from the Markdown homepage
 
 This flow does not require switching to or managing a `gh-pages` branch locally. The generated `gh-pages-dist/` directory is the publishable artifact.
+If you do want to publish straight from a branch, use `yarn publish:gh-pages`; it updates the local `gh-pages` branch root from `gh-pages-dist/` and pushes it.
 
 Environment variables:
 - `MARKDOWN_PORT` (markdown service port, default 3000)

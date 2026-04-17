@@ -11,6 +11,7 @@
     "build": "yarn build:content && tsx src/export-gh-pages.ts",
     "check": "tsx src/check.ts",
     "export:gh-pages": "yarn build:content && tsx src/export-gh-pages.ts",
+    "publish:gh-pages": "bash ../../scripts/publish-gh-pages.sh",
     "build:server": "tsc -p tsconfig.json",
     "dev": "tsx watch src/server.ts",
     "start": "node build/server.js"
