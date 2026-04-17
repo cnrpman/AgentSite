@@ -1,8 +1,23 @@
 ---
 title: Tool Reference
-summary: Full tool signatures, call order, defaults, and stop conditions.
+summary: Full tool signatures, scene-page entry points, defaults, and stop conditions.
 ---
 Use this page for tool signatures and invocation order.
+
+## Scene Pages
+
+If a request clearly matches one scene below, open that page first. Each scene page repeats the signatures, parameter shapes, call order, and stop conditions it needs.
+
+| Scene | Open | Main tools |
+|-------|------|------------|
+| token lookup and token diligence | [Token](/token/) | `searchTokenInfo`, `projectTool`, `searchTwitter`, `webSearch` |
+| project review | [Project](/project/) | `projectTool`, `searchTwitter`, `webSearch`, `searchTokenInfo` |
+| protocol or chain review | [Protocol & Chain](/protocol-chain/) | `protocolTool`, `chainTool`, `webSearch` |
+| market pulse, trends, social, news | [Market Signal](/market-signal/) | `getTrendingInsights`, `searchTwitter`, `webSearch`, `chainTool` |
+| wallet review | [Wallet](/wallet/) | `getWalletTokenBalance`, `searchTokenInfo` |
+| pool search and staking | [Staking](/staking/) | `searchPoolInfo`, `ExecuteStakeTool` |
+| swap or transfer | [Execution](/execution/) | `searchTokenInfo`, `ExecuteSwapTool`, `ExecuteTransferTool` |
+| alert creation | [Alert](/alert/) | `searchTokenInfo`, `setupAlert` |
 
 ## Global Rules
 
@@ -107,4 +122,11 @@ Use this page for tool signatures and invocation order.
 
 ## See Also
 
-- (none)
+- [Token](/token/)
+- [Project](/project/)
+- [Protocol & Chain](/protocol-chain/)
+- [Market Signal](/market-signal/)
+- [Wallet](/wallet/)
+- [Staking](/staking/)
+- [Execution](/execution/)
+- [Alert](/alert/)

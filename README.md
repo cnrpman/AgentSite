@@ -34,17 +34,18 @@ This produces a dual-output static bundle where raw Markdown remains available a
 
 `apps/agent-site-server/content` is intentionally compressed:
 
-- `index.md` - the only product page, containing tool signatures, call order, defaults, and stop conditions
+- `index.md` - scene entry points and a small set of shared rules
+- `token.md`, `project.md`, `protocol-chain.md`, `market-signal.md`, `wallet.md`, `staking.md`, `execution.md`, `alert.md` - scene-specific closed pages
 
-The product page now documents callable tools only. Behavior/profile/placeholder layers were removed from the public content tree to reduce noise.
+The product pages document callable tools only. Behavior/profile/placeholder layers were removed from the public content tree to reduce noise.
 
-The rule for the product surface is simple: keep only invocation-critical content on one page.
+The current rule is: keep the homepage thin and public, then let scene pages carry their own signatures, parameter shapes, sequencing, and stop conditions so the model does not need to bounce through a shared `flows` page.
 
 ## Notes
 
 - `apps/agent-browser-skill` includes:
   - `SKILL.md`
   - `scripts/curl-with-jwt.sh` for `Authorization: Bearer <JWT>` requests to `localhost:3000` and `*.sahara.info`
-- `apps/agent-site-server/content` is reduced to a single tool-only page.
+- `apps/agent-site-server/content` now uses a tool-only surface: one full reference plus scene pages.
 - `apps/agent-site-autosearch` is currently an empty scaffold.
 - Keep each app independently runnable and documented as implementation starts.

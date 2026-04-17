@@ -3,6 +3,7 @@ import path from 'node:path';
 import { getTokenCount } from './tokens';
 
 const DIST_ROOT = path.resolve(process.cwd(), 'dist');
+const REPORT_TOKEN_BUDGET = process.env.REPORT_TOKEN_BUDGET === '1';
 const TOKEN_TARGET_MIN = 2000;
 const TOKEN_TARGET_MAX = 5000;
 const TOKEN_BUDGET_EXEMPT_URLS = new Set(['/skill/']);
@@ -169,20 +170,22 @@ export async function runChecks(distRoot = DIST_ROOT): Promise<void> {
       }
     }
 
-    const tokens = await getTokenCount(content);
-    let status: TokenBudgetStatus;
-    if (TOKEN_BUDGET_EXEMPT_URLS.has(url)) {
-      status = 'exempt';
-    } else if (tokens === null) {
-      status = 'unavailable';
-    } else if (tokens < TOKEN_TARGET_MIN) {
-      status = 'under-target';
-    } else if (tokens > TOKEN_TARGET_MAX) {
-      status = 'over-target';
-    } else {
-      status = 'within-target';
+    if (REPORT_TOKEN_BUDGET) {
+      const tokens = await getTokenCount(content);
+      let status: TokenBudgetStatus;
+      if (TOKEN_BUDGET_EXEMPT_URLS.has(url)) {
+        status = 'exempt';
+      } else if (tokens === null) {
+        status = 'unavailable';
+      } else if (tokens < TOKEN_TARGET_MIN) {
+        status = 'under-target';
+      } else if (tokens > TOKEN_TARGET_MAX) {
+        status = 'over-target';
+      } else {
+        status = 'within-target';
+      }
+      tokenBudgets.push({ url, tokens, status });
     }
-    tokenBudgets.push({ url, tokens, status });
   }
 
   const reachable = new Set<string>();
@@ -208,7 +211,9 @@ export async function runChecks(distRoot = DIST_ROOT): Promise<void> {
     throw new Error(message);
   }
 
-  process.stdout.write(`${summarizeBudgets(tokenBudgets.sort((a, b) => a.url.localeCompare(b.url)))}\n`);
+  if (REPORT_TOKEN_BUDGET) {
+    process.stdout.write(`${summarizeBudgets(tokenBudgets.sort((a, b) => a.url.localeCompare(b.url)))}\n`);
+  }
 }
 
 if (require.main === module) {

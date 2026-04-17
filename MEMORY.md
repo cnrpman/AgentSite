@@ -10,3 +10,4 @@
 ## 2026-04-17
 - For retrieval-heavy doc trees where the root and first branch pages are often co-fetched, page boundaries should follow high-frequency access paths rather than textbook taxonomy: fill upper pages with shared context first, target roughly `2k-5k` tokens when practical, and only split downward once the parent is already dense or the access pattern clearly diverges.
 - If a user wants an agent-facing doc surface aggressively deslopped, prioritize callable signatures and sequencing over page-size targets; a 2-page tool-only surface can be better than a denser but noisier hierarchy.
+- A shared `flows` page is often a trap: models tend to fetch it for every request. Prefer scene-specific closed pages that repeat local signatures and stop conditions instead of routing through a universal second page.

@@ -52,18 +52,31 @@ summary: How to use visit(url) to traverse the Markdown directory site.
 
 The current content is intentionally minimal:
 
-- `content/index.md` - the only product page, containing tool signatures, defaults that affect calls, common sequences, and minimal failure rules
+- `content/index.md` - scene entry points and shared global rules
+- `content/token.md`
+- `content/project.md`
+- `content/protocol-chain.md`
+- `content/market-signal.md`
+- `content/wallet.md`
+- `content/staking.md`
+- `content/execution.md`
+- `content/alert.md`
 
-The public content tree no longer includes separate `soul`, `memory`, `skill`, or per-workflow tool pages. The goal is to keep only the information needed to call tools on one page.
+The public content tree no longer includes separate `soul`, `memory`, or `skill` layers. The goal is to keep only the information needed to call tools, with a thin homepage plus scene-specific closed pages.
 
 `content/index.md` should document:
-1. Which tools belong to the bundle
-2. Call signatures
-3. Required inputs and sequencing
-4. Minimal defaults that affect invocation
-5. Failure conditions that stop the next call
+1. Which scene page to open
+2. The small set of shared rules that apply everywhere
+3. Cross-scene sequencing rules that truly belong on the homepage
 
-Do not split this into a homepage subset plus a second reference page unless the single page becomes unusable.
+Each scene page should document:
+1. Which exact scene it covers
+2. Only the tool signatures needed for that scene
+3. Parameter shapes for that scene
+4. Scene-specific call order
+5. Scene-specific stop conditions and "do not" rules
+
+Do not add a shared `flows` page. It becomes a hot page and defeats the purpose of branching.
 
 ## Output Rules
 
