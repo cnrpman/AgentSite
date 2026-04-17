@@ -1,6 +1,6 @@
 # Project
 
-**Navigation:** [Home](/) > [project](/agent-site/project.md)
+**Navigation:** [Home](/) > [project](/AgentSite/project.md)
 
 **Summary:** Project-level context, valuation expectations, and project follow-up calls.
 
@@ -13,6 +13,14 @@ Use this page when the question is about a named project rather than just a toke
 | Tool | Signature | Required | Notes |
 |------|-----------|----------|-------|
 | `projectTool` | `projectTool(projectName)` | `projectName` | primary project context tool |
+
+## Endpoint Mapping
+
+Underlying endpoint: `/project/analysis`
+
+- Pass the project or token name directly.
+- Build request parameters from user intent; do not hardcode values.
+- Use this tool first for structured project context before social or open-web follow-up.
 
 ## Parameter Shapes
 
@@ -50,6 +58,7 @@ Use this page when the question is about a named project rather than just a toke
 | project plus discussion | `projectTool`, then `searchTwitter` |
 | project plus official confirmation | `projectTool`, then `webSearch` |
 | project plus token price or contract | `projectTool`, then `searchTokenInfo` |
+| full project diligence | `projectTool`, then `searchTwitter`, then `webSearch`, then `searchTokenInfo` if token facts are needed |
 
 ## Stop Conditions
 
@@ -57,6 +66,9 @@ Use this page when the question is about a named project rather than just a toke
 - Add `searchTwitter` only when discussion matters.
 - Add `webSearch` only when official-source confirmation matters.
 - Add `searchTokenInfo` only when token-level facts are needed.
+
+For due diligence or launch-interest questions, compare structured project output with both `searchTwitter` discussion and `webSearch` confirmation before finalizing the answer.
+Mandatory alongside fundamentals: for diligence, investigation, or narrative-sensitive project work, `searchTwitter` is mandatory alongside fundamentals before the conclusion is finalized.
 
 ## Do Not
 
@@ -73,8 +85,8 @@ Use this page when the question is about a named project rather than just a toke
 ## See Also
 
 - [/](/) for the full reference
-- [Token](/agent-site/token.md)
-- [Market Signal](/agent-site/market-signal.md)
+- [Token](/AgentSite/token.md)
+- [Market Signal](/AgentSite/market-signal.md)
 
 Pages that **Backlink** to here:
 - [Tool Reference](/)

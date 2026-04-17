@@ -17,15 +17,15 @@
   </head>
   <body>
     <header>
-      <a href="/agent-site/viewer/">Viewer Home</a>
+      <a href="/AgentSite/viewer/">Viewer Home</a>
       <span>·</span>
-      <a href="/agent-site/staking.md">Raw Markdown</a>
+      <a href="/AgentSite/staking.md">Raw Markdown</a>
       <span>·</span>
       <span class="meta">Static GitHub Pages export</span>
     </header>
     <main>
 <h1>Staking</h1>
-<p><strong>Navigation:</strong> <a href="/agent-site/viewer/">Home</a> &gt; <a href="/agent-site/viewer/staking/">staking</a></p>
+<p><strong>Navigation:</strong> <a href="/AgentSite/viewer/">Home</a> &gt; <a href="/AgentSite/viewer/staking/">staking</a></p>
 <p><strong>Summary:</strong> Pool search and stake execution with the minimum required sequencing.</p>
 <hr>
 <p>Use this page for pool discovery, staking options, and stake execution.</p>
@@ -95,12 +95,20 @@
 <li><code>data</code>: confirmation object with <code>pool_id</code> and timestamp when successful</li>
 <li><code>error</code>: failure reason when unsuccessful</li>
 </ul>
+<h2>Endpoint Mapping</h2>
+<p>Underlying endpoint: <code>/pool/analysis</code></p>
+<ul>
+<li>All pool-search parameters are optional; pass whatever chain, protocol, token, or <code>pool_id</code> context is already known.</li>
+<li>Use this as the primary source for pool discovery and <code>pool_id</code> selection.</li>
+<li>Build request parameters from user intent; do not hardcode values.</li>
+</ul>
 <h2>Rules</h2>
 <ul>
 <li>Use <code>searchPoolInfo</code> as the primary source for pool data.</li>
 <li>Only after <code>searchPoolInfo</code> should you supplement with <code>webSearch</code> or <code>searchTwitter</code>, and only if the question still needs it.</li>
 <li><code>searchPoolInfo</code> returns the <code>pool_id</code> needed by <code>ExecuteStakeTool</code>.</li>
 <li><code>ExecuteStakeTool</code> is for execution, not discovery.</li>
+<li>If the intent is staking execution and a pool has been selected, immediately call <code>ExecuteStakeTool</code> with that <code>pool_id</code>.</li>
 </ul>
 <h2>Call Order</h2>
 <table>
@@ -148,12 +156,12 @@
 </tbody></table>
 <h2>See Also</h2>
 <ul>
-<li><a href="/agent-site/viewer/">/</a> for the full reference</li>
-<li><a href="/agent-site/viewer/wallet/">Wallet</a></li>
+<li><a href="/AgentSite/viewer/">/</a> for the full reference</li>
+<li><a href="/AgentSite/viewer/wallet/">Wallet</a></li>
 </ul>
 <p>Pages that <strong>Backlink</strong> to here:</p>
 <ul>
-<li><a href="/agent-site/viewer/">Tool Reference</a></li>
+<li><a href="/AgentSite/viewer/">Tool Reference</a></li>
 </ul>
 
     </main>

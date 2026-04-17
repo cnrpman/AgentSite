@@ -1,6 +1,6 @@
 {
-  "last_turn_at": "2026-04-17T10:12:57.955Z",
-  "turn_count": 22,
-  "last_progress_at": "2026-04-17T10:12:57.955Z",
-  "last_agent_output": "做完了。\n\n- 新增 `yarn publish:gh-pages`\n- 它会：\n  - `yarn build`\n  - 用临时 worktree 更新 `gh-pages` 分支根目录\n  - 自"
+  "last_turn_at": "2026-04-17T12:20:15.788Z",
+  "turn_count": 26,
+  "last_progress_at": "2026-04-17T12:20:15.788Z",
+  "last_agent_output": "已完成。\n\n主改动在 [index.md](/Users/jun/git/agent-site/apps/agent-site-server/content/index.md:1), [token.m"
 }

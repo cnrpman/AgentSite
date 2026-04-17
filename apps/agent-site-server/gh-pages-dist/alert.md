@@ -1,6 +1,6 @@
 # Alert
 
-**Navigation:** [Home](/) > [alert](/agent-site/alert.md)
+**Navigation:** [Home](/) > [alert](/AgentSite/alert.md)
 
 **Summary:** Price alert setup with the exact userIntent shape and hard prerequisites.
 
@@ -57,7 +57,7 @@ Use this page for alert creation.
 ## See Also
 
 - [/](/) for the full reference
-- [Token](/agent-site/token.md)
+- [Token](/AgentSite/token.md)
 
 Pages that **Backlink** to here:
 - [Tool Reference](/)

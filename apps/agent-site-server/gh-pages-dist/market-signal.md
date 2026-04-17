@@ -1,6 +1,6 @@
 # Market Signal
 
-**Navigation:** [Home](/) > [market-signal](/agent-site/market-signal.md)
+**Navigation:** [Home](/) > [market-signal](/AgentSite/market-signal.md)
 
 **Summary:** Trend scanning, social discussion, external confirmation, and their call order.
 
@@ -53,6 +53,14 @@ Successful results may include:
 - `created_at`
 - engagement or metadata fields when available
 
+Usage policy:
+
+- For token or DeFi narratives, compare `searchTwitter` results against structured tool outputs before making a strong claim.
+- Probe official handles first when token or project metadata exposes them.
+- Tag social findings as `[Official Announcement]`, `[Community Sentiment]`, or `[Unverified Claim]`.
+- Include handles, timestamps, and links when available when presenting social findings.
+- Include freshness, handle, and confidence when social findings materially affect the answer.
+
 ### `webSearch`
 
 Returns JSON with:
@@ -70,6 +78,7 @@ Returns JSON with:
 | trend plus chain context | `getTrendingInsights`, then `chainTool` |
 | claim validation | relevant trend or social tool, then `webSearch` |
 | social scan only | `searchTwitter` |
+| token or project narrative check | relevant fundamental tool, then `searchTwitter`, then `webSearch` if confirmation is needed |
 
 ## Stop Conditions
 
@@ -94,9 +103,9 @@ Returns JSON with:
 ## See Also
 
 - [/](/) for the full reference
-- [Protocol & Chain](/agent-site/protocol-chain.md)
-- [Token](/agent-site/token.md)
+- [Protocol & Chain](/AgentSite/protocol-chain.md)
+- [Token](/AgentSite/token.md)
 
 Pages that **Backlink** to here:
 - [Tool Reference](/)
-- [Project](/agent-site/project.md)
+- [Project](/AgentSite/project.md)

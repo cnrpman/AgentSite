@@ -1,6 +1,6 @@
 # Staking
 
-**Navigation:** [Home](/) > [staking](/agent-site/staking.md)
+**Navigation:** [Home](/) > [staking](/AgentSite/staking.md)
 
 **Summary:** Pool search and stake execution with the minimum required sequencing.
 
@@ -38,12 +38,21 @@ Use this page for pool discovery, staking options, and stake execution.
 - `data`: confirmation object with `pool_id` and timestamp when successful
 - `error`: failure reason when unsuccessful
 
+## Endpoint Mapping
+
+Underlying endpoint: `/pool/analysis`
+
+- All pool-search parameters are optional; pass whatever chain, protocol, token, or `pool_id` context is already known.
+- Use this as the primary source for pool discovery and `pool_id` selection.
+- Build request parameters from user intent; do not hardcode values.
+
 ## Rules
 
 - Use `searchPoolInfo` as the primary source for pool data.
 - Only after `searchPoolInfo` should you supplement with `webSearch` or `searchTwitter`, and only if the question still needs it.
 - `searchPoolInfo` returns the `pool_id` needed by `ExecuteStakeTool`.
 - `ExecuteStakeTool` is for execution, not discovery.
+- If the intent is staking execution and a pool has been selected, immediately call `ExecuteStakeTool` with that `pool_id`.
 
 ## Call Order
 
@@ -72,7 +81,7 @@ Use this page for pool discovery, staking options, and stake execution.
 ## See Also
 
 - [/](/) for the full reference
-- [Wallet](/agent-site/wallet.md)
+- [Wallet](/AgentSite/wallet.md)
 
 Pages that **Backlink** to here:
 - [Tool Reference](/)

@@ -22,6 +22,13 @@ Use this page for protocol review, chain review, and protocol-versus-chain conte
 - At least one of `chainId` or `chainName` must be provided for `chainTool`.
 - If `chainId` is provided, it can be mapped to `chainName`.
 
+## Endpoint Mapping
+
+| Tool | Endpoint | Rule |
+|------|----------|------|
+| `protocolTool` | `/protocol/analysis` | pass the protocol slug or name directly and build parameters from user intent |
+| `chainTool` | `/chain/analysis` | pass `chainId` or `chainName`; do not hardcode values |
+
 ## Follow-Up Tool
 
 | Tool | Signature | Use when |
@@ -44,6 +51,8 @@ Use this page for protocol review, chain review, and protocol-versus-chain conte
 - TVL trend review
 - Protocol dominance analysis
 - Trading-pattern scans at the chain level
+
+Use `webSearch` only after tool output when official-source confirmation or live external context is still required.
 
 ## Output Notes
 
